@@ -86,10 +86,9 @@ img { -webkit-user-drag: none; pointer-events: none; }
   width: var(--page-w);
   max-width: 100%;
   background: var(--cream);
-  position: relative;
+  position: relative;   /* required for cover-bg absolute children */
   box-shadow: 0 3px 18px rgba(0,0,0,0.28);
   overflow: hidden;
-  /* Screen: natural height — content flows freely */
 }
 
 /* ===== COVER PAGE ===== */
@@ -129,16 +128,18 @@ img { -webkit-user-drag: none; pointer-events: none; }
 
 /* ===== INNER PAGES ===== */
 .page-inner {
-  padding: var(--margin-top) var(--margin-outer) var(--margin-bottom) var(--margin-inner);
+  padding: var(--margin-top) var(--margin-outer) 10mm var(--margin-inner);
   display: flex;
   flex-direction: column;
+  min-height: var(--page-h);
 }
-.center-page { align-items: center; justify-content: center; text-align: center; min-height: var(--page-h); }
+.center-page { align-items: center; justify-content: center; text-align: center; }
 
 /* ===== RUNNING FOOTER (book standard: title left, page number right) ===== */
 .page-footer {
   margin-top: auto;
   padding-top: 8px;
+  padding-bottom: 8mm;
   border-top: 0.4pt solid rgba(201,168,76,0.4);
   display: flex;
   justify-content: space-between;
@@ -146,7 +147,6 @@ img { -webkit-user-drag: none; pointer-events: none; }
   font-size: 7.5pt;
   color: var(--muted);
   font-family: 'EB Garamond', serif;
-  /* NOT absolute — flows naturally at bottom of content */
 }
 .f-title { font-style: italic; color: var(--gold); }
 .f-author { color: var(--muted); font-size: 7pt; }
@@ -285,9 +285,8 @@ img { -webkit-user-drag: none; pointer-events: none; }
 
 /* ===== PRINT STYLES — suppress browser headers/footers ===== */
 @media print {
-  /* This is the key: zero margin on @page removes browser URL/title/date */
+  /* Zero margin removes browser URL/title/date headers completely */
   @page { size: A5; margin: 0; }
-  @page :first { margin: 0; }
 
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
 
@@ -314,9 +313,13 @@ img { -webkit-user-drag: none; pointer-events: none; }
     overflow: visible !important;
   }
 
-  /* Each page gets proper print margins via padding */
   .page-inner {
-    padding: 18mm 16mm 22mm 18mm !important;
+    padding: 18mm 16mm 0 18mm !important;
+    min-height: 100vh !important;
+  }
+
+  .page-footer {
+    padding-bottom: 10mm !important;
   }
 
   .page-cover, .page-back-cover, .part-divider-page {
@@ -325,13 +328,9 @@ img { -webkit-user-drag: none; pointer-events: none; }
     break-after: page !important;
   }
 
-  /* Prevent breaks inside key elements */
   .ch-title, .sub-heading, .ch-part-label, .ch-number { page-break-after: avoid; break-after: avoid; }
   .scripture-pull, .movement-box, .prayer-box, .ch-hook { page-break-inside: avoid; break-inside: avoid; }
   p { orphans: 3; widows: 3; }
-
-  /* Footer stays at bottom of content, not absolute */
-  .page-footer { margin-top: 1.5rem; }
 }
 
 /* ===== RESPONSIVE ===== */
