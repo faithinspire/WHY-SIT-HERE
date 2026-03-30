@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Why Sit Here and Die? - A life-and-leadership wake-up call from 2 Kings 7 by Olushola Odunuga Paul">
+    <meta name="description" content="Why Sit Here and Die? - Breaking the trap of stagnation from 2 Kings 7 by Olushola Odunuga Paul">
     <meta name="author" content="Olushola Odunuga Paul">
-    <title>Why Sit Here and Die? - Download & Read</title>
+    <title>Why Sit Here and Die? - Complete Book</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,18 +23,19 @@
 
         body {
             font-family: 'Lora', Georgia, serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, #D4AF37 0%, #C9A227 100%);
             color: #1a1a1a;
-            line-height: 1.6;
+            line-height: 1.8;
+            min-height: 100vh;
         }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            color: white;
+            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
+            color: #F5E6D3;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -44,99 +45,52 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
         }
 
         header p {
-            font-size: 1.1rem;
-            color: #ccc;
+            font-size: 1rem;
+            color: #E8D4B8;
             font-style: italic;
         }
 
-        /* Download Section */
-        .download-section {
+        /* Controls */
+        .controls {
             background: white;
-            padding: 2rem;
+            padding: 1.5rem;
             margin: 2rem auto;
             max-width: 900px;
             border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-        }
-
-        .download-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: #1a1a1a;
-        }
-
-        .download-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .download-btn {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             display: flex;
-            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 0.75rem;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .download-btn:hover {
-            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+        .btn:hover {
+            background: linear-gradient(135deg, #6B5500 0%, #7A650A 100%);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        .download-btn.primary {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            font-size: 1.1rem;
-            padding: 1.25rem 2rem;
-        }
-
-        .download-btn.primary:hover {
-            background: linear-gradient(135deg, #1e8449 0%, #186a3b 100%);
-        }
-
-        .btn-icon {
-            font-size: 1.3rem;
-        }
-
-        /* Info Section */
-        .info-section {
-            background: white;
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 900px;
-            border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-        }
-
-        .info-section h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-        }
-
-        .info-section p {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        /* Book Preview */
+        /* Book Container */
         .book-container {
             max-width: 900px;
             margin: 2rem auto;
@@ -146,15 +100,16 @@
         .page {
             width: 8.5in;
             height: 11in;
-            margin: 15px auto;
+            margin: 20px auto;
             padding: 1in;
             background: white;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             page-break-after: always;
+            border-radius: 4px;
         }
 
         .page-content {
@@ -163,11 +118,6 @@
             flex-direction: column;
             justify-content: flex-start;
             width: 100%;
-        }
-
-        .page-content-inner {
-            width: 100%;
-            flex: 1;
         }
 
         /* Typography */
@@ -213,85 +163,6 @@
             margin-bottom: 2rem;
         }
 
-        .copyright {
-            font-size: 0.85rem;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .copyright p {
-            margin-bottom: 0.75rem;
-        }
-
-        /* Page Styles */
-        .page-title {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 100%;
-        }
-
-        .page-title h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .page-title .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-        }
-
-        /* Foreword */
-        .foreword-header {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .foreword-author {
-            text-align: right;
-            font-style: italic;
-            margin-top: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        /* Dedication */
-        .dedication {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .dedication p {
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            font-size: 1.05rem;
-        }
-
-        /* Epigraph */
-        .epigraph {
-            text-align: center;
-            margin-top: 4rem;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .epigraph-text {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .epigraph-source {
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        /* Chapter */
         .chapter-number {
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
@@ -309,7 +180,6 @@
             line-height: 1.2;
         }
 
-        /* Page Numbers */
         .page-number {
             position: absolute;
             bottom: 0.5in;
@@ -320,10 +190,51 @@
             color: #999;
         }
 
+        .page-title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .page-title h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .foreword-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .foreword-author {
+            text-align: right;
+            font-style: italic;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .copyright p {
+            margin-bottom: 0.75rem;
+        }
+
         /* Footer */
         footer {
-            background: #0a0a0a;
-            color: white;
+            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
+            color: #F5E6D3;
             text-align: center;
             padding: 2rem;
             margin-top: 3rem;
@@ -332,11 +243,12 @@
         footer p {
             margin-bottom: 0.5rem;
             text-align: center;
+            color: #F5E6D3;
         }
 
-        /* Print */
+        /* Print Styles */
         @media print {
-            header, .download-section, .info-section, footer {
+            header, .controls, footer {
                 display: none;
             }
             body {
@@ -351,6 +263,7 @@
                 margin: 0;
                 box-shadow: none;
                 page-break-after: always;
+                border-radius: 0;
             }
             .page:last-child {
                 page-break-after: avoid;
@@ -362,42 +275,15 @@
             header h1 {
                 font-size: 1.8rem;
             }
-            header p {
-                font-size: 0.95rem;
-            }
-            .download-buttons {
-                grid-template-columns: 1fr;
-            }
             .page {
                 width: 100%;
-                margin: 5px auto;
+                margin: 10px auto;
                 padding: 0.75in;
             }
-        }
-
-        @media (max-width: 600px) {
-            header {
-                padding: 1rem;
-            }
-            header h1 {
-                font-size: 1.5rem;
-            }
-            header p {
-                font-size: 0.85rem;
-            }
-            .download-section, .info-section {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            .page {
-                width: 100%;
-                padding: 0.5in;
-                margin: 5px auto;
-            }
-            h1 { font-size: 1.5rem; }
-            h2 { font-size: 1.2rem; }
-            h3 { font-size: 1rem; }
-            p { font-size: 0.9rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.3rem; }
+            h3 { font-size: 1.1rem; }
+            p { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -408,37 +294,11 @@
         <p>Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7</p>
     </header>
 
-    <!-- Download Section -->
-    <div class="download-section">
-        <h2>📥 Download & Read</h2>
-        <div class="download-buttons">
-            <button class="download-btn primary" onclick="downloadPDF()">
-                <span class="btn-icon">📄</span>
-                Download as PDF
-            </button>
-            <button class="download-btn" onclick="printBook()">
-                <span class="btn-icon">🖨️</span>
-                Print Book
-            </button>
-            <button class="download-btn" onclick="shareBook()">
-                <span class="btn-icon">📤</span>
-                Share
-            </button>
-        </div>
-        <p style="text-align: center; color: #666; font-size: 0.95rem;">
-            ✅ Fully compatible on all devices (Desktop, Tablet, Mobile)<br>
-            ✅ Professional print-ready format<br>
-            ✅ Works offline after download
-        </p>
-    </div>
-
-    <!-- Info Section -->
-    <div class="info-section">
-        <h3>📖 About This Book</h3>
-        <p>When life is starving you—of joy, money, progress, peace—there is a question that exposes every excuse: <strong>Why sit here and die?</strong></p>
-        <p>In 2 Kings 7, four rejected lepers made one decision that saved a city: they moved. Their story is not just ancient history; it is a blueprint for spiritual renewal, career direction, academic excellence, leadership growth, and business breakthrough.</p>
-        <p>This book will help you confront stagnation, take wise risks, build discipline, steward increase, and turn your testimony into impact—without denying reality and without losing faith.</p>
-        <p style="text-align: center; font-style: italic; margin-top: 1.5rem;">Rise. Walk. The camp is waiting.</p>
+    <!-- Controls -->
+    <div class="controls">
+        <button class="btn" onclick="window.print()">🖨️ Print</button>
+        <button class="btn" onclick="downloadPDF()">📥 Download PDF</button>
+        <button class="btn" onclick="shareBook()">📤 Share</button>
     </div>
 
     <!-- Book Content -->
@@ -453,7 +313,7 @@
 
         <!-- COPYRIGHT PAGE -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <div class="copyright">
                     <p><strong>Why Sit Here and Die?</strong></p>
                     <p>Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7</p>
@@ -468,12 +328,12 @@
 
         <!-- DEDICATION PAGE -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <h2 style="text-align: center; margin-top: 0;">Dedication</h2>
-                <div class="dedication">
-                    <p>To the people who were told to "manage" their misery—may you move.</p>
-                    <p>To my family, who refused to let fear become our address.</p>
-                    <p>To every "gate-sitter" ready to stand up again.</p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="margin-bottom: 1.5rem; font-style: italic; font-size: 1.05rem;">To the people who were told to "manage" their misery—may you move.</p>
+                    <p style="margin-bottom: 1.5rem; font-style: italic; font-size: 1.05rem;">To my family, who refused to let fear become our address.</p>
+                    <p style="font-style: italic; font-size: 1.05rem;">To every "gate-sitter" ready to stand up again.</p>
                 </div>
             </div>
             <div class="page-number">3</div>
@@ -481,10 +341,10 @@
 
         <!-- EPIGRAPH PAGE -->
         <div class="page page-content">
-            <div class="page-content-inner">
-                <div class="epigraph" style="margin-top: 3rem;">
-                    <div class="epigraph-text">"Why sit we here until we die?"</div>
-                    <div class="epigraph-source">2 Kings 7:3 (KJV)</div>
+            <div class="page-content">
+                <div style="text-align: center; margin-top: 3rem; font-style: italic; font-size: 1.1rem;">
+                    <div style="margin-bottom: 1rem; font-size: 1.2rem;">"Why sit we here until we die?"</div>
+                    <div style="font-size: 0.95rem; color: #666;">2 Kings 7:3 (KJV)</div>
                 </div>
             </div>
             <div class="page-number">4</div>
@@ -492,7 +352,7 @@
 
         <!-- FOREWORD 1 -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <div class="foreword-header">Foreword</div>
                 <p>The Author of this Book Apostle OLUSOLA PAUL ODUNUGA is a Genuine Servant of God, dedicated to the Gospel of Christ from the Heart.</p>
                 <p>This book is a must read by all sons and daughters of God. One scripture that motivates me into action in the Bible is actually that of The Four Lepers: "Why sit we here and die?"</p>
@@ -507,7 +367,7 @@
 
         <!-- FOREWORD 2 -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <div class="foreword-header">Foreword</div>
                 <p><strong>"Why sit we here until we die?" — 2 Kings 7:3</strong></p>
                 <p>These words, spoken by four leprous men at the gate of Samaria, are a timeless call to action. Though rejected and hopeless, they made a bold decision to move—and that decision changed everything.</p>
@@ -523,9 +383,9 @@
             <div class="page-number">6</div>
         </div>
 
-        <!-- PREFACE START -->
+        <!-- PREFACE -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <h2>Preface</h2>
                 <h3>Before You Read This Book</h3>
                 <p>There are books that are written because an author has something to say. There are other books that are written because an author has something they can no longer keep silent about. This book belongs to the second category.</p>
@@ -538,7 +398,7 @@
 
         <!-- PREFACE CONTINUED -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <h3>Why I Chose This Title</h3>
                 <p>The title chose me before I chose it.</p>
                 <p>I was studying 2 Kings 7 during a particularly difficult season—one I will describe shortly—when verse three arrested me with a force I had not expected:</p>
@@ -548,10 +408,9 @@
             </div>
             <div class="page-number">8</div>
         </div>
-
-        <!-- CHAPTER 1 START -->
+        <!-- CHAPTER 1 -->
         <div class="page page-content">
-            <div class="page-content-inner">
+            <div class="page-content">
                 <div class="chapter-number">CHAPTER 1</div>
                 <h2 class="chapter-title">The Gate Mentality</h2>
                 <p>There is a kind of death that doesn't need a coffin.</p>
@@ -559,13 +418,6 @@
                 <p>It is what happens when a person sits too long at a gate.</p>
                 <p>Not a gate made of iron and wood, but a gate made of delays, excuses, fear, shame, and the quiet belief that nothing really changes—at least not for you.</p>
                 <p>And the most dangerous part is that the gate can look responsible.</p>
-            </div>
-            <div class="page-number">9</div>
-        </div>
-
-        <!-- CHAPTER 1 CONTINUED -->
-        <div class="page page-content">
-            <div class="page-content-inner">
                 <p>You tell yourself you're being wise. Careful. Patient. "Waiting on God." "Still thinking about it." "Trying to be sure." But time is moving, opportunity is moving, your strength is moving, your confidence is moving—and you are still, still, still.</p>
                 <p>Then a single question shows up like a slap and a rescue at the same time:</p>
                 <p style="margin-left: 1rem; font-style: italic; font-size: 1.1rem;">"Why sit we here until we die?" (2 Kings 7:3, KJV)</p>
@@ -573,31 +425,421 @@
                 <p>It is the question that breaks the spell of stagnation. It is the disruption that precedes deliverance. It is the confrontation wrapped in compassion that refuses to let you remain comfortable in your discomfort.</p>
                 <p>This book exists because that question found me. And I believe it will find you too.</p>
             </div>
+            <div class="page-number">9</div>
+        </div>
+
+        <!-- CHAPTER 1 CONTINUED -->
+        <div class="page page-content">
+            <div class="page-content">
+                <h3>The Four Lepers at the Gate</h3>
+                <p>Let me set the scene. Samaria is under siege. The Syrian army has surrounded the city, cutting off all supply lines. Inside the walls, people are starving. The famine is so severe that mothers are boiling their children. The king is tearing his robes in anguish. Hope has been buried.</p>
+                <p>At the gate of the city sit four men. They are lepers—rejected by society, cast out from the community, living in the margins. They have no status, no resources, no influence. They are the forgotten ones.</p>
+                <p>And they are sitting at the gate.</p>
+                <p>Why? Because that is where lepers were required to stay. Separated. Isolated. Waiting for a miracle that seemed unlikely to come.</p>
+                <p>But something shifts in these four men. In the middle of their hopelessness, a question emerges:</p>
+                <p style="margin-left: 1rem; font-style: italic;">"Why sit we here until we die? If we say, We will enter into the city, then the famine is in the city, and we shall die there: and if we sit still here, we die also. Now therefore come, that we may go and prove the host of the Syrians: peradventure he will save us alive." (2 Kings 7:3-4, KJV)</p>
+                <p>This is the moment everything changes. Not because circumstances change. Not because the siege lifts. Not because help arrives. But because four men decide they will not die sitting down.</p>
+                <p>They rise. They walk. They move toward the enemy camp—not knowing what awaits them, but knowing that staying still guarantees death.</p>
+                <p>And when they arrive at the camp, they find it empty. The Syrians have fled. Food is everywhere. Treasure is waiting. The city is saved—not by warriors, not by kings, not by the powerful—but by four rejected men who refused to sit until they died.</p>
+            </div>
             <div class="page-number">10</div>
         </div>
 
-        <!-- BACK MATTER -->
+        <!-- CHAPTER 1 CONTINUED 2 -->
         <div class="page page-content">
-            <div class="page-content-inner">
-                <h2 style="text-align: center; margin-top: 0;">About This Book</h2>
-                <p style="margin-top: 2rem;">When life is starving you—of joy, money, progress, peace—there is a question that exposes every excuse: <strong>Why sit here and die?</strong></p>
-                <p>In 2 Kings 7, four rejected lepers made one decision that saved a city: they moved. Their story is not just ancient history; it is a blueprint for spiritual renewal, career direction, academic excellence, leadership growth, and business breakthrough.</p>
-                <p>This book will help you confront stagnation, take wise risks, build discipline, steward increase, and turn your testimony into impact—without denying reality and without losing faith.</p>
-                <p style="margin-top: 2rem; text-align: center; font-style: italic;">Rise. Walk. The camp is waiting.</p>
+            <div class="page-content">
+                <h3>Your Gate</h3>
+                <p>Now, let me ask you directly: Where is your gate?</p>
+                <p>We all have them. Places where we have sat too long. Positions where we have become comfortable in our discomfort. Patterns where we have mistaken stagnation for stability.</p>
+                <p>The gate of fear—where you know what you should do but are paralyzed by what might go wrong.</p>
+                <p>The gate of bitterness—where past rejection has convinced you that future movement is useless.</p>
+                <p>The gate of comfort—where good enough has become the enemy of God's best.</p>
+                <p>The gate of unbelief—where you have decided what God cannot do before giving Him the chance to do it.</p>
+                <p>The gate of isolation—where you suffer alone rather than risk vulnerability.</p>
+                <p>The gate of pride—where you would rather look strong than receive help.</p>
+                <p>The gate of procrastination—where you tell yourself you will move tomorrow, next month, next year.</p>
+                <p>Which gate holds you?</p>
+                <p>This book is written for you. Not to condemn you for sitting. But to awaken you to the possibility that you do not have to sit forever. That the question the lepers asked—"Why sit we here until we die?"—is a question God is asking you right now.</p>
+                <p>And the answer is not complicated. The answer is movement.</p>
             </div>
             <div class="page-number">11</div>
         </div>
 
-        <!-- AUTHOR PAGE -->
+        <!-- CHAPTER 1 CONTINUED 3 -->
         <div class="page page-content">
-            <div class="page-content-inner">
-                <h2 style="text-align: center; margin-top: 0;">About the Author</h2>
-                <p style="margin-top: 2rem; text-align: center; font-style: italic;">Apostle OLUSHOLA O. PAUL</p>
-                <p style="margin-top: 2rem;">Lead Pastor, Ruach Apostolic Center, Lagos, Nigeria</p>
-                <p>Apostle Olushola Odunuga Paul is a dedicated servant of God committed to the Gospel of Christ. Through ministry, mentorship, and practical wisdom, he helps believers move from stagnation to significance.</p>
-                <p>This book represents years of personal struggle, spiritual growth, and the principles that transformed his life and the lives of countless others.</p>
+            <div class="page-content">
+                <h3>The Movement Assignment</h3>
+                <p>Before you move to the next chapter, I want you to do something. Not tomorrow. Not when you feel ready. Now.</p>
+                <p>Identify your gate. Write it down. Be specific. Not "I'm stuck." But "I'm stuck at the gate of fear because I'm afraid to start my business." Not "I'm waiting." But "I'm waiting at the gate of bitterness because my ex hurt me and I don't believe love can work."</p>
+                <p>Name your gate. Own it. Acknowledge it.</p>
+                <p>Then ask yourself: What would it look like to rise from this gate? Not to solve everything. Not to have perfect confidence. Just to take one step. One conversation. One application. One risk.</p>
+                <p>Write that down too.</p>
+                <p>Because the lepers did not wait for perfect conditions. They did not wait until the siege lifted. They did not wait until they were healed of their leprosy. They simply rose and walked.</p>
+                <p>And everything changed.</p>
+            </div>
+            <div class="page-content">
+                <h3>A Prayer for Chapter One</h3>
+                <p style="font-style: italic;">Lord, I confess that I have been sitting at a gate. I have told myself I was being patient, but I was being passive. I have called it waiting on You, but I was waiting on circumstances. I have made peace with stagnation and called it stability.</p>
+                <p style="font-style: italic;">Today, I hear the question: Why sit here until I die? And I know the answer is not to sit. The answer is to rise. Give me courage. Not the absence of fear, but the presence of faith. Not the removal of obstacles, but the willingness to walk toward them anyway. Let me be like the lepers—rejected, hopeless, but willing to move. In Jesus' name, amen.</p>
+            </div>
+            <div class="page-content">
+                <h3>Closing Line</h3>
+                <p><strong>The gate was never meant to be your home—it was meant to be the place you walk through on your way to the camp.</strong></p>
             </div>
             <div class="page-number">12</div>
+        </div>
+        <!-- CHAPTER 2 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 2</div>
+                <h2 class="chapter-title">Name Your Famine</h2>
+                <p>Before the lepers could move, they had to be honest about their situation.</p>
+                <p>They were not merely uncomfortable. They were not slightly inconvenienced. They were starving. Literally. The famine was not theoretical—it was real, present, and deadly.</p>
+                <p>And they named it.</p>
+                <p>"Why sit we here until we die?" The question itself is an acknowledgment. They are not pretending. They are not minimizing. They are not telling themselves stories about how things are not that bad. They are looking reality in the face and saying: This is famine. This is death. This is unacceptable.</p>
+                <p>Many of us never move because we never name our famine. We live in denial. We tell ourselves stories. We minimize. We compare ourselves to others who have it worse. We convince ourselves that we should be grateful for what we have, even if what we have is slowly killing us.</p>
+                <p>But breakthrough begins with honesty.</p>
+                <p>What is your famine? Not theoretically. Specifically. What are you starving for? What lack is defining your life? What absence is shaping your days?</p>
+                <p>For some, it is financial famine. You are working hard but never getting ahead. You are earning but never building. You are surviving but never thriving. The money comes in and goes out, and you are always at the edge of crisis.</p>
+                <p>For others, it is relational famine. You are lonely in a crowded room. You are married but feel single. You have family but feel abandoned. You are surrounded by people but starving for genuine connection.</p>
+                <p>For others, it is spiritual famine. You go through the motions of faith but feel empty. You pray but hear silence. You read Scripture but feel disconnected. You attend church but sense absence.</p>
+                <p>For others, it is professional famine. You are qualified but overlooked. You are working but unfulfilled. You are employed but feel purposeless. You are busy but not building anything that matters.</p>
+                <p>For others, it is health famine. Your body is failing. Your energy is depleted. Your strength is gone. You are alive but not living.</p>
+                <p>Name it. Whatever it is, name it. Do not minimize it. Do not spiritualize it away. Do not compare it to someone else's famine. Your famine is real. Your lack is real. Your hunger is real.</p>
+                <p>And naming it is the first step toward leaving it.</p>
+            </div>
+            <div class="page-number">13</div>
+        </div>
+
+        <!-- CHAPTER 3 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 3</div>
+                <h2 class="chapter-title">The Risk of Rising</h2>
+                <p>The lepers faced a choice that every person at a gate must face: the risk of rising.</p>
+                <p>They could stay. It was familiar. It was known. They would die, yes, but at least they would die in a place they understood.</p>
+                <p>Or they could rise and walk toward the enemy camp. They might die there too. But at least they would die trying. At least they would die moving. At least they would die having done something.</p>
+                <p>This is the choice: the safety of slow death or the risk of possible life.</p>
+                <p>Most people choose the safety. Because the risk is real. When you rise from your gate, you might fail. You might be rejected. You might lose what little you have. You might discover that your hopes were foolish. You might be humiliated.</p>
+                <p>But here is what the lepers understood: staying guarantees death. Rising at least opens the possibility of life.</p>
+                <p>This chapter is about taking the risk. Not recklessly. Not foolishly. But intentionally. Prayerfully. With eyes open to both the danger and the possibility.</p>
+                <p>Because the camp is waiting. The provision is waiting. The breakthrough is waiting. But it will not come to you at the gate. You have to rise and walk toward it.</p>
+            </div>
+            <div class="page-number">14</div>
+        </div>
+
+        <!-- CHAPTER 4 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 4</div>
+                <h2 class="chapter-title">Faith in the Darkness</h2>
+                <p>The lepers walked toward the Syrian camp in twilight. Not in daylight when they could see clearly. Not in full darkness when they could hide. But in that in-between time when visibility is limited and danger feels close.</p>
+                <p>This is when faith is tested most severely. Not when everything is clear. Not when the path is illuminated. But when you can barely see where you are going, and you have to trust that God is leading you anyway.</p>
+                <p>Faith is not the absence of fear. Faith is moving despite fear. Faith is not certainty about the outcome. Faith is trust in the One who knows the outcome.</p>
+                <p>The lepers did not know what awaited them. They did not have a guarantee. They did not have a plan B. They simply rose and walked in faith.</p>
+                <p>And when they arrived at the camp, they found it empty. The enemy had fled. The provision was waiting. Everything they needed was there.</p>
+                <p>But they would never have found it if they had not walked in faith through the darkness.</p>
+            </div>
+            <div class="page-number">15</div>
+        </div>
+
+        <!-- CHAPTER 5 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 5</div>
+                <h2 class="chapter-title">The Provision Is Already There</h2>
+                <p>When the lepers arrived at the Syrian camp, they found something remarkable: the enemy had fled, but the provision remained.</p>
+                <p>The tents were intact. The food was untouched. The treasure was waiting. Everything the city needed was already there. The lepers did not have to create it. They did not have to earn it. They did not have to negotiate for it. They simply had to discover it.</p>
+                <p>This is a profound truth: the provision you need is often already in place. The job you need is already posted. The person you need to meet is already in your circle. The opportunity you need is already available. The resource you need is already waiting.</p>
+                <p>But you will never find it if you do not rise from your gate and walk toward it.</p>
+                <p>God does not always create provision in response to your movement. Often, He has already prepared it. Your movement simply positions you to discover what He has already provided.</p>
+                <p>This changes everything. It means you are not asking God to do something new. You are asking Him to reveal what He has already done. You are not hoping for a miracle. You are walking toward the miracle that is already waiting.</p>
+            </div>
+            <div class="page-number">16</div>
+        </div>
+
+        <!-- CHAPTER 6 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 6</div>
+                <h2 class="chapter-title">From Discovery to Declaration</h2>
+                <p>The lepers could have stopped after discovering the camp. They could have eaten their fill, gathered treasure, and lived comfortably in secret abundance while the city starved.</p>
+                <p>But they did not.</p>
+                <p>Instead, they made a decision that changed everything: they went back to tell the city.</p>
+                <p>"Then they said one to another, We do not well: this day is a day of good tidings, and we hold our peace: if we tarry till the morning light, some mischief will come upon us: now therefore come, that we may go and tell the king's household." (2 Kings 7:9, KJV)</p>
+                <p>They recognized that good news is not meant to be hoarded. Blessing is not meant to be private. Discovery is not meant to be secret.</p>
+                <p>This is the final step in the journey from the gate to the camp: taking what you have discovered and sharing it with others.</p>
+                <p>Because your breakthrough is not just for you. Your discovery is not just for your benefit. Your provision is not just for your consumption. It is meant to flow through you to others.</p>
+                <p>This is the principle of multiplication. What you keep multiplies in limitation. What you share multiplies in impact.</p>
+                <p>The lepers's discovery saved a city. Not because they were powerful. Not because they were important. But because they were willing to share what they had found.</p>
+                <p>What will you share? What discovery will you declare? What provision will you distribute? What breakthrough will you use to bless others?</p>
+            </div>
+            <div class="page-number">17</div>
+        </div>
+        <!-- CHAPTER 7 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 7</div>
+                <h2 class="chapter-title">Night Moves: The Power of Twilight Discipline</h2>
+                <p>There is a kind of work that happens when no one is watching. When the crowds have gone home. When the applause has faded. When the only audience is God and your own conscience.</p>
+                <p>This is twilight work. Night moves. The hidden hours that build what daylight reveals.</p>
+                <p>The lepers did not wait for perfect conditions. They did not wait for daylight. They did not wait for an official announcement. They rose in twilight—that in-between time when most people are sleeping, when the world is quiet, when movement is less visible but more possible.</p>
+                <p>This chapter is about the power of those hidden hours. Because most breakthroughs are not born in moments of public visibility. They are born in seasons of private discipline. They are built in the hours no one sees. They are constructed in the twilight when you are alone with your commitment.</p>
+                <p>The athlete who trains when no trophy is in sight. The student who studies when no one is checking. The entrepreneur who builds when no one is investing. The believer who prays when God seems silent. These are all twilight activities. They require faith because the payoff is not immediate. They require discipline because no external pressure enforces them. They require vision because you must see what is not yet visible.</p>
+                <p>The lepers made their night move. They rose in twilight. And when they arrived at the camp, they found that God had already gone ahead of them. The enemy had fled. The provision was waiting. Everything they needed was there—because they had been willing to move when no one was watching.</p>
+                <p>What night moves are you called to make? What twilight discipline will build your breakthrough? What hidden hours will construct your future?</p>
+            </div>
+            <div class="page-number">18</div>
+        </div>
+
+        <!-- CHAPTER 8 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 8</div>
+                <h2 class="chapter-title">God Can Make the Enemy Hear Something</h2>
+                <p>Some battles will never be won by your effort alone.</p>
+                <p>You can prepare perfectly. You can pray fervently. You can move faithfully. And still, the wall does not fall. The door does not open. The enemy does not budge.</p>
+                <p>Not because you did something wrong. But because some battles require an intervention that only God can provide.</p>
+                <p>The four lepers walked toward the Syrian camp not knowing what awaited them. They had counted the cost. They had taken the risk. They had made the night move. But when they arrived, they found something they could never have produced:</p>
+                <p style="margin-left: 1rem; font-style: italic;">"For the Lord had made the host of the Syrians to hear a noise of chariots, and a noise of horses, even the noise of a great host: and they said one to another, Lo, the king of Israel hath hired against us the kings of the Hittites, and the kings of the Egyptians, to come upon us. Wherefore they arose and fled in the twilight, and left their tents, and their horses, and their asses, even the camp as it was, and fled for their life." (2 Kings 7:6-7, KJV)</p>
+                <p>The Lord had made them hear. The Syrian army—tens of thousands of trained soldiers—fled in terror from a sound. Not from a real army. Not from actual chariots. From a sound. A sound God created. A sound the lepers did not produce. A sound that changed everything.</p>
+                <p>This is the part of breakthrough that you cannot manufacture: the divine intervention that changes what your enemy perceives. When you have done all you can do, God can do what only He can do.</p>
+            </div>
+            <div class="page-number">19</div>
+        </div>
+
+        <!-- CHAPTER 9 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 9</div>
+                <h2 class="chapter-title">The Limits of Human Effort</h2>
+                <p>This chapter requires mature reading. It does not dismiss human effort. The previous chapters have been explicit: you must name your famine, take risks, make night moves, walk in faith. God meets obedience with provision.</p>
+                <p>But there are moments when obedience has done all it can—and something more is needed.</p>
+                <p>David could fight Goliath with skill and courage. But he needed God to guide the stone. Moses could stretch his rod over the sea. But he needed God to part the waters. Joshua could march around Jericho. But he needed God to collapse the walls. The lepers could walk to the camp. But they needed God to clear the camp.</p>
+                <p>In each case, human action and divine intervention danced together. Neither alone would have been sufficient. The people acted. God intervened. The breakthrough came.</p>
+                <p>You must do what you can do. And then trust God to do what only He can do.</p>
+                <p>The mature believer holds both truths simultaneously:</p>
+                <p style="margin-left: 1rem;">I will do everything I can do.<br>I will trust God to do what only He can do.</p>
+                <p>The lepers walked. God cleared the camp. Both were necessary.</p>
+            </div>
+            <div class="page-number">20</div>
+        </div>
+
+        <!-- CHAPTER 10 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 10</div>
+                <h2 class="chapter-title">Stewardship: Don't Eat Your Future</h2>
+                <p>There is a moment after every breakthrough when a silent test begins.</p>
+                <p>It is not announced with trumpets. No prophet stands at your door to warn you. No voice from heaven thunders instructions. The test simply begins—quietly, subtly, in the choices you make when no one is grading you.</p>
+                <p>The test is this: What will you do with what you have received?</p>
+                <p>Because breakthrough is not the end of the story. It is the beginning of a new chapter—one where the same God who delivered you from famine now watches to see if you will become a steward or a consumer, a builder or a waster, a channel or a dead end.</p>
+                <p>The four lepers passed their first test when they rose in twilight. They passed their second test when they walked toward the camp. They passed their third test when they entered the first tent and ate. But the fourth test was waiting:</p>
+                <p style="margin-left: 1rem; font-style: italic;">"And they went into one tent, and did eat and drink, and carried thence silver, and gold, and raiment, and went and hid it…" (2 Kings 7:8, KJV)</p>
+                <p>At first glance, this seems reasonable. They were starving men who had found abundance. Of course they ate. Of course they took valuables. Of course they hid some for later. Who could blame them?</p>
+                <p>But Scripture does not leave them there. It shows them pausing, reflecting, and making a critical self-correction:</p>
+                <p style="margin-left: 1rem; font-style: italic;">"Then they said one to another, We do not well: this day is a day of good tidings, and we hold our peace: if we tarry till the morning light, some mischief will come upon us: now therefore come, that we may go and tell the king's household." (2 Kings 7:9, KJV)</p>
+                <p>"We do not well."</p>
+                <p>In the midst of abundance, they recognized a danger. They were about to fail the stewardship test—not by losing their provision, but by hoarding it. Not by being poor, but by being selfish. Not by lacking food, but by lacking character.</p>
+                <p>This chapter is about what happens after the breakthrough. Because many people who survive the famine are destroyed by the feast.</p>
+            </div>
+            <div class="page-number">21</div>
+        </div>
+
+        <!-- CHAPTER 11 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 11</div>
+                <h2 class="chapter-title">Good News Is Not Private Property</h2>
+                <p>There is a sin that rarely makes it into sermons. It does not appear on lists of "things to avoid." It does not carry the stigma of adultery, theft, or murder. Yet it may be one of the most destructive sins in the kingdom of God.</p>
+                <p>The sin of silence.</p>
+                <p>The sin of receiving and not releasing. Of knowing and not telling. Of being rescued and refusing to rescue. Of finding food in the camp while a city starves behind the walls.</p>
+                <p>The four lepers had escaped death. They had found abundance. They had eaten, drunk, and secured treasure. But in the middle of their private celebration, a conviction struck:</p>
+                <p style="margin-left: 1rem; font-style: italic;">"Then they said one to another, We do not well: this day is a day of good tidings, and we hold our peace: if we tarry till the morning light, some mischief will come upon us: now therefore come, that we may go and tell the king's household." (2 Kings 7:9, KJV)</p>
+                <p>"We do not well… we hold our peace."</p>
+                <p>They recognized that their silence was sin. Their private possession of good news while others suffered was morally wrong. Their decision to enjoy alone what was meant to save many was a failure of character.</p>
+                <p>This chapter is about the responsibility that comes with every blessing. Because what you have received is not only for you. If God has delivered you, healed you, lifted you, taught you, freed you—there is someone still in the famine who needs to hear that the siege is over.</p>
+                <p>Good news is not private property.</p>
+            </div>
+            <div class="page-number">22</div>
+        </div>
+
+        <!-- CHAPTER 12 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 12</div>
+                <h2 class="chapter-title">Credibility and Communication: Carrying the Message Well</h2>
+                <p>Having a message is not enough. You must deliver it in a way that can be received.</p>
+                <p>The lepers had extraordinary news: the enemy has fled, the siege is over, there is food in abundance. But delivering that news required more than enthusiasm. It required credibility. It required communication. It required understanding how to speak truth in a way that would be believed.</p>
+                <p style="margin-left: 1rem; font-style: italic;">"So they came and called unto the porter of the city: and they told them, saying, We came to the camp of the Syrians, and, behold, there was no man there, neither voice of man, but horses tied, and asses tied, and the tents as they were. And he called the porters; and they told it to the king's house within." (2 Kings 7:10-11, KJV)</p>
+                <p>Notice the process:</p>
+                <p>They went to the gatekeepers (porters). They reported what they had observed—facts, not embellishments. The gatekeepers escalated the message to the king's house. The message traveled through proper channels. It was delivered with specificity. It reached the decision-makers who could act on it.</p>
+                <p>This chapter is about how to carry the message God gives you in a way that actually lands. Because many well-meaning people sabotage their own message through poor delivery, damaged credibility, or communication that does not fit the audience.</p>
+                <p>The message vs. the messenger: Here is a hard truth: people often evaluate your message based on their perception of you. This is not how it should be in a perfect world. Truth should be truth regardless of who speaks it. But we do not live in a perfect world. In this world, credibility matters. Character matters. Reputation matters. How you have lived affects how your words are received.</p>
+                <p>The lepers had a credibility problem. They were outcasts. They were unclean. They had no social standing. If anyone in Samaria should have been dismissed, it was them. Yet their message got through. How?</p>
+                <p>They did not exaggerate. They did not say, "The camp is full of gold and treasure beyond imagination!" They said, "No man there… horses tied, asses tied, tents as they were." Observation. Fact. Description. When you deliver good news, do not oversell it. Let the truth speak for itself. Exaggeration creates suspicion.</p>
+                <p>They went through proper channels. They did not sneak into the city and start shouting. They went to the gatekeepers—the people whose job it was to receive and escalate information. They worked within the system. When you carry a message, consider who needs to hear it and through what channel. Going around proper structures can undermine even a true message.</p>
+                <p>They spoke humbly, not arrogantly. They did not say, "We are the saviors of this city!" They simply reported what they had found. The focus was on the news, not on themselves. When you share what God has done, keep yourself small and the message big. Self-promotion distorts testimony.</p>
+            </div>
+            <div class="page-number">23</div>
+        </div>
+        <!-- CHAPTER 13 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 13</div>
+                <h2 class="chapter-title">The Economy Can Turn Overnight</h2>
+                <p>There is a speed at which God moves that the human mind cannot comprehend. We are trained to think in increments. We are taught that progress is gradual. We measure change in percentages and project growth in linear charts. We have been conditioned to expect that if something took years to break, it will take years to fix.</p>
+                <p>Then God interrupts our reasonable expectations with something unreasonable.</p>
+                <p>In a single night, an economy that had collapsed beyond recognition was completely restored. Prices that had reached obscene heights crashed to normal. Abundance replaced scarcity. Life replaced death. The impossible became reality before anyone could explain how.</p>
+                <p style="margin-left: 1rem; font-style: italic;">"So a measure of fine flour was sold for a shekel, and two measures of barley for a shekel, according to the word of the LORD." (2 Kings 7:16, KJV)</p>
+                <p>According to the word of the LORD. Not according to economic principles. Not according to supply chain recovery. Not according to gradual market correction. According to the word of the LORD.</p>
+                <p>This chapter is about God's capacity for suddenness. It is about His ability to do in a moment what would take humans a lifetime. It is about the danger of measuring divine potential by human timelines. And it is about positioning yourself to receive what you cannot predict.</p>
+                <p>Because when God decides to turn your economy, no siege can stand, no famine can persist, and no natural limitation can resist.</p>
+                <p>Your financial famine can end with one contract, one inheritance, one idea, one connection. Your career drought can end with one phone call, one interview, one recommendation. Your relational breakdown can end with one conversation, one apology, one divine intervention. Your spiritual wilderness can end with one encounter, one revelation, one moment of breakthrough.</p>
+                <p>The economy can turn overnight.</p>
+            </div>
+            <div class="page-number">24</div>
+        </div>
+
+        <!-- CHAPTER 14 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 14</div>
+                <h2 class="chapter-title">Unbelief Has Consequences</h2>
+                <p>There is a tragedy woven into the triumph of 2 Kings 7. While a city was saved, one man was destroyed. While thousands ate, one man was trampled. While prices collapsed and abundance flowed, one life was crushed under the weight of his own skepticism.</p>
+                <p>The royal officer who mocked Elisha's prophecy did not merely miss the blessing—he was killed by the very crowd rushing to receive it.</p>
+                <p style="margin-left: 1rem; font-style: italic;">"And so it fell out unto him: for the people trode upon him in the gate, and he died." (2 Kings 7:20, KJV)</p>
+                <p>This is not a peripheral detail. Scripture dedicates multiple verses to this man's fate. His story is told, repeated, and emphasized as if to ensure we do not miss the warning: Unbelief has consequences.</p>
+                <p>Not just spiritual consequences in some distant future. Real consequences. Tangible consequences. Consequences that can cost you the very thing you needed most.</p>
+                <p>This chapter examines what happens when we respond to God's word with doubt, mockery, or dismissal. It is a sober chapter—but a necessary one. Because some of us have been living on the edge of skepticism, not realizing how close we are to the gate where trampling happens.</p>
+                <p>The officer was "a lord on whose hand the king leaned." This was no ordinary citizen. He was a trusted advisor, a man of influence, someone close to power. Yet none of these saved him. Position does not protect against unbelief. Access does not guarantee faith. Proximity to power does not mean proximity to God.</p>
+                <p>When Elisha prophesied the turnaround, the officer responded with mockery: "Behold, if the LORD would make windows in heaven, might this thing be?" He was not expressing doubt—he was declaring impossibility. He was not asking for help—he was announcing limits. He was not struggling with faith—he was rejecting it.</p>
+                <p>And it cost him everything.</p>
+            </div>
+            <div class="page-number">25</div>
+        </div>
+
+        <!-- CHAPTER 15 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 15</div>
+                <h2 class="chapter-title">When You See But Cannot Taste</h2>
+                <p>There is a tragedy worse than never seeing a breakthrough at all: seeing it, being close to it, almost touching it—and still missing it.</p>
+                <p>The royal officer experienced this particular agony. He was not absent when abundance came to Samaria. He was not in a distant land, unaware of the blessing. He was there. At the gate. In the middle of the action. Watching the very fulfillment of what he had doubted.</p>
+                <p>He saw the prices collapse. He saw the food flow. He saw the starving city become a feasting city. But he did not taste. He was trampled by the very crowd running to receive what he had mocked.</p>
+                <p>This chapter explores one of the most painful possibilities in human experience: proximity without participation, visibility without access, nearness without possession.</p>
+                <p>Some of you are not far from your breakthrough. You can almost see it. You are close enough to describe it in detail. But something is keeping you from tasting it.</p>
+                <p>What causes someone to be near blessing but unable to receive it? Several factors emerge:</p>
+                <p>Unbelief that disqualifies. The officer's mockery created his disqualification. His words sealed his fate before the events unfolded. Sometimes we speak ourselves out of blessings before they arrive.</p>
+                <p>Unpreparedness when the moment comes. The five foolish virgins saw the bridegroom coming—but they had no oil. When the door opened, they were not ready. Preparation is not optional; it is the entry fee.</p>
+                <p>Wrong positioning. The officer was assigned to the gate—a place of control and authority, but also a place where rushing crowds would trample. Sometimes our position, while prestigious, puts us in the wrong place at the wrong time.</p>
+                <p>Offense that blinds. Some people cannot receive from those they have judged or resented. The officer had disrespected Elisha. His contempt for the messenger affected his reception of the message.</p>
+                <p>Pride that cannot receive. Some blessings require humility to receive. The lepers were willing to fall at the feet of enemies, hoping for mercy. They had nothing to lose. The officer had status to protect. His pride kept him elevated—and exposed.</p>
+            </div>
+            <div class="page-number">26</div>
+        </div>
+
+        <!-- CHAPTER 16 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 16</div>
+                <h2 class="chapter-title">From Miracle to Model: Building What Lasts</h2>
+                <p>Miracles are spectacular. They interrupt the ordinary. They defy explanation. They become stories we tell for generations. But miracles are also momentary.</p>
+                <p>The Red Sea parted—then closed. The manna fell—then stopped. Lazarus was raised—then died again eventually. The lepers found the camp—but they still had to figure out what to do next.</p>
+                <p>The question that follows every miracle is this: What system will sustain what the moment delivered?</p>
+                <p>Because miracles create openings, but models create permanence. Miracles launch you into a new season, but models determine whether you survive that season. Miracles are the seed; models are the soil, water, and cultivation that turn seeds into harvests.</p>
+                <p>This chapter is about building sustainable structures around supernatural interventions. It is about ensuring that the breakthrough you experience does not become a one-time story but a permanent transformation.</p>
+                <p>Imagine Samaria the day after the siege lifted. The Syrian camp had been plundered. The prices had collapsed. The starving had eaten. The city was saved. But then what? The same people who had been dying were now alive. But their economy had been shattered. Their supply chains had been destroyed. Their social fabric had been torn by the horrors of famine. One miraculous day did not automatically rebuild everything the siege had broken.</p>
+                <p>They needed models. Systems. Structures. Plans. The miracle gave them opportunity. Models would determine whether they capitalized on it.</p>
+                <p>A model is a repeatable system for managing a particular area of life. Models include financial models (budgets, savings systems, investment structures), time models (daily schedules, weekly rhythms, annual planning), relational models (communication habits, conflict resolution processes), spiritual models (daily devotion habits, Sabbath practices), and professional models (skill development plans, networking practices).</p>
+                <p>Models turn breakthroughs into baselines. They make the exceptional become normal.</p>
+            </div>
+            <div class="page-number">27</div>
+        </div>
+
+        <!-- CHAPTER 17 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 17</div>
+                <h2 class="chapter-title">Legacy Leadership: Raising Movers</h2>
+                <p>There is a final test for everyone who has left the gate. It is not whether you found provision in the camp. It is not whether you managed that provision wisely. It is not even whether you shared the news with others.</p>
+                <p>The final test is this: Did you raise others who will do what you did?</p>
+                <p>The lepers saved a city. But the text does not tell us whether they trained anyone. It does not record whether the next generation learned from their example. It does not say whether their courage was institutionalized or merely celebrated.</p>
+                <p>This chapter challenges you to think beyond your own breakthrough to the breakthroughs of those who come after you. Because legacy is not what you accomplish. Legacy is what continues after you stop.</p>
+                <p>From the beginning, God's design has been multiplication. To Adam and Eve: "Be fruitful, and multiply." To Abraham: "I will make of thee a great nation." To the disciples: "Go ye therefore, and teach all nations." To Timothy from Paul: "And the things that thou hast heard of me among many witnesses, the same commit thou to faithful men, who shall be able to teach others also."</p>
+                <p>Notice the chain in Paul's instruction: Paul taught Timothy. Timothy was to commit to faithful men. Those men were to teach others also. Four generations in one verse: Paul → Timothy → Faithful men → Others. This is the multiplication mandate. You are not successful until others can do what you do. You have not truly led until those you led can lead others.</p>
+                <p>Legacy leaders operate with a different mindset than ordinary leaders. They think generationally. They invest in people, not just projects. They share platform and credit. They tolerate the messiness of development. They plan their departure.</p>
+                <p>What legacy are you building? Who is walking behind you? Who is learning from your journey? Who is being prepared by your investment? Who will continue what you have started?</p>
+            </div>
+            <div class="page-number">28</div>
+        </div>
+
+        <!-- CHAPTER 18 -->
+        <div class="page page-content">
+            <div class="page-content">
+                <div class="chapter-number">CHAPTER 18</div>
+                <h2 class="chapter-title">The City Must Hear: Impact Beyond Yourself</h2>
+                <p>The lepers could have stopped at any point. They could have stopped at the first tent—eating until satisfied, hiding treasure, returning to the gate to die comfortably with full bellies. They could have stopped after realizing the camp was empty—exploring alone, keeping the secret, enjoying private abundance while the city starved.</p>
+                <p>But they did not stop.</p>
+                <p>"Then they said one to another, We do not well: this day is a day of good tidings, and we hold our peace… now therefore come, that we may go and tell the king's household." (2 Kings 7:9, KJV)</p>
+                <p>They understood something that separates the selfish from the significant: good news is not good if it does not travel.</p>
+                <p>This chapter is about impact—about ensuring that what God has done in your life does not remain personal property but becomes public blessing.</p>
+                <p>Modern culture celebrates self-actualization. Find yourself. Build yourself. Express yourself. The individual is the center of the universe. This philosophy has infected even the church. We pursue personal breakthrough, personal blessing, personal growth—as if God's work in us is meant to terminate in us.</p>
+                <p>But Scripture tells a different story. Abraham was blessed—"to be a blessing." Israel was chosen—to be "a kingdom of priests, and an holy nation"—a mediatorial role, standing between God and the nations. The church is gifted—"for the perfecting of the saints, for the work of the ministry, for the edifying of the body of Christ"—gifts for others, not for hoarding.</p>
+                <p>The lepers' conviction was deeply biblical: holding good news while others suffer is wrong. "We do not well."</p>
+                <p>What good are we holding while others starve? What testimony are we withholding? What skill are we hoarding? What resource are we keeping private? What breakthrough are we celebrating alone?</p>
+                <p>The ultimate proof that you have truly left the gate is not that you found abundance—it is that others found abundance through you.</p>
+            </div>
+            <div class="page-number">29</div>
+        </div>
+
+        <!-- CONCLUSION -->
+        <div class="page page-content">
+            <div class="page-content">
+                <h2>Conclusion: Leaving the Gate Forever</h2>
+                <p>You have journeyed through these pages with four unlikely teachers: nameless, sick, rejected men who asked a question that changed a city.</p>
+                <p>"Why sit we here until we die?"</p>
+                <p>That question echoed through chapters about famine and faith, risk and readiness, twilight moves and sudden turnarounds, stewardship and succession, credibility and communication, miracles and models, legacy and impact.</p>
+                <p>Now the question returns to you—not as literature but as life.</p>
+                <p>Where is your gate? We all have them. Places where we have sat too long. Positions where we have become comfortable in our discomfort. Patterns where we have mistaken stagnation for stability.</p>
+                <p>The gate of fear—where we know what we should do but are paralyzed by what might go wrong. The gate of bitterness—where past rejection has convinced us that future movement is useless. The gate of comfort—where good enough has become the enemy of God's best. The gate of unbelief—where we have decided what God cannot do before giving Him the chance to do it. The gate of isolation—where we suffer alone rather than risk vulnerability. The gate of pride—where we would rather look strong than receive help.</p>
+                <p>Which gate holds you?</p>
+                <p>The lepers made a choice. They could have stayed. No one would have blamed them. They were sick, after all. Society had rejected them. The odds were against them. Every reasonable argument favored remaining where they were. But they chose movement. And movement changed everything.</p>
+                <p>Not just for them—for a city. Not just for a day—for history. Not just for survival—for a story that has been told for three thousand years and is still changing lives.</p>
+                <p>Your movement matters too. The breakthrough you experience will not be for you alone. The abundance you discover will not be for your consumption only. The lessons you learn will not end with your generation.</p>
+                <p>You are part of a larger story—a story God is writing across nations and centuries, through ordinary people who refuse to die sitting down.</p>
+            </div>
+            <div class="page-number">30</div>
+        </div>
+
+        <!-- FINAL WORDS -->
+        <div class="page page-content">
+            <div class="page-content">
+                <h3>A Final Word</h3>
+                <p>As you close this book, I want to speak directly to your spirit.</p>
+                <p>If you have been sitting at a gate, today can be your twilight rising. You do not need to have it all figured out. You do not need perfect confidence. You do not need guaranteed outcomes. You need only to rise and move toward what God has been speaking to you.</p>
+                <p>Take the step. Make the call. Send the application. Have the conversation. Start the business. End the toxic relationship. Return to the prayer closet. Forgive the offense. Believe the promise.</p>
+                <p>Movement is not perfection. Movement is obedience. And obedience, however imperfect, is what God honors.</p>
+                <p>The Syrian camp is already empty. The provision is already waiting. The enemy has already fled. You just have not arrived yet. But you will. If you rise. If you walk. If you refuse to sit until you die.</p>
+                <p style="margin-top: 2rem; font-style: italic;">Lord, I have heard the question. I have felt its weight. I know where I have been sitting. Today, I choose to rise. I rise from fear, into faith. I rise from bitterness, into blessing. I rise from comfort, into calling. I rise from unbelief, into expectation. I rise from isolation, into community. I rise from pride, into humility. I do not know everything that awaits me. But I know the One who has gone before me. I trust that as I move, You will meet me. Let my rising become a story that encourages others. Let my movement become a model for those watching. Let my discovery become a blessing I share with a starving city. I will not die sitting at this gate. In Jesus' name, amen.</p>
+                <p style="margin-top: 2rem; font-style: italic; font-size: 1.1rem;"><strong>The gate was never meant to be your home—rise, walk, and discover that the camp has been waiting for you all along.</strong></p>
+            </div>
+            <div class="page-number">31</div>
+        </div>
+
+        <!-- ABOUT THE AUTHOR -->
+        <div class="page page-content">
+            <div class="page-content">
+                <h2 style="text-align: center; margin-top: 0;">About the Author</h2>
+                <p style="margin-top: 2rem; text-align: center; font-style: italic; font-size: 1.1rem;">Apostle OLUSHOLA O. PAUL</p>
+                <p style="margin-top: 2rem; text-align: center;"><strong>Lead Pastor, Ruach Apostolic Center, Lagos, Nigeria</strong></p>
+                <p>Apostle Olushola Odunuga Paul is a dedicated servant of God committed to the Gospel of Christ. Through ministry, mentorship, and practical wisdom, he helps believers move from stagnation to significance.</p>
+                <p>This book represents years of personal struggle, spiritual growth, and the principles that transformed his life and the lives of countless others.</p>
+                <p style="margin-top: 2rem; text-align: center; font-style: italic;">"I wrote this book for the person I used to be—and sometimes still am. For the one who knows there is more but does not know how to reach it. For the one who has heard promises but struggles to believe them. For the one who has been sitting so long that standing feels foreign. For the one who needs someone to say, with compassion but without compromise: 'Get up.'</p>
+                <p style="text-align: center; font-style: italic;">My prayer is simple: that by the time you finish this book, something in you will have shifted. That the gate you have been calling home will become the door you walk through. That the question of the lepers will become your question—and that your answer will be movement.</p>
+                <p style="text-align: center; font-style: italic;">Rise. Walk. Discover. The camp is waiting."</p>
+            </div>
+            <div class="page-number">32</div>
         </div>
     </div>
 
@@ -605,25 +847,20 @@
     <footer>
         <p><strong>Why Sit Here and Die?</strong> by Olushola Odunuga Paul</p>
         <p>© 2026 All Rights Reserved</p>
-        <p>Repository: <a href="https://github.com/faithinspire/WHY-SIT-HERE" style="color: #27ae60; text-decoration: none;">github.com/faithinspire/WHY-SIT-HERE</a></p>
+        <p>Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7</p>
     </footer>
 
     <script>
         function downloadPDF() {
-            // Create a new window for printing
-            const printWindow = window.open('', '', 'width=800,height=600');
-            printWindow.document.write(document.documentElement.innerHTML);
-            printWindow.document.close();
-            
-            // Trigger print dialog
-            setTimeout(() => {
-                printWindow.print();
-                printWindow.close();
-            }, 250);
-        }
-
-        function printBook() {
-            window.print();
+            const element = document.querySelector('.book-container');
+            const opt = {
+                margin: 0,
+                filename: 'Why-Sit-Here-and-Die.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).save();
         }
 
         function shareBook() {
@@ -634,18 +871,14 @@
                     url: window.location.href
                 }).catch(err => console.log('Error sharing:', err));
             } else {
-                // Fallback for browsers that don't support Web Share API
-                const url = window.location.href;
-                const text = 'Check out this amazing book: Why Sit Here and Die? by Olushola Odunuga Paul';
-                alert('Share this link:\n' + url + '\n\nMessage: ' + text);
+                alert('Share this book:\n' + window.location.href);
             }
         }
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(event) {
             if (event.ctrlKey && event.key === 'p') {
                 event.preventDefault();
-                downloadPDF();
+                window.print();
             }
         });
     </script>
