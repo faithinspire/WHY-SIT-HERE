@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Sit Here and Die? - Online Reader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background: linear-gradient(135deg, #D4AF37 0%, #C9A227 100%);
+            color: #1a1a1a;
+            min-height: 100vh;
+        }
+
+        /* LOGIN SCREEN */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #D4AF37 0%, #C9A227 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .login-box h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #8B7500;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box .subtitle {
+            color: #A0860D;
+            font-style: italic;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .login-box p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #D4AF37;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'Lora', serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #8B7500;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #6B5500 0%, #7A650A 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .error-message {
+            color: #d32f2f;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #ffebee;
+            border-radius: 4px;
+            display: none;
+        }
+
+        /* READER SCREEN */
+        .reader-screen {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .reader-header {
+            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
+            color: #F5E6D3;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-title p {
+            font-size: 0.9rem;
+            color: #E8D4B8;
+            font-style: italic;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid #F5E6D3;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .reader-content {
+            flex: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 2rem;
+            background: white;
+            overflow-y: auto;
+            line-height: 1.9;
+        }
+
+        .reader-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .reader-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .reader-content::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 5px;
+        }
+
+        .reader-content::-webkit-scrollbar-thumb:hover {
+            background: #A0860D;
+        }
+
+        .chapter {
+            margin-bottom: 3rem;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #8B7500;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #D4AF37;
+            padding-bottom: 1rem;
+        }
+
+        .chapter-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .scripture {
+            font-style: italic;
+            color: #555;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-left: 4px solid #D4AF37;
+            background: #f9f9f9;
+        }
+
+        .story-box {
+            background: #f0f8ff;
+            border: 2px solid #D4AF37;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box {
+            background: #fffacd;
+            border-left: 4px solid #D4AF37;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .prayer-box {
+            background: #f3e5f5;
+            border: 2px solid #9c27b0;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        .closing-line {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-weight: bold;
+            font-style: italic;
+            color: #e65100;
+        }
+
+        .reader-footer {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .reader-footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .toc {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+        }
+
+        .toc h2 {
+            font-family: 'Playfair Display', serif;
+            color: #8B7500;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+            gap: 2rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .toc li:before {
+            content: "▸ ";
+            color: #D4AF37;
+            font-weight: bold;
+            margin-left: -1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-title h1 {
+                font-size: 1.3rem;
+            }
+
+            .chapter-title {
+                font-size: 1.5rem;
+            }
+
+            .reader-content {
+                padding: 1rem;
+            }
+
+            .toc ul {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h1>Why Sit Here and Die?</h1>
+            <p class="subtitle">Online Reader</p>
+            <p>Enter your access password to read the complete book online.</p>
+            <p style="font-size: 0.85rem; color: #999;">Password provided after payment confirmation.</p>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="password">Access Password:</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="login-btn">Access Book</button>
+            </form>
+            
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <!-- READER SCREEN -->
+    <div class="reader-screen" id="readerScreen">
+        <div class="reader-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>Why Sit Here and Die?</h1>
+                    <p>A Journey from Famine to Feast</p>
+                </div>
+                <div class="header-controls">
+                    <button class="header-btn" onclick="downloadPDF()">📥 Download PDF</button>
+                    <button class="header-btn" onclick="logout()">🚪 Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="reader-content" id="readerContent">
+            <!-- Content will be loaded here -->
+        </div>
+
+        <div class="reader-footer">
+            <p>&copy; 2024 Olushola Odunuga Paul. All rights reserved.</p>
+            <p>Why Sit Here and Die? - A Journey from Famine to Feast</p>
+        </div>
+    </div>
+
+    <script>
+        // Correct password
+        const CORRECT_PASSWORD = "March31";
+
+        // Book content - complete manuscript
+        const bookContent = `
+            <div class="chapter">
+                <h2 class="chapter-title">Introduction: The Question That Changes Everything</h2>
+                <div class="chapter-content">
+                    <p>There is a question that has echoed through three thousand years of history, changing lives, shifting perspectives, and launching ordinary people into extraordinary journeys.</p>
+                    <p>It is not a complicated question. It does not require advanced education to understand. It does not demand special circumstances to apply. It is simple, direct, and devastatingly powerful:</p>
+                    <p><strong>"Why sit we here until we die?"</strong></p>
+                    <p>These words were spoken by four men who had nothing to lose. They were lepers—the rejected, the unclean, the forgotten. They sat at the gate of Samaria during a famine so severe that mothers were boiling their children for food. The city was under siege. No food was entering. No hope was visible. Death was not a possibility; it was a certainty.</p>
+                    <p>These four men had been cast out by society. They could not enter the city. They could not participate in normal life. They were living on borrowed time, waiting for death to come.</p>
+                    <p>And then one of them asked: "Why sit we here until we die?"</p>
+                    <p>That question changed everything. Not just for them—for a city. Not just for a day—for history. Not just for survival—for a story that has been told for three thousand years and is still changing lives.</p>
+                    <p>This book is about that question and what happens when you answer it with action.</p>
+                    <p>It is about the famine you are facing—the lack, the limitation, the siege that seems permanent. It is about the gate where you have been sitting—the place of comfort mixed with desperation, of resignation mixed with hidden hope. It is about the camp that is waiting—the provision, the breakthrough, the abundance that exists just beyond your current position.</p>
+                    <p>Most importantly, it is about the choice you must make: Will you sit until you die? Or will you rise and walk toward what God has prepared?</p>
+                    <p>The lepers chose to rise. They chose to walk. They chose to discover. And in doing so, they saved a city.</p>
+                    <p>This book follows their journey through eighteen chapters, each one exploring a principle that will help you move from your gate to your camp, from your famine to your feast, from sitting to rising.</p>
+                    <p>As you read, I invite you to ask yourself the same question the lepers asked: "Why sit I here until I die?" What gate am I at? What famine am I accepting? What camp am I refusing to walk toward?</p>
+                    <p>The answers to these questions will determine not just your future, but the future of everyone connected to you.</p>
+                    <p>Let's begin the journey.</p>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <h2 class="chapter-title">Table of Contents</h2>
+                <div class="toc">
+                    <ul>
+                        <li>Introduction: The Question That Changes Everything</li>
+                        <li>Chapter 7: Night Moves - The Power of Twilight Hours</li>
+                        <li>Chapter 8: God Can Make the Enemy Hear Something</li>
+                        <li>Chapter 10: Stewardship: Don't Eat Your Future</li>
+                        <li>Chapter 11: Good News Is Not Private Property</li>
+                        <li>Chapter 13: The Economy Can Turn Overnight</li>
+                        <li>Chapter 14: Unbelief Has Consequences</li>
+                        <li>Chapter 15: When You See But Cannot Taste</li>
+                        <li>Chapter 16: From Miracle to Model</li>
+                        <li>Chapter 17: Legacy Leadership</li>
+                        <li>Chapter 18: The City Must Hear</li>
+                        <li>Conclusion: Leaving the Gate Forever</li>
+                        <li>About the Author</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <h2 class="chapter-title">Chapter 7: Night Moves - The Power of Twilight Hours</h2>
+                <div class="chapter-content">
+                    <p>There is a category of work that the world does not see. It happens in the hours when most people sleep. It occurs in the spaces where no one is watching. It produces results that appear suddenly, as if by magic, when in reality they were built brick by brick in darkness.</p>
+                    <p>The lepers made their night move when they rose in twilight and walked toward the camp. But their breakthrough was not the beginning of night moves—it was the culmination of them.</p>
+                    <p>Before that night, there had been other nights. Nights when they had prayed. Nights when they had hoped. Nights when they had refused to accept their condition as final. Nights when they had prepared themselves mentally and spiritually for the possibility of movement.</p>
+                    <p>This chapter is about the power of those hidden hours. It is about what happens when you invest in yourself when no one is grading you, when no one is watching, when no external pressure forces you to perform.</p>
+                    <p>Night moves are the work you do when the world is sleeping. They are the preparation that precedes the promotion. They are the practice that precedes the performance. They are the farming that precedes the feast.</p>
+                    <p>And they are often the difference between those who breakthrough and those who break down.</p>
+                    
+                    <div class="highlight-box">
+                        <strong>The Definition of Night Moves:</strong> Night moves are intentional investments in your growth, your calling, your future—made in the hours when no one is watching, when no one is forcing you, when the only accountability is internal.
+                    </div>
+
+                    <p><strong>The Invisible Architecture of Breakthrough</strong></p>
+                    <p>Every visible breakthrough has an invisible architecture. Behind every success story is a story of unseen work. Behind every promotion is preparation. Behind every opportunity seized is opportunity created through private investment.</p>
+                    <p>Consider the athlete who trains when no trophy is in sight. The believer who prays when God seems silent. These are all twilight activities. They require faith because the payoff is not immediate. They require discipline because no external pressure enforces them. They require vision because you must see what is not yet visible.</p>
+
+                    <div class="story-box">
+                        <strong>Another Story: Kunle's Midnight Business</strong><br><br>
+                        Kunle worked in a bank—long hours, demanding targets, little margin. But inside him lived a dream of owning a leather goods company. He had always been fascinated with craftsmanship, with making things by hand, with creating products that carried beauty and utility.<br><br>
+                        The problem was time. And energy. And money. And courage.<br><br>
+                        For a year, Kunle did nothing but think about it. The dream lived in his imagination but never touched his reality.<br><br>
+                        Then he made a decision. He would not wait for perfect conditions. He would begin with imperfect ones.<br><br>
+                        He bought a basic set of leatherworking tools—spending money he could barely spare. He watched YouTube tutorials late at night after work. He practiced on cheap leather scraps, producing ugly, amateurish pieces that he threw away. He kept practicing.<br><br>
+                        Midnight. 1 a.m. 2 a.m. His wife thought he was crazy. His children wondered why Daddy was always in the spare room with the strange smell of leather and glue.<br><br>
+                        But Kunle kept going.<br><br>
+                        After six months, his pieces became presentable. After a year, they became attractive. After eighteen months, he sold his first product—a wallet, to a colleague who was amazed that Kunle had made it.<br><br>
+                        Word spread slowly. One wallet became three. Three became ten. Ten became fifty. Kunle started an Instagram page. Orders trickled in—then flowed.<br><br>
+                        Three years after that first midnight session, Kunle resigned from the bank. His leather goods business was earning more than his salary, and the fulfillment was incomparable.<br><br>
+                        "Everyone saw the resignation and thought I was brave," Kunle reflects. "They did not see the thousand midnight hours before that day. They did not see the failed products. They did not see the exhaustion. They saw the fruit; they did not see the farming."
+                    </div>
+
+                    <p><strong>Night Moves.</strong></p>
+
+                    <p><strong>The Enemies of Night Moves</strong></p>
+                    <p>Why do so few people make night moves? Because night moves have powerful enemies.</p>
+                    <p><strong>1. Exhaustion.</strong> After a full day of work, family, and survival, who has energy for extra effort? The couch calls. The screen beckons. The pillow whispers. Overcoming exhaustion requires a "why" that is stronger than your tiredness. If your purpose is clear enough, you will find energy you did not know you had.</p>
+                    <p><strong>2. Instant gratification culture.</strong> We are trained to expect immediate results. Post a photo, get likes in minutes. Send a message, get a reply in seconds. Buy something, have it delivered the same day. Night moves do not produce instant results. They require delayed gratification—the ability to invest today for a harvest that may come months or years later. This capacity is rare because our culture has eroded it.</p>
+                    <p><strong>3. Lack of accountability.</strong> In public, there is social pressure to perform. People see you; expectations are enforced. At night, alone, no one is watching. No one will know if you skip tonight's study session. No one will notice if you spend the evening scrolling instead of building. Night moves require internal accountability—the discipline to hold yourself to standards even when no external force enforces them.</p>
+                    <p><strong>4. Discouragement.</strong> When you work in secret, you receive no encouragement. No one celebrates your small progress. No one cheers your discipline. The silence can feel like evidence that your efforts do not matter. Night moves require faith that the Audience of One sees, that the Father who sees in secret will reward openly (Matthew 6:6).</p>
+
+                    <div class="closing-line">
+                        The breakthrough that comes suddenly was built gradually—in the hours when no one was watching and only God was keeping score.
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter">
+                <h2 class="chapter-title">About the Author</h2>
+                <div class="chapter-content">
+                    <p><strong>Olushola Odunuga Paul</strong></p>
+                    <p>"I wrote this book for the person I used to be—and sometimes still am.</p>
+                    <p>For the one who knows there is more but does not know how to reach it. For the one who has heard promises but struggles to believe them. For the one who has been sitting so long that standing feels foreign. For the one who needs someone to say, with compassion but without compromise: 'Get up.'</p>
+                    <p>I am not writing as someone who has figured out everything. I am writing as someone who has learned one thing clearly: sitting is not a strategy. Waiting without walking is not faith. Comfort that leads to death is not wisdom.</p>
+                    <p>Every chapter of this book comes from somewhere real in my journey. Every principle has been tested. Every story—whether mine or others'—represents real struggle and real breakthrough.</p>
+                    <p>My prayer is simple: that by the time you finish this book, something in you will have shifted. That the gate you have been calling home will become the door you walk through. That the question of the lepers will become your question—and that your answer will be movement.</p>
+                    <p><strong>Rise. Walk. Discover.</strong></p>
+                    <p><strong>The camp is waiting."</strong></p>
+                    <p style="margin-top: 2rem;"><strong>Church:</strong> Ruach Apostolic Center, Lagos, Nigeria</p>
+                </div>
+            </div>
+        `;
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (password === CORRECT_PASSWORD) {
+                // Correct password
+                localStorage.setItem('bookAccess', 'true');
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('readerScreen').style.display = 'flex';
+                document.getElementById('readerContent').innerHTML = bookContent;
+                document.getElementById('password').value = '';
+                errorMessage.style.display = 'none';
+            } else {
+                // Wrong password
+                errorMessage.textContent = '❌ Incorrect password. Please try again.';
+                errorMessage.style.display = 'block';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('bookAccess');
+            document.getElementById('readerScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('password').value = '';
+        }
+
+        function downloadPDF() {
+            alert('PDF download feature will be available soon. For now, you can use your browser\'s print function (Ctrl+P or Cmd+P) to save as PDF.');
+        }
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('bookAccess') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('readerScreen').style.display = 'flex';
+                document.getElementById('readerContent').innerHTML = bookContent;
+            }
+        });
+    </script>
+</body>
+</html>
