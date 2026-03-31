@@ -1737,7 +1737,7 @@
                     return;
                 }
                 
-                // Generate professional PDF from book data
+                // Generate professional PDF from book data with international book standards
                 const printWindow = window.open('', '', 'width=900,height=700');
                 
                 let htmlContent = `
@@ -1749,34 +1749,53 @@
                         <style>
                             * { margin: 0; padding: 0; box-sizing: border-box; }
                             body { 
-                                font-family: 'Georgia', serif; 
+                                font-family: 'Georgia', 'Garamond', serif; 
                                 line-height: 1.8; 
                                 color: #2a2a2a; 
-                                background: #f5f0e8;
-                                padding: 40px;
+                                background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%);
+                                padding: 20px;
                             }
                             .page { 
                                 background: white; 
                                 padding: 60px 50px;
-                                margin-bottom: 40px;
-                                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                                margin-bottom: 20px;
+                                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
                                 page-break-after: always;
-                                min-height: 800px;
+                                min-height: 900px;
+                                position: relative;
+                            }
+                            .page::before {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23f5f0e8" width="100" height="100"/><path fill="%23c9a84c" opacity="0.03" d="M0,0 L100,100 M100,0 L0,100"/></svg>');
+                                pointer-events: none;
+                                z-index: 0;
+                            }
+                            .page > * {
+                                position: relative;
+                                z-index: 1;
                             }
                             h1 { 
                                 color: #c9a84c; 
-                                font-size: 36px; 
+                                font-size: 42px; 
                                 text-align: center; 
                                 margin-bottom: 20px;
                                 font-weight: bold;
-                                letter-spacing: 2px;
+                                letter-spacing: 3px;
+                                text-transform: uppercase;
                             }
                             h2 { 
                                 color: #3d0c11; 
-                                font-size: 18px; 
+                                font-size: 20px; 
                                 margin-top: 30px; 
-                                margin-bottom: 15px;
+                                margin-bottom: 20px;
                                 font-weight: bold;
+                                border-bottom: 2px solid #c9a84c;
+                                padding-bottom: 10px;
                             }
                             .subtitle { 
                                 text-align: center; 
@@ -1823,6 +1842,10 @@
                                 font-size: 14px;
                                 line-height: 1.8;
                                 color: #2a2a2a;
+                                text-indent: 0.5in;
+                            }
+                            .content p {
+                                margin-bottom: 12px;
                             }
                             .part { 
                                 color: #c9a84c; 
@@ -1837,7 +1860,8 @@
                                 flex-direction: column;
                                 justify-content: center;
                                 align-items: center;
-                                min-height: 800px;
+                                min-height: 900px;
+                                background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(61,12,17,0.05) 100%);
                             }
                             .dedication {
                                 text-align: center;
@@ -1854,15 +1878,28 @@
                                 color: #c9a84c;
                                 border-left: 3px solid #c9a84c;
                                 border-right: 3px solid #c9a84c;
-                                padding: 30px;
-                                margin: 30px 0;
+                                padding: 40px;
+                                margin: 40px 0;
+                                background: rgba(201, 168, 76, 0.05);
                             }
                             .section-title {
                                 text-align: center;
                                 color: #3d0c11;
-                                font-size: 18px;
+                                font-size: 20px;
                                 font-weight: bold;
-                                margin-bottom: 20px;
+                                margin-bottom: 25px;
+                                border-bottom: 2px solid #c9a84c;
+                                padding-bottom: 15px;
+                            }
+                            .foreword-content, .preface-content, .acknowledgments-content, .endorsement-content {
+                                font-size: 14px;
+                                line-height: 1.8;
+                                text-align: justify;
+                                color: #2a2a2a;
+                            }
+                            .foreword-content p, .preface-content p, .acknowledgments-content p, .endorsement-content p {
+                                margin-bottom: 15px;
+                                text-indent: 0.5in;
                             }
                             hr { 
                                 border: none; 
@@ -1873,7 +1910,16 @@
                                 text-align: center;
                                 font-size: 10px;
                                 color: #999;
+                                margin-top: 40px;
+                                line-height: 1.6;
+                            }
+                            .page-number {
+                                text-align: center;
+                                font-size: 12px;
+                                color: #999;
                                 margin-top: 30px;
+                                padding-top: 20px;
+                                border-top: 1px solid #ddd;
                             }
                             @media print { 
                                 body { padding: 0; background: white; }
@@ -1916,7 +1962,7 @@
                 htmlContent += `
                     <div class="page">
                         <h2 class="section-title">Acknowledgments</h2>
-                        <div class="content">${bookContent.frontMatter.acknowledgments.replace(/\n/g, '<br>')}</div>
+                        <div class="acknowledgments-content"><p>${bookContent.frontMatter.acknowledgments.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
                     </div>
                 `;
                 
@@ -1924,7 +1970,7 @@
                 htmlContent += `
                     <div class="page">
                         <h2 class="section-title">Foreword</h2>
-                        <div class="content">${bookContent.frontMatter.foreword.replace(/\n/g, '<br>')}</div>
+                        <div class="foreword-content"><p>${bookContent.frontMatter.foreword.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
                     </div>
                 `;
                 
@@ -1932,7 +1978,7 @@
                 htmlContent += `
                     <div class="page">
                         <h2 class="section-title">Preface</h2>
-                        <div class="content">${bookContent.frontMatter.preface.replace(/\n/g, '<br>')}</div>
+                        <div class="preface-content"><p>${bookContent.frontMatter.preface.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
                     </div>
                 `;
                 
@@ -1940,22 +1986,40 @@
                 htmlContent += `
                     <div class="page">
                         <h2 class="section-title">Endorsement</h2>
-                        <div class="content">${bookContent.frontMatter.endorsement.replace(/\n/g, '<br>')}</div>
+                        <div class="endorsement-content"><p>${bookContent.frontMatter.endorsement.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
+                    </div>
+                `;
+                
+                // Table of Contents
+                htmlContent += `
+                    <div class="page">
+                        <h2 class="section-title">Table of Contents</h2>
+                        <div class="content">
+                `;
+                
+                bookContent.chapters.forEach(chapter => {
+                    htmlContent += `<p>Chapter ${chapter.number}: ${chapter.title}</p>`;
+                });
+                
+                htmlContent += `
+                        </div>
                     </div>
                 `;
                 
                 // Chapters
+                let pageNumber = 1;
                 if (bookContent.chapters && bookContent.chapters.length > 0) {
                     bookContent.chapters.forEach(chapter => {
-                        const contentText = chapter.content ? chapter.content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>') : '';
+                        const contentText = chapter.content ? chapter.content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ') : '';
                         htmlContent += `
                             <div class="page">
                                 <div class="chapter">
                                     <div class="part">${chapter.part}</div>
                                     <div class="chapter-title">Chapter ${chapter.number}: ${chapter.title}</div>
                                     <div class="hook">"${chapter.hook}"</div>
-                                    <div class="content">${contentText}</div>
+                                    <div class="content"><p>${contentText}</p></div>
                                 </div>
+                                <div class="page-number">Page ${pageNumber++}</div>
                             </div>
                         `;
                     });
