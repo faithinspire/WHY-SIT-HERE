@@ -846,7 +846,7 @@
             <h1>WHY SIT HERE AND DIE?</h1>
             <p class="hero-scripture">"Why sit we here until we die?" — 2 Kings 7:3 (KJV)</p>
             <div class="hero-buttons">
-                <button class="btn" onclick="openReader()"><i class="fas fa-book-open"></i> READ ONLINE</button>
+                <button class="btn" onclick="document.getElementById('chapters').scrollIntoView()">Read a Chapter</button>
                 <button class="btn btn-solid" onclick="document.getElementById('book').scrollIntoView()">Get the Book</button>
             </div>
         </div>
@@ -1139,12 +1139,13 @@
             </div>
             
             <div class="payment-step">
-                <h4><span class="step-number">4</span> Enter Your Details to Access Book</h4>
+                <h4><span class="step-number">4</span> Enter Password Below to Access Book</h4>
                 <form id="accessForm" onsubmit="handleAccessSubmit(event)">
                     <input type="text" id="fullName" placeholder="Full Name" required>
                     <input type="email" id="email" placeholder="Email Address" required>
-                    <input type="text" id="reference" placeholder="Transaction Reference (optional)" required>
-                    <button type="submit" class="btn btn-solid" style="width: 100%;">✓ Access My Book Now</button>
+                    <input type="text" id="reference" placeholder="Transaction Reference" required>
+                    <input type="password" id="password" placeholder="Enter password sent to you after payment" required>
+                    <button type="submit" class="btn btn-solid" style="width: 100%;">Access My Book Now</button>
                 </form>
                 <div id="accessMessage" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px;"></div>
             </div>
@@ -1301,43 +1302,69 @@
         function handleAccessSubmit(e) {
             e.preventDefault();
             
+            const password = document.getElementById('password').value;
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const reference = document.getElementById('reference').value;
             const messageDiv = document.getElementById('accessMessage');
             
-            // BYPASS: Accept all submissions without password check
-            sessionStorage.setItem('bookAccess', JSON.stringify({
-                name: fullName,
-                email: email,
-                reference: reference,
-                timestamp: new Date().getTime()
-            }));
+            // Check password - compare directly with base64 encoded value
+            const encodedInput = btoa(password.trim());
+            const correctPassword = "TWFyY2gzMQ=="; // March31 in base64
             
-            // Hide form and show access panel
-            document.getElementById('accessForm').style.display = 'none';
-            document.getElementById('bookAccessPanel').style.display = 'block';
-            document.getElementById('welcomeMessage').textContent = `Welcome, ${fullName}! Your book is ready.`;
-            messageDiv.style.display = 'none';
-            failedAttempts = 0;
-            
-            // Scroll to access panel
-            document.getElementById('bookAccessPanel').scrollIntoView({ behavior: 'smooth' });
-            
-            showToast('✅ Access granted! Welcome to your book.');
+            if (encodedInput === correctPassword) {
+                // Correct password
+                sessionStorage.setItem('bookAccess', JSON.stringify({
+                    name: fullName,
+                    email: email,
+                    reference: reference,
+                    timestamp: new Date().getTime()
+                }));
+                
+                // Hide form and show access panel
+                document.getElementById('accessForm').style.display = 'none';
+                document.getElementById('bookAccessPanel').style.display = 'block';
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${fullName}! Your book is ready.`;
+                messageDiv.style.display = 'none';
+                failedAttempts = 0;
+                
+                // Scroll to access panel
+                document.getElementById('bookAccessPanel').scrollIntoView({ behavior: 'smooth' });
+                
+                showToast('✅ Access granted! Welcome to your book.');
+            } else {
+                failedAttempts++;
+                
+                if (failedAttempts >= 3) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = 'rgba(61, 12, 17, 0.8)';
+                    messageDiv.style.color = '#ff6b6b';
+                    messageDiv.style.borderLeft = '4px solid #ff6b6b';
+                    messageDiv.textContent = '❌ Too many attempts. Please contact us on WhatsApp for assistance.';
+                    document.getElementById('accessForm').style.pointerEvents = 'none';
+                    document.getElementById('accessForm').style.opacity = '0.5';
+                    
+                    setTimeout(() => {
+                        document.getElementById('accessForm').style.pointerEvents = 'auto';
+                        document.getElementById('accessForm').style.opacity = '1';
+                        failedAttempts = 0;
+                        messageDiv.style.display = 'none';
+                    }, 60000);
+                } else {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = 'rgba(61, 12, 17, 0.8)';
+                    messageDiv.style.color = '#ff6b6b';
+                    messageDiv.style.borderLeft = '4px solid #ff6b6b';
+                    messageDiv.textContent = `❌ Invalid password. Please check your WhatsApp message or contact us. (Attempt ${failedAttempts}/3)`;
+                }
+            }
         }
         
         // READER FUNCTIONS
         function openReader() {
-            // BYPASS: Auto-grant access without password
-            const access = {
-                timestamp: new Date().toISOString(),
-                name: 'Reader',
-                email: 'reader@book.local'
-            };
-            sessionStorage.setItem('bookAccess', JSON.stringify(access));
-            
-            // Create reader modal with full book content
+            const access = JSON.parse(sessionStorage.getItem('bookAccess'));
+            if (access) {
+                // Create reader modal with full book content
                 const readerHTML = `
                     <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%); z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
                         <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
@@ -1514,6 +1541,9 @@
                     }
                 `;
                 document.head.appendChild(style);
+            } else {
+                showToast('❌ Please enter your password first.');
+            }
         }
         
         function displayFrontMatter(sectionId) {
@@ -1634,63 +1664,11 @@
         document.head.appendChild(style);
         
         function downloadPDF() {
-            // BYPASS: Generate and download PDF from book data
-            if (!bookContent || !bookContent.chapters) {
-                showToast('❌ Book data not loaded');
-                return;
+            const access = JSON.parse(sessionStorage.getItem('bookAccess'));
+            if (access) {
+                window.open(BOOK_PDF_URL, '_blank');
+                showToast('PDF download started!');
             }
-            
-            // Create a new window for printing
-            const printWindow = window.open('', '', 'width=800,height=600');
-            
-            let htmlContent = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Why Sit Here and Die - Complete Book</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 40px; }
-                        h1 { color: #c9a84c; text-align: center; font-size: 28px; }
-                        h2 { color: #3d0c11; margin-top: 30px; page-break-before: always; }
-                        .subtitle { text-align: center; color: #666; margin-bottom: 20px; }
-                        .chapter { page-break-inside: avoid; margin-bottom: 40px; }
-                        .hook { font-style: italic; color: #3d0c11; border-left: 3px solid #c9a84c; padding-left: 15px; margin: 15px 0; }
-                        .content { text-align: justify; }
-                        @media print { body { margin: 0; } }
-                    </style>
-                </head>
-                <body>
-                    <h1>WHY SIT HERE AND DIE?</h1>
-                    <p class="subtitle">${bookContent.metadata.subtitle}</p>
-                    <p style="text-align: center;">by ${bookContent.metadata.author}</p>
-                    <p style="text-align: center;">${bookContent.metadata.church}</p>
-                    <hr style="margin: 40px 0;">
-            `;
-            
-            // Add all chapters
-            bookContent.chapters.forEach(chapter => {
-                htmlContent += `
-                    <div class="chapter">
-                        <h2>Chapter ${chapter.number}: ${chapter.title}</h2>
-                        <div class="hook">${chapter.hook}</div>
-                        <div class="content">${chapter.content.replace(/\n/g, '<br>')}</div>
-                    </div>
-                `;
-            });
-            
-            htmlContent += `
-                </body>
-                </html>
-            `;
-            
-            printWindow.document.write(htmlContent);
-            printWindow.document.close();
-            
-            // Trigger print dialog which allows saving as PDF
-            setTimeout(() => {
-                printWindow.print();
-                showToast('📥 PDF dialog opened. Select "Save as PDF" to download.');
-            }, 500);
         }
         
         // REQUEST CLEARANCE
