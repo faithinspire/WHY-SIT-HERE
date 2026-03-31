@@ -1184,13 +1184,30 @@
             
             <div class="payment-step">
                 <h4><span class="step-number">4</span> Enter Password Below to Access Book</h4>
-                <form id="accessForm" onsubmit="handleAccessSubmit(event)">
+                <form id="accessForm" onsubmit="handleAccessSubmit(event); return false;">
                     <input type="text" id="fullName" placeholder="Full Name" required>
                     <input type="email" id="email" placeholder="Email Address" required>
                     <input type="password" id="password" placeholder="Enter password sent to you after payment" required>
                     <button type="submit" class="btn btn-solid" style="width: 100%;">Access My Book Now</button>
                 </form>
                 <div id="accessMessage" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px;"></div>
+                
+                <!-- Access Success Panel - Shows after correct password -->
+                <div id="accessSuccess" style="display: none; margin-top: 2rem; text-align: center;">
+                    <div style="padding: 2rem; background: rgba(201, 168, 76, 0.05); border-radius: 8px; border: 2px solid var(--gold);">
+                        <i class="fas fa-unlock" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem; display: block;"></i>
+                        <h3 id="welcomeMessage" style="color: var(--gold); margin-bottom: 1.5rem;">Welcome! Your book is ready.</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                            <button class="btn btn-solid" onclick="openReader()" style="padding: 1.2rem 1rem; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-book-open"></i> READ ONLINE
+                            </button>
+                            <button class="btn" onclick="downloadPDF()" style="padding: 1.2rem 1rem; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-download"></i> DOWNLOAD PDF
+                            </button>
+                        </div>
+                        <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.7); font-style: italic;">Bookmark this page. Use your password to return anytime.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1361,15 +1378,12 @@
                     timestamp: new Date().getTime()
                 }));
                 
-                // Hide form and show access panel
+                // Hide form and show success panel inline
                 document.getElementById('accessForm').style.display = 'none';
-                document.getElementById('bookAccessPanel').style.display = 'block';
+                document.getElementById('accessSuccess').style.display = 'block';
                 document.getElementById('welcomeMessage').textContent = `Welcome, ${fullName}! Your book is ready.`;
                 messageDiv.style.display = 'none';
                 failedAttempts = 0;
-                
-                // Scroll to access panel
-                document.getElementById('bookAccessPanel').scrollIntoView({ behavior: 'smooth' });
                 
                 showToast('✅ Access granted! Welcome to your book.');
             } else {
