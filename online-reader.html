@@ -433,8 +433,18 @@
             alert('PDF download feature will be available soon. For now, you can use your browser\'s print function (Ctrl+P or Cmd+P) to save as PDF.');
         }
 
-        // Check if user is already logged in
+        // Check if user is already logged in or has access code in URL
         window.addEventListener('load', function() {
+            // Check URL for access code (post-payment redirect)
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessCode = urlParams.get('access');
+            
+            if (accessCode === 'March31') {
+                localStorage.setItem('bookAccess', 'true');
+                // Remove access code from URL for security
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
             if (localStorage.getItem('bookAccess') === 'true' && bookContent) {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('readerScreen').style.display = 'flex';
