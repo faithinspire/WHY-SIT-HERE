@@ -1364,22 +1364,27 @@
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access) {
-                // Create reader modal with table of contents
+                // Create reader modal with full book content
                 const readerHTML = `
-                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
-                        <div style="background: rgba(201, 168, 76, 0.1); padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(201, 168, 76, 0.2); flex-wrap: wrap; gap: 1rem;">
-                            <h3 style="color: var(--gold); margin: 0; font-size: 1.2rem;">Why Sit Here and Die? — Online Reader</h3>
-                            <button onclick="closeReader()" style="background: var(--gold); color: var(--black); border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">✕ Close</button>
-                        </div>
-                        <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 250px 1fr; gap: 0; width: 100%;">
-                            <div id="chapterNav" style="border-right: 1px solid rgba(201, 168, 76, 0.2); padding: 1.5rem; max-height: 100%; overflow-y: auto; background: rgba(10, 10, 10, 0.5);">
-                                <h4 style="color: var(--gold); margin: 0 0 1.5rem 0; font-size: 0.95rem; font-weight: 700;">TABLE OF CONTENTS</h4>
-                                <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%); z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
+                        <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <div>
+                                <h3 style="color: #0a0a0a; margin: 0; font-size: 1.3rem; font-weight: 900;">📖 Why Sit Here and Die?</h3>
+                                <p style="color: rgba(10,10,10,0.7); margin: 0.3rem 0 0 0; font-size: 0.9rem;">By Olushola Odunuga Paul</p>
                             </div>
-                            <div id="chapterContent" style="padding: 2.5rem; color: var(--cream); line-height: 1.9; font-size: 1.05rem; position: relative; overflow-y: auto;">
-                                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 4rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0;">Licensed Copy — ${access.name}</div>
-                                <div style="position: relative; z-index: 1; text-align: center;">
-                                    <p style="color: rgba(201, 168, 76, 0.8); font-size: 1.1rem;">📖 Select a chapter from the table of contents to begin reading</p>
+                            <button onclick="closeReader()" style="background: #0a0a0a; color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;">✕ Close</button>
+                        </div>
+                        <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 280px 1fr; gap: 0; width: 100%;">
+                            <div id="chapterNav" style="border-right: 2px solid var(--gold); padding: 2rem 1.5rem; max-height: 100%; overflow-y: auto; background: linear-gradient(180deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.05) 100%);">
+                                <h4 style="color: var(--gold); margin: 0 0 1.5rem 0; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">📑 Contents</h4>
+                                <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
+                            </div>
+                            <div id="chapterContent" style="padding: 3rem; color: #2a2a2a; line-height: 2; font-size: 1.1rem; position: relative; overflow-y: auto; background: linear-gradient(to bottom, #f5f0e8, #faf7f0); font-family: 'Georgia', serif;">
+                                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.05; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
+                                <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
+                                    <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Why Sit Here and Die?</h1>
+                                    <p style="color: rgba(42,42,42,0.7); font-size: 1.1rem; margin-bottom: 2rem;">A life-and-leadership wake-up call from 2 Kings 7</p>
+                                    <p style="color: var(--gold); font-style: italic; font-size: 1rem;">Select a section from the table of contents to begin reading</p>
                                 </div>
                             </div>
                         </div>

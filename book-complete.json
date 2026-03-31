@@ -1,0 +1,203 @@
+{
+  "book": {
+    "metadata": {
+      "title": "Why Sit Here and Die?",
+      "subtitle": "Breaking the trap of stagnation — spiritually, financially, and personally — from 2 Kings 7",
+      "author": "Olushola Odunuga Paul",
+      "church": "Ruach Apostolic Center, Lagos, Nigeria",
+      "year": 2026,
+      "totalChapters": 18,
+      "parts": 4,
+      "coreScripture": "2 Kings 7:3–4 (KJV)",
+      "status": "COMPLETE",
+      "lastUpdated": "March 31, 2026"
+    },
+    "frontMatter": {
+      "titlePage": {
+        "title": "WHY SIT HERE AND DIE?",
+        "subtitle": "Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7",
+        "author": "OLUSHOLA O. PAUL",
+        "copyright": "Copyright © 2026 by OLUSHOLA O PAUL. All rights reserved.",
+        "disclaimer": "Scripture quotations marked KJV are from the King James Version, public domain. This book provides spiritual and practical principles. It does not replace professional medical, legal, financial, or psychological advice."
+      },
+      "dedication": "To the people who were told to 'manage' their misery—may you move. To my family, who refused to let fear become our address. To every 'gate-sitter' ready to stand up again.",
+      "epigraph": "2 Kings 7:3 (KJV) 'Why sit we here until we die?'",
+      "acknowledgments": "I thank God for sustaining me through the seasons this message was born. To Pst, Adesina Israel, Apst Richman Ene, Pst Mark, Pst Tosin for prayer, correction, and encouragement. To my team, for editing, design, and honest feedback. To every reader: may movement replace mourning."
+    },
+    "structure": {
+      "PART_ONE": {
+        "title": "THE TRAP: WHEN STAYING PUT FEELS SAFE",
+        "chapters": [1, 2, 3, 4],
+        "description": "Identifying the gates where we sit and the famines we face"
+      },
+      "PART_TWO": {
+        "title": "THE MOVE: COURAGE, STRATEGY, AND WISE RISK",
+        "chapters": [5, 6, 7, 8],
+        "description": "Taking the first steps and trusting God's intervention"
+      },
+      "PART_THREE": {
+        "title": "ABUNDANCE: WHAT YOU DO AFTER YOU FIND THE CAMP",
+        "chapters": [9, 10, 11, 12],
+        "description": "Managing provision and sharing the good news"
+      },
+      "PART_FOUR": {
+        "title": "LEADERSHIP, SYSTEMS, AND SUSTAINABLE CHANGE",
+        "chapters": [13, 14, 15, 16, 17, 18],
+        "description": "Building models, raising leaders, and creating lasting impact"
+      }
+    },
+    "chapters": [
+      {
+        "number": 1,
+        "part": "PART ONE",
+        "title": "The Gate Mentality",
+        "hook": "The most dangerous place is not the battlefield—it's the place you learned to survive without hope.",
+        "lifeAreas": ["spirituality", "mental health", "identity"],
+        "keyTakeaway": "The gate is a waiting room that becomes a prison. Movement proves that you are receiving, not just reading."
+      },
+      {
+        "number": 2,
+        "part": "PART ONE",
+        "title": "Name the Famine",
+        "hook": "You can't break what you refuse to describe.",
+        "lifeAreas": ["finances", "academics", "career clarity"],
+        "keyTakeaway": "Scarcity is real—but denial is optional."
+      },
+      {
+        "number": 3,
+        "part": "PART ONE",
+        "title": "Rejected, Not Finished",
+        "hook": "Rejection is not your final destination—it's your launching pad.",
+        "lifeAreas": ["human development", "self-worth", "resilience"],
+        "keyTakeaway": "Don't let pain name you. Let it train you."
+      },
+      {
+        "number": 4,
+        "part": "PART ONE",
+        "title": "The Conversation That Changed Everything",
+        "hook": "Your next level often begins with a hard conversation.",
+        "lifeAreas": ["leadership", "relationships", "teamwork"],
+        "keyTakeaway": "Breakthrough starts when someone speaks truth in the group."
+      },
+      {
+        "number": 5,
+        "part": "PART TWO",
+        "title": "Faith That Walks",
+        "hook": "Faith is not a feeling. Faith is movement with a reason.",
+        "lifeAreas": ["spirituality", "discipline", "decision-making"],
+        "keyTakeaway": "You don't need full clarity—just the next obedient step."
+      },
+      {
+        "number": 6,
+        "part": "PART TWO",
+        "title": "Risk Management for Believers",
+        "hook": "The lepers did a cost-benefit analysis while starving.",
+        "lifeAreas": ["business", "investing", "career pivots"],
+        "keyTakeaway": "Wisdom is not fear; wisdom is structured courage."
+      },
+      {
+        "number": 7,
+        "part": "PART TWO",
+        "title": "Night Moves: Winning When Nobody Claps",
+        "hook": "Some victories happen quietly—before the applause.",
+        "lifeAreas": ["academics", "skill-building", "consistency"],
+        "keyTakeaway": "Build in private what you want to display in public."
+      },
+      {
+        "number": 8,
+        "part": "PART TWO",
+        "title": "God Can Make the Enemy Hear Something",
+        "hook": "When God fights, you don't need to fake strength.",
+        "lifeAreas": ["spirituality", "perseverance", "pressure handling"],
+        "keyTakeaway": "Divine intervention does not cancel human action—it rewards it."
+      },
+      {
+        "number": 9,
+        "part": "PART THREE",
+        "title": "The First Tent: Small Wins Matter",
+        "hook": "Breakthrough rarely begins with a stadium; it begins with one tent.",
+        "lifeAreas": ["business start-up", "career traction", "academics"],
+        "keyTakeaway": "Don't despise the first proof that change is possible."
+      },
+      {
+        "number": 10,
+        "part": "PART THREE",
+        "title": "Stewardship: Don't Eat Your Future",
+        "hook": "Many people escape lack then die in excess.",
+        "lifeAreas": ["money management", "habits", "maturity"],
+        "keyTakeaway": "Provision without discipline becomes destruction."
+      },
+      {
+        "number": 11,
+        "part": "PART THREE",
+        "title": "Good News Is Not Private Property",
+        "hook": "Hoarded breakthrough becomes hidden disobedience.",
+        "lifeAreas": ["leadership", "service", "community impact"],
+        "keyTakeaway": "The breakthrough that stays with you blesses only one."
+      },
+      {
+        "number": 12,
+        "part": "PART THREE",
+        "title": "Credibility and Communication",
+        "hook": "Truth must be delivered in a way people can receive.",
+        "lifeAreas": ["leadership", "corporate life", "ministry", "persuasion"],
+        "keyTakeaway": "Message + timing + clarity = influence."
+      },
+      {
+        "number": 13,
+        "part": "PART FOUR",
+        "title": "The Economy Can Turn Overnight",
+        "hook": "Systems shift when information and access shift.",
+        "lifeAreas": ["business", "markets", "opportunity thinking"],
+        "keyTakeaway": "Prepare for the turn—don't be shocked by it."
+      },
+      {
+        "number": 14,
+        "part": "PART FOUR",
+        "title": "Unbelief Has Consequences",
+        "hook": "Some people see change and still refuse it.",
+        "lifeAreas": ["mindset", "cynicism", "leadership culture"],
+        "keyTakeaway": "Mocking possibility can block participation."
+      },
+      {
+        "number": 15,
+        "part": "PART FOUR",
+        "title": "From Miracle to Model",
+        "hook": "Miracles are moments; models are lifestyles.",
+        "lifeAreas": ["personal systems", "productivity", "spiritual habits"],
+        "keyTakeaway": "Build routines that keep you from returning to the gate."
+      },
+      {
+        "number": 16,
+        "part": "PART FOUR",
+        "title": "Legacy Leadership: Raising Movers",
+        "hook": "Your greatest success is not what you escape—it's who you empower.",
+        "lifeAreas": ["mentoring", "parenting", "discipleship", "organizational leadership"],
+        "keyTakeaway": "Leaders don't just move; they multiply movers."
+      },
+      {
+        "number": 17,
+        "part": "PART FOUR",
+        "title": "The City Must Hear",
+        "hook": "Good news is not good if it does not travel.",
+        "lifeAreas": ["impact", "service", "community", "legacy"],
+        "keyTakeaway": "The breakthrough that flows through you can feed a city."
+      },
+      {
+        "number": 18,
+        "part": "PART FOUR",
+        "title": "The City Must Hear: Impact Beyond Yourself",
+        "hook": "Good news is not good if it does not travel.",
+        "lifeAreas": ["impact", "service", "community", "legacy"],
+        "keyTakeaway": "The ultimate proof that you have truly left the gate is that others found abundance through you."
+      }
+    ],
+    "deployment": {
+      "website": "https://why-sit-here.vercel.app",
+      "repository": "https://github.com/faithinspire/WHY-SIT-HERE",
+      "status": "LIVE",
+      "password": "March31",
+      "price": "₦6,000"
+    }
+  }
+}
