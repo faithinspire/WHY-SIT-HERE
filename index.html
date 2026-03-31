@@ -1303,11 +1303,131 @@
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access) {
-                // Open reader with book content
-                alert('Opening online reader with your book content...');
-                // In production, this would open a full-screen reader
+                // Create reader modal
+                const readerHTML = `
+                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 3000; display: flex; flex-direction: column;">
+                        <div style="background: rgba(201, 168, 76, 0.1); padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(201, 168, 76, 0.2);">
+                            <h3 style="color: var(--gold); margin: 0;">Why Sit Here and Die?</h3>
+                            <button onclick="closeReader()" style="background: var(--gold); color: var(--black); border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 700;">Close</button>
+                        </div>
+                        <div style="flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: 200px 1fr;">
+                            <div id="chapterNav" style="border-right: 1px solid rgba(201, 168, 76, 0.2); padding-right: 1rem; max-height: 100%; overflow-y: auto;">
+                                <h4 style="color: var(--gold); margin-bottom: 1rem;">Chapters</h4>
+                                <div id="chapterList"></div>
+                            </div>
+                            <div id="chapterContent" style="padding-left: 2rem; color: var(--cream); line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; word-wrap: break-word; position: relative;">
+                                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05; font-size: 4rem; font-weight: 900; color: var(--gold); display: flex; align-items: center; justify-content: center; pointer-events: none;">Licensed Copy — ${access.name}</div>
+                                <div style="position: relative; z-index: 1;">
+                                    Select a chapter to read
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', readerHTML);
+                
+                // Populate chapter list
+                const chapterList = document.getElementById('chapterList');
+                bookContent.chapters.forEach(ch => {
+                    const btn = document.createElement('button');
+                    btn.textContent = `Ch ${ch.number}: ${ch.title}`;
+                    btn.style.cssText = `
+                        display: block;
+                        width: 100%;
+                        padding: 0.7rem;
+                        margin-bottom: 0.5rem;
+                        background: rgba(201, 168, 76, 0.1);
+                        border: 1px solid rgba(201, 168, 76, 0.2);
+                        color: var(--cream);
+                        border-radius: 4px;
+                        cursor: pointer;
+                        text-align: left;
+                        font-size: 0.9rem;
+                        transition: all 0.3s;
+                    `;
+                    btn.onmouseover = () => {
+                        btn.style.background = 'rgba(201, 168, 76, 0.2)';
+                        btn.style.borderColor = 'var(--gold)';
+                    };
+                    btn.onmouseout = () => {
+                        btn.style.background = 'rgba(201, 168, 76, 0.1)';
+                        btn.style.borderColor = 'rgba(201, 168, 76, 0.2)';
+                    };
+                    btn.onclick = () => displayChapter(ch.number);
+                    chapterList.appendChild(btn);
+                });
             }
         }
+        
+        function displayChapter(chapterNum) {
+            const chapter = bookContent.chapters.find(c => c.number === chapterNum);
+            if (chapter) {
+                const content = document.getElementById('chapterContent');
+                content.innerHTML = `
+                    <div style="position: relative; z-index: 1;">
+                        <h2 style="color: var(--gold); margin-bottom: 0.5rem;">Chapter ${chapter.number}: ${chapter.title}</h2>
+                        <p style="color: rgba(201, 168, 76, 0.8); font-style: italic; margin-bottom: 2rem;">${chapter.hook}</p>
+                        <div style="white-space: pre-wrap; word-wrap: break-word;">${chapter.content}</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function closeReader() {
+            const modal = document.getElementById('readerModal');
+            if (modal) modal.remove();
+        }
+        
+        // TESTIMONIALS CAROUSEL AUTO-ROTATE
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        
+        function rotateTestimonials() {
+            testimonials.forEach((card, index) => {
+                card.style.opacity = index === currentTestimonial ? '1' : '0.5';
+                card.style.transform = index === currentTestimonial ? 'scale(1)' : 'scale(0.95)';
+            });
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        }
+        
+        if (testimonials.length > 0) {
+            setInterval(rotateTestimonials, 5000);
+        }
+        
+        // SCROLL ANIMATIONS
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // ADD FADE-IN-UP ANIMATION
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
         
         function downloadPDF() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
@@ -1331,6 +1451,10 @@
             if (name) {
                 showToast(`Chapter ${chapterNum} preview unlocked for ${name}!`);
                 // In production, this would show the chapter preview
+                const chapter = bookContent.chapters.find(c => c.number === chapterNum);
+                if (chapter) {
+                    alert(`${chapter.title}\n\n${chapter.hook}\n\n[Full chapter content available after purchase]`);
+                }
             }
         }
         
