@@ -1187,7 +1187,6 @@
                 <form id="accessForm" onsubmit="handleAccessSubmit(event)">
                     <input type="text" id="fullName" placeholder="Full Name" required>
                     <input type="email" id="email" placeholder="Email Address" required>
-                    <input type="text" id="reference" placeholder="Transaction Reference" required>
                     <input type="password" id="password" placeholder="Enter password sent to you after payment" required>
                     <button type="submit" class="btn btn-solid" style="width: 100%;">Access My Book Now</button>
                 </form>
@@ -1348,7 +1347,6 @@
             const password = document.getElementById('password').value;
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
-            const reference = document.getElementById('reference').value;
             const messageDiv = document.getElementById('accessMessage');
             
             // Check password - compare directly with base64 encoded value
@@ -1360,7 +1358,6 @@
                 sessionStorage.setItem('bookAccess', JSON.stringify({
                     name: fullName,
                     email: email,
-                    reference: reference,
                     timestamp: new Date().getTime()
                 }));
                 
@@ -1407,10 +1404,10 @@
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access) {
-                // Create reader modal with full book content
+                // Create reader modal with full book content - ENHANCED COLORS
                 const readerHTML = `
-                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%); z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
-                        <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
+                        <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
                             <div>
                                 <h3 style="color: #0a0a0a; margin: 0; font-size: 1.3rem; font-weight: 900;">📖 Why Sit Here and Die?</h3>
                                 <p style="color: rgba(10,10,10,0.7); margin: 0.3rem 0 0 0; font-size: 0.9rem;">By Olushola Odunuga Paul</p>
@@ -1418,15 +1415,15 @@
                             <button onclick="closeReader()" style="background: #0a0a0a; color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;">✕ Close</button>
                         </div>
                         <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 280px 1fr; gap: 0; width: 100%;">
-                            <div id="chapterNav" style="border-right: 2px solid var(--gold); padding: 2rem 1.5rem; max-height: 100%; overflow-y: auto; background: linear-gradient(180deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.05) 100%);">
-                                <h4 style="color: var(--gold); margin: 0 0 1.5rem 0; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">📑 Contents</h4>
+                            <div id="chapterNav" style="border-right: 3px solid #c9a84c; padding: 2rem 1.5rem; max-height: 100%; overflow-y: auto; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.1);">
+                                <h4 style="color: #c9a84c; margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">📑 CONTENTS</h4>
                                 <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
                             </div>
-                            <div id="chapterContent" style="padding: 3rem; color: #2a2a2a; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; background: linear-gradient(to bottom, #faf8f3, #f5f0e8); font-family: 'Georgia', serif;">
+                            <div id="chapterContent" style="padding: 3rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; background: #0f0f0f; font-family: 'Georgia', serif;">
                                 <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
                                 <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
                                     <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Why Sit Here and Die?</h1>
-                                    <p style="color: rgba(42,42,42,0.7); font-size: 1.1rem; margin-bottom: 2rem;">A life-and-leadership wake-up call from 2 Kings 7</p>
+                                    <p style="color: rgba(232, 232, 232, 0.7); font-size: 1.1rem; margin-bottom: 2rem;">A life-and-leadership wake-up call from 2 Kings 7</p>
                                     <p style="color: var(--gold); font-style: italic; font-size: 1rem;">Select a section from the table of contents to begin reading</p>
                                 </div>
                             </div>
@@ -1456,25 +1453,29 @@
                         width: 100%;
                         padding: 0.9rem;
                         margin-bottom: 0.3rem;
-                        background: rgba(201, 168, 76, 0.08);
-                        border: 1px solid rgba(201, 168, 76, 0.15);
-                        color: rgba(245, 240, 232, 0.9);
+                        background: rgba(201, 168, 76, 0.12);
+                        border: 2px solid rgba(201, 168, 76, 0.3);
+                        color: #c9a84c;
                         border-radius: 4px;
                         cursor: pointer;
                         text-align: left;
-                        font-size: 0.85rem;
+                        font-size: 0.9rem;
+                        font-weight: 600;
                         transition: all 0.3s;
                         font-family: 'Lato', sans-serif;
+                        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
                     `;
                     btn.onmouseover = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.15)';
-                        btn.style.borderColor = 'var(--gold)';
-                        btn.style.color = 'var(--gold)';
+                        btn.style.background = 'rgba(201, 168, 76, 0.25)';
+                        btn.style.borderColor = '#c9a84c';
+                        btn.style.color = '#f5f0e8';
+                        btn.style.boxShadow = '0 0 10px rgba(201, 168, 76, 0.3)';
                     };
                     btn.onmouseout = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.08)';
-                        btn.style.borderColor = 'rgba(201, 168, 76, 0.15)';
-                        btn.style.color = 'rgba(245, 240, 232, 0.9)';
+                        btn.style.background = 'rgba(201, 168, 76, 0.12)';
+                        btn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
+                        btn.style.color = '#c9a84c';
+                        btn.style.boxShadow = 'none';
                     };
                     btn.onclick = () => displayFrontMatter(section.id);
                     chapterList.appendChild(btn);
@@ -1482,7 +1483,7 @@
                 
                 // Add separator
                 const separator = document.createElement('div');
-                separator.style.cssText = 'height: 1px; background: rgba(201, 168, 76, 0.2); margin: 1rem 0;';
+                separator.style.cssText = 'height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 1rem 0;';
                 chapterList.appendChild(separator);
                 
                 // Add chapters
@@ -1494,25 +1495,29 @@
                         width: 100%;
                         padding: 0.9rem;
                         margin-bottom: 0.3rem;
-                        background: rgba(201, 168, 76, 0.08);
-                        border: 1px solid rgba(201, 168, 76, 0.15);
-                        color: rgba(245, 240, 232, 0.9);
+                        background: rgba(201, 168, 76, 0.12);
+                        border: 2px solid rgba(201, 168, 76, 0.3);
+                        color: #c9a84c;
                         border-radius: 4px;
                         cursor: pointer;
                         text-align: left;
-                        font-size: 0.85rem;
+                        font-size: 0.9rem;
+                        font-weight: 600;
                         transition: all 0.3s;
                         font-family: 'Lato', sans-serif;
+                        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
                     `;
                     btn.onmouseover = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.15)';
-                        btn.style.borderColor = 'var(--gold)';
-                        btn.style.color = 'var(--gold)';
+                        btn.style.background = 'rgba(201, 168, 76, 0.25)';
+                        btn.style.borderColor = '#c9a84c';
+                        btn.style.color = '#f5f0e8';
+                        btn.style.boxShadow = '0 0 10px rgba(201, 168, 76, 0.3)';
                     };
                     btn.onmouseout = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.08)';
-                        btn.style.borderColor = 'rgba(201, 168, 76, 0.15)';
-                        btn.style.color = 'rgba(245, 240, 232, 0.9)';
+                        btn.style.background = 'rgba(201, 168, 76, 0.12)';
+                        btn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
+                        btn.style.color = '#c9a84c';
+                        btn.style.boxShadow = 'none';
                     };
                     btn.onclick = () => displayChapter(ch.number);
                     chapterList.appendChild(btn);
@@ -1526,25 +1531,29 @@
                     width: 100%;
                     padding: 0.9rem;
                     margin-bottom: 0.3rem;
-                    background: rgba(201, 168, 76, 0.08);
-                    border: 1px solid rgba(201, 168, 76, 0.15);
-                    color: rgba(245, 240, 232, 0.9);
+                    background: rgba(201, 168, 76, 0.12);
+                    border: 2px solid rgba(201, 168, 76, 0.3);
+                    color: #c9a84c;
                     border-radius: 4px;
                     cursor: pointer;
                     text-align: left;
-                    font-size: 0.85rem;
+                    font-size: 0.9rem;
+                    font-weight: 600;
                     transition: all 0.3s;
                     font-family: 'Lato', sans-serif;
+                    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
                 `;
                 conclusionBtn.onmouseover = () => {
-                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.15)';
-                    conclusionBtn.style.borderColor = 'var(--gold)';
-                    conclusionBtn.style.color = 'var(--gold)';
+                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.25)';
+                    conclusionBtn.style.borderColor = '#c9a84c';
+                    conclusionBtn.style.color = '#f5f0e8';
+                    conclusionBtn.style.boxShadow = '0 0 10px rgba(201, 168, 76, 0.3)';
                 };
                 conclusionBtn.onmouseout = () => {
-                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.08)';
-                    conclusionBtn.style.borderColor = 'rgba(201, 168, 76, 0.15)';
-                    conclusionBtn.style.color = 'rgba(245, 240, 232, 0.9)';
+                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.12)';
+                    conclusionBtn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
+                    conclusionBtn.style.color = '#c9a84c';
+                    conclusionBtn.style.boxShadow = 'none';
                 };
                 conclusionBtn.onclick = () => displayConclusion();
                 chapterList.appendChild(conclusionBtn);
@@ -1561,9 +1570,10 @@
                         }
                         #chapterNav {
                             border-right: none !important;
-                            border-bottom: 1px solid rgba(201, 168, 76, 0.2) !important;
-                            max-height: 120px !important;
+                            border-bottom: 3px solid #c9a84c !important;
+                            max-height: 150px !important;
                             padding: 1rem !important;
+                            overflow-x: auto !important;
                         }
                         #chapterContent {
                             padding: 1.5rem !important;
@@ -1577,9 +1587,16 @@
                         }
                     }
                     @media (max-width: 480px) {
+                        #chapterNav {
+                            max-height: 120px !important;
+                            padding: 0.8rem !important;
+                        }
                         #chapterContent {
                             padding: 1rem !important;
                             font-size: 0.9rem !important;
+                        }
+                        #chapterList {
+                            grid-template-columns: 1fr !important;
                         }
                     }
                 `;
