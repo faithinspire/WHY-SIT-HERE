@@ -1332,17 +1332,17 @@
                             </div>
                             <button onclick="closeReader()" style="background: #0a0a0a; color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;">✕ Close</button>
                         </div>
-                        <div style="flex: 1; overflow: hidden; display: flex; width: 100%; position: relative;">
-                            <div id="chapterNav" style="width: ${sidebarWidth}px; border-right: 3px solid #c9a84c; padding: 1.5rem; overflow-y: auto; overflow-x: hidden; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.1); flex-shrink: 0;">
+                        <div style="flex: 1; overflow: hidden; display: flex; width: 100%; position: relative;" id="readerContainer">
+                            <div id="chapterNav" style="width: ${sidebarWidth}px; border-right: 3px solid #c9a84c; padding: 1.5rem; overflow-y: auto; overflow-x: hidden; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.1); flex-shrink: 0; position: relative; z-index: 5;">
                                 <h4 style="color: #c9a84c; margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); position: sticky; top: 0; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); padding-bottom: 1rem; z-index: 10;">📑 CONTENTS</h4>
                                 <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #c9a84c, #a68a3a); width: 50px; flex-shrink: 0; position: relative; gap: 4px; padding: 0 4px;">
-                                <button id="resizeLeft" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">◀</button>
-                                <div id="resizeDivider" style="width: 4px; height: 100%; background: linear-gradient(90deg, #c9a84c, #a68a3a); cursor: col-resize; flex-shrink: 0;"></div>
-                                <button id="resizeRight" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
+                            <div id="resizeControl" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #c9a84c, #a68a3a); width: 50px; flex-shrink: 0; position: relative; gap: 4px; padding: 0 4px; z-index: 100; cursor: col-resize;">
+                                <button id="resizeLeft" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 101;">◀</button>
+                                <div id="resizeDivider" style="width: 4px; height: 100%; background: linear-gradient(90deg, #c9a84c, #a68a3a); cursor: col-resize; flex-shrink: 0; z-index: 101;"></div>
+                                <button id="resizeRight" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 101;">▶</button>
                             </div>
-                            <div id="chapterContent" style="flex: 1; padding: 2rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; overflow-x: hidden; background: #0f0f0f; font-family: 'Georgia', serif;">
+                            <div id="chapterContent" style="flex: 1; padding: 2rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; overflow-x: hidden; background: #0f0f0f; font-family: 'Georgia', serif; z-index: 1;">
                                 <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
                                 <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
                                     <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Why Sit Here and Die?</h1>
@@ -1357,14 +1357,24 @@
                 
                 // Add resizable divider functionality
                 const divider = document.getElementById('resizeDivider');
+                const resizeControl = document.getElementById('resizeControl');
                 const nav = document.getElementById('chapterNav');
                 const leftBtn = document.getElementById('resizeLeft');
                 const rightBtn = document.getElementById('resizeRight');
+                const container = document.getElementById('readerContainer');
                 let isResizing = false;
                 
-                // Mouse drag functionality
+                // Mouse drag functionality - works over entire content
                 divider.addEventListener('mousedown', () => {
                     isResizing = true;
+                    document.body.style.userSelect = 'none';
+                    document.body.style.cursor = 'col-resize';
+                });
+                
+                resizeControl.addEventListener('mousedown', () => {
+                    isResizing = true;
+                    document.body.style.userSelect = 'none';
+                    document.body.style.cursor = 'col-resize';
                 });
                 
                 document.addEventListener('mousemove', (e) => {
@@ -1372,7 +1382,8 @@
                     const modal = document.getElementById('readerModal');
                     if (!modal) return;
                     
-                    const newWidth = e.clientX - modal.getBoundingClientRect().left;
+                    const containerRect = container.getBoundingClientRect();
+                    const newWidth = e.clientX - containerRect.left - 25; // 25 is half of control width
                     if (newWidth > 150 && newWidth < 500) {
                         sidebarWidth = newWidth;
                         nav.style.width = newWidth + 'px';
@@ -1381,6 +1392,8 @@
                 
                 document.addEventListener('mouseup', () => {
                     isResizing = false;
+                    document.body.style.userSelect = 'auto';
+                    document.body.style.cursor = 'auto';
                 });
                 
                 // Arrow button functionality
@@ -1482,15 +1495,22 @@
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access && bookContent) {
                 try {
-                    // Try to download the complete professional PDF
+                    // Download the complete PDF with all content
                     const link = document.createElement('a');
                     link.href = 'Why_Sit_Here_and_Die_Complete.pdf';
                     link.download = 'Why_Sit_Here_and_Die_Complete.pdf';
+                    link.style.display = 'none';
                     document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
                     
-                    showToast('📥 Complete PDF downloading...');
+                    // Trigger download
+                    link.click();
+                    
+                    // Cleanup
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                    }, 100);
+                    
+                    showToast('📥 Complete book PDF downloading...');
                 } catch (error) {
                     console.error('PDF download error:', error);
                     showToast('❌ PDF download failed. Please try again.');
