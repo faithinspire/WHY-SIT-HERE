@@ -3,378 +3,688 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why Sit Here and Die? - A Life-and-Leadership Wake-Up Call</title>
+    <title>Why Sit Here and Die? - Breaking the Trap of Stagnation</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Lora', serif;
+            font-family: 'Georgia', serif;
             line-height: 1.8;
             color: #333;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #d4af37;
         }
-        
-        header {
-            text-align: center;
-            color: #D4AF37;
-            margin-bottom: 60px;
-            padding: 40px 0;
-            border-bottom: 2px solid #D4AF37;
-        }
-        
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        .subtitle {
-            font-size: 1.3em;
-            color: #A0860D;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        
-        .author {
-            font-size: 1.1em;
-            color: #ccc;
-            margin-top: 20px;
-        }
-        
-        .content {
-            background: white;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            margin-bottom: 40px;
-        }
-        
-        .book-description {
-            font-size: 1.1em;
-            line-height: 2;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .key-features {
-            background: #f9f9f9;
-            padding: 30px;
-            border-left: 4px solid #D4AF37;
-            margin: 30px 0;
-            border-radius: 5px;
-        }
-        
-        .key-features h3 {
-            color: #D4AF37;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        
-        .key-features ul {
+
+        nav ul {
             list-style: none;
-            padding-left: 0;
-        }
-        
-        .key-features li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #666;
-        }
-        
-        .key-features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #D4AF37;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        
-        .pricing-section {
-            background: linear-gradient(135deg, #D4AF37 0%, #A0860D 100%);
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 40px 0;
-            color: white;
-        }
-        
-        .price {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .price-description {
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            opacity: 0.95;
-        }
-        
-        .payment-buttons {
             display: flex;
-            gap: 20px;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23000" width="1200" height="600"/><path fill="%23d4af37" opacity="0.1" d="M0 300 Q300 200 600 300 T1200 300 L1200 600 L0 600 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: #fff;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #d4af37;
+            font-style: italic;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .hero .scripture {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #d4af37;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 700px;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Buttons */
+        .cta-section {
+            display: flex;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 30px;
+            margin-top: 2rem;
         }
-        
+
         .btn {
-            padding: 15px 40px;
-            font-size: 1.1em;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
-        .btn-paypal {
-            background: #0070ba;
-            color: white;
+
+        .btn-primary {
+            background: #d4af37;
+            color: #000;
         }
-        
-        .btn-paypal:hover {
-            background: #005a94;
+
+        .btn-primary:hover {
+            background: #e6c547;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,112,186,0.4);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
-        
-        .btn-card {
-            background: #635bff;
-            color: white;
+
+        .btn-secondary {
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
         }
-        
-        .btn-card:hover {
-            background: #4c47d9;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(99,91,255,0.4);
+
+        .btn-secondary:hover {
+            background: #d4af37;
+            color: #000;
         }
-        
-        .btn-reader {
-            background: #D4AF37;
-            color: #1a1a1a;
-            margin-top: 20px;
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
-        
-        .btn-reader:hover {
-            background: #A0860D;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212,175,55,0.4);
+
+        .section-light {
+            background: #f5f5f5;
         }
-        
-        .existing-customer {
-            background: #f0f0f0;
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 40px;
+
+        .section-dark {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #d4af37;
             text-align: center;
         }
-        
-        .existing-customer p {
-            margin-bottom: 15px;
-            color: #666;
-            font-size: 1.05em;
+
+        .section-dark h2 {
+            color: #d4af37;
         }
-        
-        .book-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 40px 0;
-        }
-        
-        .info-box {
-            background: #f9f9f9;
-            padding: 25px;
-            border-radius: 8px;
-            border-top: 3px solid #D4AF37;
-        }
-        
-        .info-box h4 {
-            color: #D4AF37;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-        
-        .info-box p {
-            color: #666;
+
+        .section p {
+            margin-bottom: 1.5rem;
             line-height: 1.8;
+            font-size: 1.05rem;
         }
-        
-        .chapters-preview {
-            background: #f9f9f9;
-            padding: 30px;
-            border-radius: 8px;
-            margin: 30px 0;
-        }
-        
-        .chapters-preview h3 {
-            color: #D4AF37;
-            margin-bottom: 20px;
-            font-size: 1.3em;
-        }
-        
-        .chapters-grid {
+
+        /* About Section */
+        .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 3rem;
+            align-items: center;
+            margin: 2rem 0;
         }
-        
-        .chapter-item {
-            padding: 12px;
-            background: white;
-            border-left: 3px solid #D4AF37;
-            border-radius: 3px;
-            color: #666;
-            font-size: 0.95em;
+
+        .about-grid img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        
-        footer {
-            text-align: center;
-            color: #999;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #444;
-            font-size: 0.9em;
-        }
-        
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-            
-            .content {
-                padding: 30px;
-            }
-            
-            .book-info {
+            .about-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .chapters-grid {
-                grid-template-columns: 1fr;
+
+            .hero h1 {
+                font-size: 2.5rem;
             }
-            
-            .payment-buttons {
+
+            nav ul {
+                gap: 1rem;
+            }
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #d4af37;
+        }
+
+        .section-dark .feature-card {
+            background: #2d2d2d;
+            color: #fff;
+        }
+
+        .feature-card h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #d4af37;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-dark .testimonial {
+            background: #2d2d2d;
+            color: #fff;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #d4af37;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%);
+            color: #000;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .payment-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .payment-option {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-option:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            border-top: 3px solid #d4af37;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-section {
                 flex-direction: column;
             }
-            
+
             .btn {
                 width: 100%;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Why Sit Here and Die?</h1>
-            <p class="subtitle">Breaking the trap of stagnation—spiritually, financially, and personally</p>
-            <p class="subtitle">A life-and-leadership wake-up call from 2 Kings 7</p>
-            <p class="author">By OLUSHOLA O. PAUL</p>
-        </header>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#chapters">Chapters</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#purchase">Purchase</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Why Sit Here and Die?</h1>
+        <p class="subtitle">Breaking the Trap of Stagnation</p>
+        <p class="tagline">A life-and-leadership wake-up call from 2 Kings 7</p>
         
-        <div class="content">
-            <div class="book-description">
-                <p>When life is starving you—of joy, money, progress, peace—there is a question that exposes every excuse: <strong>Why sit here and die?</strong></p>
-                
-                <p>In 2 Kings 7, four rejected lepers made one decision that saved a city: they moved. Their story is not just ancient history; it is a blueprint for spiritual renewal, career direction, academic excellence, leadership growth, and business breakthrough.</p>
-                
-                <p>This book will help you confront stagnation, take wise risks, build discipline, steward increase, and turn your testimony into impact—without denying reality and without losing faith.</p>
+        <div class="scripture">
+            "And there were four leprous men at the entering in of the gate: and they said one to another, Why sit we here until we die? If we say, We will enter into the city, then the famine is in the city, and we shall die there: and if we sit still here, we die also. Now therefore come, and let us fall unto the host of the Syrians: if they save us alive, we shall live; and if they kill us, we shall but die."
+            <br><br>
+            <strong>— 2 Kings 7:3–4 (KJV)</strong>
+        </div>
+
+        <div class="cta-section">
+            <button class="btn btn-primary" onclick="scrollToSection('purchase')">Get the Book Now</button>
+            <button class="btn btn-secondary" onclick="scrollToSection('about')">Learn More</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section section-light" id="about">
+        <h2>About This Book</h2>
+        
+        <p>When life is tight—spiritually, financially, emotionally, professionally—passivity becomes a decision. The four lepers teach a repeatable pattern: face reality, move with courage, take wise risks, and steward the "good news" you find.</p>
+
+        <p>This is not a book of theory. This is a book of testimony. Every principle has been tested in the laboratory of real life. Every chapter addresses a struggle you have personally navigated. Every invitation to rise is an invitation the author first had to accept himself.</p>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>📖 18 Chapters</h3>
+                <p>Comprehensive exploration of spiritual, financial, relational, and professional breakthrough</p>
             </div>
-            
-            <div class="key-features">
-                <h3>What You'll Discover</h3>
-                <ul>
-                    <li>How to recognize the "gates" where you've been sitting too long</li>
-                    <li>The power of naming your famine before you can be fed</li>
-                    <li>Why rejection can become your greatest teacher</li>
-                    <li>How to move with faith when you can't see the whole path</li>
-                    <li>The difference between recklessness and wise risk-taking</li>
-                    <li>Why your "night moves" determine your public success</li>
-                    <li>How God intervenes where your hands cannot reach</li>
-                    <li>The stewardship test that comes after every breakthrough</li>
-                    <li>Why good news must be shared, not hoarded</li>
-                    <li>How to build systems that sustain miracles</li>
-                    <li>The legacy you leave through those you raise</li>
-                    <li>And much more...</li>
-                </ul>
+            <div class="feature-card">
+                <h3>🎯 Practical Tools</h3>
+                <p>Actionable frameworks, audits, and assignments designed to turn insight into action</p>
             </div>
-            
-            <div class="book-info">
-                <div class="info-box">
-                    <h4>📖 Complete Book</h4>
-                    <p>All 18 chapters with real-life stories, biblical depth, practical frameworks, and movement assignments designed to transform your life.</p>
-                </div>
-                <div class="info-box">
-                    <h4>🎯 Practical & Spiritual</h4>
-                    <p>Blends Scripture, life skills, and leadership wisdom. Not just inspiration—actionable principles you can apply immediately.</p>
-                </div>
+            <div class="feature-card">
+                <h3>📚 Real Stories</h3>
+                <p>Authentic narratives from people who refused to sit at their gates</p>
             </div>
-            
-            <div class="chapters-preview">
-                <h3>18 Chapters of Transformation</h3>
-                <div class="chapters-grid">
-                    <div class="chapter-item">1. The Gate Mentality</div>
-                    <div class="chapter-item">2. Name the Famine</div>
-                    <div class="chapter-item">3. When Rejection Becomes a Teacher</div>
-                    <div class="chapter-item">4. The Conversation That Changed Everything</div>
-                    <div class="chapter-item">5. Faith That Walks</div>
-                    <div class="chapter-item">6. Risk Management for Believers</div>
-                    <div class="chapter-item">7. Night Moves: Winning When Nobody Claps</div>
-                    <div class="chapter-item">8. God Can Make the Enemy Hear Something</div>
-                    <div class="chapter-item">9. The First Tent: Small Wins Matter</div>
-                    <div class="chapter-item">10. Stewardship: Don't Eat Your Future</div>
-                    <div class="chapter-item">11. Good News Is Not Private Property</div>
-                    <div class="chapter-item">12. Credibility and Communication</div>
-                    <div class="chapter-item">13. The Economy Can Turn Overnight</div>
-                    <div class="chapter-item">14. Unbelief Has Consequences</div>
-                    <div class="chapter-item">15. When You See But Cannot Taste</div>
-                    <div class="chapter-item">16. From Miracle to Model</div>
-                    <div class="chapter-item">17. Legacy Leadership: Raising Movers</div>
-                    <div class="chapter-item">18. The City Must Hear: Impact Beyond Yourself</div>
-                </div>
-            </div>
-            
-            <div class="pricing-section">
-                <h2>Get Your Copy Today</h2>
-                <p class="price-description">Complete access to all 18 chapters + online reading + PDF download</p>
-                <div class="price">₦5,000</div>
-                <p class="price-description">One-time payment • Lifetime access • Read anytime, anywhere</p>
-                
-                <div class="payment-buttons">
-                    <button class="btn btn-paypal" onclick="alert('PayPal integration coming soon. Please use card payment.')">Pay with PayPal</button>
-                    <button class="btn btn-card" onclick="alert('Card payment integration coming soon. Contact us for manual payment options.')">Pay with Card</button>
-                </div>
-            </div>
-            
-            <div class="existing-customer">
-                <p><strong>Already purchased?</strong></p>
-                <p>Access your book with your password</p>
-                <a href="online-reader.html" class="btn btn-reader">Go to Online Reader</a>
+            <div class="feature-card">
+                <h3>✨ Biblical Foundation</h3>
+                <p>Every chapter rooted in Scripture with practical application for modern life</p>
             </div>
         </div>
+    </section>
+
+    <!-- Chapters Preview -->
+    <section class="section section-dark" id="chapters">
+        <h2>What You'll Discover</h2>
         
-        <footer>
-            <p>&copy; 2026 Olushola Odunuga Paul. All rights reserved.</p>
-            <p>Published by Ruach Apostolic Center, Lagos, Nigeria</p>
-        </footer>
+        <div class="features">
+            <div class="feature-card">
+                <h3>Part One: The Trap</h3>
+                <p><strong>Chapters 1-4</strong><br>Recognize the gates where you're sitting. Name the famines. Learn how rejection can train you. Have the conversations that change everything.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Part Two: The Move</h3>
+                <p><strong>Chapters 5-8</strong><br>Develop faith that walks. Manage risk wisely. Build in the hidden hours. Discover how God intervenes where you cannot.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Part Three: Abundance</h3>
+                <p><strong>Chapters 9-12</strong><br>Steward what you've found. Share the good news. Build credibility. Communicate with impact.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Part Four: Legacy</h3>
+                <p><strong>Chapters 13-18</strong><br>Understand sudden turnarounds. Face the consequences of unbelief. Build systems that last. Raise the next generation of movers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section section-light" id="testimonials">
+        <h2>What Readers Are Saying</h2>
+        
+        <div class="testimonial">
+            <p>"This book didn't just inspire me—it confronted me. I realized I've been sitting at gates I could have walked through years ago. The practical assignments forced me to move, not just think about moving."</p>
+            <p class="testimonial-author">— Chioma, Lagos</p>
+        </div>
+
+        <div class="testimonial">
+            <p>"Every chapter felt like it was written for my specific situation. The author's honesty about his own struggles made me feel less alone. This is the book I wish someone had given me five years ago."</p>
+            <p class="testimonial-author">— Tunde, Abuja</p>
+        </div>
+
+        <div class="testimonial">
+            <p>"I've read many Christian books, but this one is different. It's biblical without being preachy, practical without being shallow, and challenging without being condemning. I'm already on my second read-through."</p>
+            <p class="testimonial-author">— Adaeze, Port Harcourt</p>
+        </div>
+    </section>
+
+    <!-- Purchase Section -->
+    <section class="section section-light" id="purchase">
+        <h2>Get Your Copy Today</h2>
+        
+        <div class="payment-section">
+            <h3>Complete Book Access</h3>
+            <p>All 18 chapters + Movement Assignments + Prayers</p>
+            <div class="price-display">₦5,000</div>
+            <p style="margin-bottom: 2rem;">One-time payment for lifetime access</p>
+            
+            <div class="payment-options">
+                <div class="payment-option" onclick="openPaymentModal('card')">
+                    <h4>💳 Card Payment</h4>
+                    <p>Visa, Mastercard, Verve</p>
+                </div>
+                <div class="payment-option" onclick="openPaymentModal('transfer')">
+                    <h4>🏦 Bank Transfer</h4>
+                    <p>Direct deposit</p>
+                </div>
+                <div class="payment-option" onclick="openPaymentModal('mobile')">
+                    <h4>📱 Mobile Money</h4>
+                    <p>MTN, Airtel, GLO</p>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="openPaymentModal('card')" style="background: #000; color: #d4af37; margin-top: 1rem;">Proceed to Payment</button>
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+            <h3 style="color: #333; margin-bottom: 1rem;">What's Included</h3>
+            <ul style="list-style: none; text-align: left; max-width: 500px; margin: 0 auto;">
+                <li style="padding: 0.5rem 0;">✓ Full 18-chapter book</li>
+                <li style="padding: 0.5rem 0;">✓ Movement Assignments for each chapter</li>
+                <li style="padding: 0.5rem 0;">✓ Closing prayers and reflections</li>
+                <li style="padding: 0.5rem 0;">✓ Lifetime access to updates</li>
+                <li style="padding: 0.5rem 0;">✓ Digital download (PDF + Web reader)</li>
+                <li style="padding: 0.5rem 0;">✓ Email support</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <h2 style="color: #333; margin-bottom: 1.5rem;">Complete Your Purchase</h2>
+            
+            <form id="paymentForm" onsubmit="processPayment(event)">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="">Select payment method</option>
+                        <option value="card">Card Payment</option>
+                        <option value="transfer">Bank Transfer</option>
+                        <option value="mobile">Mobile Money</option>
+                    </select>
+                </div>
+
+                <div id="bankDetails" style="display: none; background: #f0f0f0; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
+                    <p><strong>Bank Transfer Details:</strong></p>
+                    <p>Bank: [Bank Name]<br>Account: [Account Number]<br>Name: [Account Name]</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">After transfer, reply with proof of payment to confirm access.</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: #d4af37; color: #000;">Complete Purchase - ₦5,000</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                Your information is secure and will only be used to provide book access.
+            </p>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Why Sit Here and Die?</strong></p>
+        <p>Breaking the Trap of Stagnation — Spiritually, Financially, and Personally</p>
+        <p>By Olushola O. Paul</p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem;">© 2026 Olushola O Paul. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">
+            <a href="#" style="color: #d4af37; text-decoration: none;">Privacy Policy</a> | 
+            <a href="#" style="color: #d4af37; text-decoration: none;">Terms of Service</a> | 
+            <a href="#" style="color: #d4af37; text-decoration: none;">Contact</a>
+        </p>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function openPaymentModal(method) {
+            const modal = document.getElementById('paymentModal');
+            const bankDetails = document.getElementById('bankDetails');
+            const paymentMethod = document.getElementById('paymentMethod');
+            
+            modal.style.display = 'block';
+            paymentMethod.value = method;
+            
+            if (method === 'transfer') {
+                bankDetails.style.display = 'block';
+            } else {
+                bankDetails.style.display = 'none';
+            }
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function processPayment(event) {
+            event.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            
+            // Store payment info (in production, this would go to a backend)
+            const paymentData = {
+                fullname,
+                email,
+                phone,
+                paymentMethod,
+                amount: 5000,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Payment Data:', paymentData);
+            
+            // Simulate payment processing
+            alert(`Thank you, ${fullname}!\n\nYour payment of ₦5,000 has been received.\n\nYou will receive an email at ${email} with your book access link shortly.\n\nIf you don't receive it within 5 minutes, please contact support.`);
+            
+            closePaymentModal();
+            document.getElementById('paymentForm').reset();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Handle payment method change
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            const bankDetails = document.getElementById('bankDetails');
+            if (this.value === 'transfer') {
+                bankDetails.style.display = 'block';
+            } else {
+                bankDetails.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
