@@ -4,453 +4,367 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Why Sit Here and Die? - Online Reader</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Lora', Georgia, serif;
-            background: linear-gradient(135deg, #D4AF37 0%, #C9A227 100%);
-            color: #1a1a1a;
-            min-height: 100vh;
+            font-family: 'Lora', serif;
+            background: #f5f5f5;
+            color: #333;
         }
-
-        /* LOGIN SCREEN */
-        .login-screen {
+        
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #D4AF37 0%, #C9A227 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         }
-
+        
         .login-box {
             background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             max-width: 400px;
             width: 90%;
             text-align: center;
         }
-
+        
         .login-box h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #8B7500;
-            margin-bottom: 0.5rem;
+            color: #D4AF37;
+            margin-bottom: 10px;
+            font-size: 2em;
         }
-
-        .login-box .subtitle {
-            color: #A0860D;
-            font-style: italic;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
+        
         .login-box p {
-            color: #555;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.05em;
         }
-
+        
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
             text-align: left;
         }
-
+        
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             color: #333;
-            font-weight: 600;
+            font-weight: bold;
         }
-
+        
         .form-group input {
             width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #D4AF37;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-family: 'Lora', serif;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
         }
-
+        
         .form-group input:focus {
             outline: none;
-            border-color: #8B7500;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            border-color: #D4AF37;
         }
-
-        .login-btn {
+        
+        .btn-login {
             width: 100%;
-            padding: 0.75rem;
-            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
-            color: white;
+            padding: 12px;
+            background: #D4AF37;
+            color: #1a1a1a;
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-
-        .login-btn:hover {
-            background: linear-gradient(135deg, #6B5500 0%, #7A650A 100%);
+        
+        .btn-login:hover {
+            background: #A0860D;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.4);
         }
-
+        
         .error-message {
             color: #d32f2f;
-            margin-top: 1rem;
-            padding: 0.75rem;
-            background: #ffebee;
-            border-radius: 4px;
+            margin-top: 15px;
             display: none;
         }
-
-        /* READER SCREEN */
-        .reader-screen {
+        
+        .reader-container {
             display: none;
-            flex-direction: column;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
             min-height: 100vh;
         }
-
+        
         .reader-header {
-            background: linear-gradient(135deg, #8B7500 0%, #A0860D 100%);
-            color: #F5E6D3;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #D4AF37 0%, #A0860D 100%);
+            color: white;
+            padding: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-
-        .header-title h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 0.25rem;
+        
+        .reader-header h1 {
+            font-size: 1.8em;
+            margin: 0;
         }
-
-        .header-title p {
-            font-size: 0.9rem;
-            color: #E8D4B8;
-            font-style: italic;
-        }
-
-        .header-controls {
+        
+        .reader-controls {
             display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
+            gap: 15px;
         }
-
-        .header-btn {
-            padding: 0.5rem 1rem;
+        
+        .btn-control {
+            padding: 10px 20px;
             background: rgba(255,255,255,0.2);
             color: white;
-            border: 1px solid #F5E6D3;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .header-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .reader-content {
-            flex: 1;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 2rem;
-            background: white;
-            overflow-y: auto;
-            line-height: 1.9;
-        }
-
-        .reader-content::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .reader-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .reader-content::-webkit-scrollbar-thumb {
-            background: #D4AF37;
+            border: 2px solid white;
             border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
         }
-
-        .reader-content::-webkit-scrollbar-thumb:hover {
-            background: #A0860D;
+        
+        .btn-control:hover {
+            background: white;
+            color: #D4AF37;
         }
-
-        .chapter {
-            margin-bottom: 3rem;
+        
+        .reader-content {
+            padding: 50px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            color: #444;
         }
-
-        .chapter-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #8B7500;
-            margin-bottom: 1.5rem;
+        
+        .reader-content h2 {
+            color: #D4AF37;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
             border-bottom: 2px solid #D4AF37;
-            padding-bottom: 1rem;
+            padding-bottom: 10px;
         }
-
-        .chapter-content p {
-            margin-bottom: 1rem;
+        
+        .reader-content h3 {
+            color: #A0860D;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .reader-content p {
+            margin-bottom: 15px;
             text-align: justify;
         }
-
-        .scripture {
-            font-style: italic;
-            color: #555;
-            margin: 1.5rem 0;
-            padding: 1rem;
-            border-left: 4px solid #D4AF37;
-            background: #f9f9f9;
-        }
-
-        .story-box {
-            background: #f0f8ff;
-            border: 2px solid #D4AF37;
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .highlight-box {
-            background: #fffacd;
-            border-left: 4px solid #D4AF37;
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .prayer-box {
-            background: #f3e5f5;
-            border: 2px solid #9c27b0;
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            font-style: italic;
-        }
-
-        .closing-line {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            font-weight: bold;
-            font-style: italic;
-            color: #e65100;
-        }
-
-        .reader-footer {
-            background: #f5f5f5;
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid #ddd;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .reader-footer p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .toc {
-            background: #f9f9f9;
-            padding: 1.5rem;
-            border-radius: 6px;
-            margin-bottom: 2rem;
-        }
-
-        .toc h2 {
-            font-family: 'Playfair Display', serif;
-            color: #8B7500;
-            margin-bottom: 1rem;
-        }
-
-        .toc ul {
-            list-style: none;
-            columns: 2;
-            gap: 2rem;
-        }
-
-        .toc li {
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-        }
-
-        .toc li:before {
-            content: "▸ ";
+        
+        .reader-content strong {
             color: #D4AF37;
-            font-weight: bold;
-            margin-left: -1rem;
         }
-
+        
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+        
+        .chapter-nav button {
+            padding: 10px 20px;
+            background: #D4AF37;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .chapter-nav button:hover {
+            background: #A0860D;
+        }
+        
+        .chapter-nav button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .chapter-info {
+            text-align: center;
+            color: #666;
+        }
+        
         @media (max-width: 768px) {
-            .header-content {
+            .reader-header {
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 15px;
             }
-
-            .header-title h1 {
-                font-size: 1.3rem;
+            
+            .reader-controls {
+                width: 100%;
+                flex-wrap: wrap;
             }
-
-            .chapter-title {
-                font-size: 1.5rem;
-            }
-
+            
             .reader-content {
-                padding: 1rem;
+                padding: 20px;
             }
-
-            .toc ul {
-                columns: 1;
+            
+            .chapter-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .chapter-nav button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-screen" id="loginScreen">
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
         <div class="login-box">
             <h1>Why Sit Here and Die?</h1>
-            <p class="subtitle">Online Reader</p>
-            <p>Enter your access password to read the complete book online.</p>
-            <p style="font-size: 0.85rem; color: #999;">Password provided after payment confirmation.</p>
-            
+            <p>Enter your password to access the book</p>
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="password">Access Password:</label>
+                    <label for="password">Password:</label>
                     <input type="password" id="password" placeholder="Enter password" required>
                 </div>
-                <button type="submit" class="login-btn">Access Book</button>
+                <button type="submit" class="btn-login">Access Book</button>
             </form>
-            
-            <div class="error-message" id="errorMessage"></div>
+            <div class="error-message" id="errorMessage">Incorrect password. Please try again.</div>
         </div>
     </div>
-
-    <!-- READER SCREEN -->
-    <div class="reader-screen" id="readerScreen">
+    
+    <!-- Reader Screen -->
+    <div class="reader-container" id="readerScreen">
         <div class="reader-header">
-            <div class="header-content">
-                <div class="header-title">
-                    <h1>Why Sit Here and Die?</h1>
-                    <p>A Journey from Famine to Feast</p>
-                </div>
-                <div class="header-controls">
-                    <button class="header-btn" onclick="downloadPDF()">📥 Download PDF</button>
-                    <button class="header-btn" onclick="logout()">🚪 Logout</button>
-                </div>
+            <h1>Why Sit Here and Die?</h1>
+            <div class="reader-controls">
+                <button class="btn-control" onclick="downloadPDF()">📥 Download PDF</button>
+                <button class="btn-control" onclick="logout()">🚪 Logout</button>
             </div>
         </div>
-
-        <div class="reader-content" id="readerContent">
-            <!-- Content will be loaded here -->
+        
+        <div class="reader-content" id="bookContent">
+            <!-- Book content will be loaded here -->
         </div>
-
-        <div class="reader-footer">
-            <p>&copy; 2024 Olushola Odunuga Paul. All rights reserved.</p>
-            <p>Why Sit Here and Die? - A Journey from Famine to Feast</p>
+        
+        <div class="chapter-nav">
+            <button onclick="previousChapter()" id="prevBtn">← Previous Chapter</button>
+            <div class="chapter-info">
+                <span id="chapterInfo">Chapter 1 of 18</span>
+            </div>
+            <button onclick="nextChapter()" id="nextBtn">Next Chapter →</button>
         </div>
     </div>
-
+    
+    <script src="chapters-part1.js"></script>
+    <script src="chapters-part2.js"></script>
+    <script src="chapters-part3.js"></script>
     <script>
-        // Correct password
         const CORRECT_PASSWORD = "March31";
-
-        // Load book content from book.html
-        let bookContent = '';
-
-        // Fetch and extract content from book.html
-        fetch('book.html')
-            .then(response => response.text())
-            .then(html => {
-                // Extract content between <div class="content"> and closing div
-                const match = html.match(/<div class="content">([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>\s*<\/body>/);
-                if (match) {
-                    bookContent = match[1];
-                } else {
-                    // Fallback: try alternative pattern
-                    const altMatch = html.match(/<div class="content">([\s\S]*?)<\/div>\s*<\/div>/);
-                    if (altMatch) {
-                        bookContent = altMatch[1];
-                    }
-                }
-            })
-            .catch(err => console.error('Error loading book content:', err));
-
+        let currentChapter = 1;
+        const totalChapters = 18;
+        
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('bookAccess') === 'true') {
+                showReader();
+                loadChapter(currentChapter);
+            }
+            
+            // Check for URL parameter (post-payment redirect)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('access')) {
+                localStorage.setItem('bookAccess', 'true');
+                window.history.replaceState({}, document.title, window.location.pathname);
+                showReader();
+                loadChapter(currentChapter);
+            }
+        });
+        
         function handleLogin(event) {
             event.preventDefault();
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-
+            
             if (password === CORRECT_PASSWORD) {
                 localStorage.setItem('bookAccess', 'true');
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('readerScreen').style.display = 'flex';
-                document.getElementById('readerContent').innerHTML = bookContent;
                 document.getElementById('password').value = '';
-                errorMessage.style.display = 'none';
+                showReader();
+                loadChapter(currentChapter);
             } else {
-                errorMessage.textContent = '❌ Incorrect password. Please try again.';
-                errorMessage.style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'block';
                 document.getElementById('password').value = '';
             }
         }
-
+        
+        function showReader() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('readerScreen').style.display = 'block';
+        }
+        
         function logout() {
-            localStorage.removeItem('bookAccess');
-            document.getElementById('readerScreen').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('password').value = '';
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('bookAccess');
+                document.getElementById('readerScreen').style.display = 'none';
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('password').value = '';
+                currentChapter = 1;
+            }
         }
-
+        
+        function loadChapter(chapterNum) {
+            currentChapter = chapterNum;
+            const bookContent = getBookContent(chapterNum);
+            document.getElementById('bookContent').innerHTML = bookContent;
+            document.getElementById('chapterInfo').textContent = `Chapter ${chapterNum} of ${totalChapters}`;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = chapterNum === 1;
+            document.getElementById('nextBtn').disabled = chapterNum === totalChapters;
+            
+            // Scroll to top
+            document.getElementById('bookContent').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function nextChapter() {
+            if (currentChapter < totalChapters) {
+                loadChapter(currentChapter + 1);
+            }
+        }
+        
+        function previousChapter() {
+            if (currentChapter > 1) {
+                loadChapter(currentChapter - 1);
+            }
+        }
+        
         function downloadPDF() {
-            alert('PDF download feature will be available soon. For now, you can use your browser\'s print function (Ctrl+P or Cmd+P) to save as PDF.');
+            alert('PDF download feature coming soon. You can use your browser\'s print function (Ctrl+P or Cmd+P) to save as PDF.');
         }
-
-        // Check if user is already logged in or has access code in URL
-        window.addEventListener('load', function() {
-            // Check URL for access code (post-payment redirect)
-            const urlParams = new URLSearchParams(window.location.search);
-            const accessCode = urlParams.get('access');
-            
-            if (accessCode === 'March31') {
-                localStorage.setItem('bookAccess', 'true');
-                // Remove access code from URL for security
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-            
-            if (localStorage.getItem('bookAccess') === 'true' && bookContent) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('readerScreen').style.display = 'flex';
-                document.getElementById('readerContent').innerHTML = bookContent;
-            }
-        });
+        
+        function getBookContent(chapterNum) {
+            // Merge all chapter parts
+            const allChapters = { ...bookChapters, ...bookChaptersPart2, ...bookChaptersPart3 };
+            return allChapters[chapterNum] || '<p>Chapter content loading...</p>';
+        }
     </script>
 </body>
 </html>
