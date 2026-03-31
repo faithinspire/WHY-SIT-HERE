@@ -1096,6 +1096,49 @@
         <h2>"Why sit we here until we die?" — 2 Kings 7:3</h2>
     </section>
     
+    <!-- ANIMATED PAYMENT FLYER -->
+    <section style="padding: 5rem 2rem; max-width: 1200px; margin: 0 auto;">
+        <h2 class="section-title">How to Access Your Book</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px;">
+            <!-- Step 1 -->
+            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">1</div>
+                <i class="fas fa-globe" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
+                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Visit Website</h3>
+                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Go to our website and explore the book details</p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">2</div>
+                <i class="fas fa-credit-card" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
+                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Make Payment</h3>
+                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Transfer ₦6,000 to provided bank account</p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">3</div>
+                <i class="fas fa-key" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
+                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Receive Password</h3>
+                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Get access password via WhatsApp</p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">4</div>
+                <i class="fas fa-download" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
+                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Access & Download</h3>
+                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Read online or download PDF</p>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <a href="payment-flyer.html" class="btn btn-solid" style="display: inline-block; padding: 12px 30px; text-decoration: none;">
+                <i class="fas fa-arrow-right"></i> View Full Animated Flyer
+            </a>
+        </div>
+    </section>
+    
     <!-- GET THE BOOK -->
     <section id="book" class="get-book">
         <h2 class="section-title">Get the Book</h2>
@@ -1650,107 +1693,13 @@
                     return;
                 }
                 
-                // Enhanced chapter display with fanciful styling
+                // Professional book styling with international standards
                 content.innerHTML = `
                     <div style="position: relative; z-index: 1; font-family: 'Georgia', serif; color: #2a2a2a;">
-                        <!-- Part Designation -->
-                        <div style="color: var(--gold); font-size: 0.95rem; margin-bottom: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-align: center;">${chapter.part}</div>
-                        
-                        <!-- Chapter Title with Fancy Background -->
-                        <div style="
-                            background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(61, 12, 17, 0.15) 100%);
-                            border: 3px solid var(--gold);
-                            border-radius: 12px;
-                            padding: 40px 30px;
-                            margin-bottom: 30px;
-                            position: relative;
-                            overflow: hidden;
-                            box-shadow: 0 8px 32px rgba(201, 168, 76, 0.2);
-                        ">
-                            <!-- Background Pattern -->
-                            <div style="
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                right: 0;
-                                bottom: 0;
-                                background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\"><rect fill=\"%23f5f0e8\" width=\"100\" height=\"100\"/><path fill=\"%23c9a84c\" opacity=\"0.05\" d=\"M0,0 L100,100 M100,0 L0,100\"/></svg>');
-                                pointer-events: none;
-                                z-index: 0;
-                            "></div>
-                            
-                            <!-- Chapter Number Badge -->
-                            <div style="
-                                position: absolute;
-                                top: 15px;
-                                right: 20px;
-                                width: 70px;
-                                height: 70px;
-                                background: linear-gradient(135deg, var(--gold) 0%, #a68a3a 100%);
-                                border-radius: 50%;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                font-size: 2rem;
-                                font-weight: 900;
-                                color: #0a0a0a;
-                                box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
-                                z-index: 2;
-                            ">
-                                ${chapter.number}
-                            </div>
-                            
-                            <!-- Title Content -->
-                            <div style="position: relative; z-index: 1;">
-                                <h2 style="
-                                    color: var(--gold);
-                                    margin: 0 0 15px 0;
-                                    font-size: 3rem;
-                                    font-family: 'Playfair Display', serif;
-                                    font-weight: 900;
-                                    line-height: 1.2;
-                                    letter-spacing: 1px;
-                                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-                                ">
-                                    ${chapter.title}
-                                </h2>
-                                
-                                <!-- Hook/Subtitle with Fancy Styling -->
-                                <div style="
-                                    background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.1), transparent);
-                                    border-left: 4px solid var(--gold);
-                                    border-right: 4px solid var(--gold);
-                                    padding: 20px 25px;
-                                    margin-top: 20px;
-                                    border-radius: 8px;
-                                ">
-                                    <p style="
-                                        color: #3d0c11;
-                                        font-style: italic;
-                                        margin: 0;
-                                        font-size: 1.3rem;
-                                        line-height: 1.8;
-                                        font-weight: 600;
-                                        letter-spacing: 0.5px;
-                                    ">
-                                        "${chapter.hook}"
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Chapter Content -->
-                        <div style="
-                            font-size: 1rem;
-                            line-height: 1.9;
-                            text-align: justify;
-                            white-space: pre-wrap;
-                            word-wrap: break-word;
-                            color: #2a2a2a;
-                            padding: 20px 0;
-                        ">
-                            ${chapter.content}
-                        </div>
+                        <div style="color: var(--gold); font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">${chapter.part}</div>
+                        <h2 style="color: var(--gold); margin-bottom: 0.8rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900; line-height: 1.3;">Chapter ${chapter.number}: ${chapter.title}</h2>
+                        <p style="color: #3d0c11; font-style: italic; margin-bottom: 1.5rem; font-size: 1rem; border-left: 4px solid var(--gold); padding-left: 1.2rem; line-height: 1.8;">"${chapter.hook}"</p>
+                        <div style="font-size: 1rem; line-height: 1.9; text-align: justify; white-space: pre-wrap; word-wrap: break-word; color: #2a2a2a;">${chapter.content}</div>
                     </div>
                 `;
             }
@@ -2100,7 +2049,7 @@
                     </div>
                 `;
                 
-                // Chapters
+                // Chapters with enhanced title styling
                 let pageNumber = 1;
                 if (bookContent.chapters && bookContent.chapters.length > 0) {
                     bookContent.chapters.forEach(chapter => {
@@ -2108,9 +2057,82 @@
                         htmlContent += `
                             <div class="page">
                                 <div class="chapter">
-                                    <div class="part">${chapter.part}</div>
-                                    <div class="chapter-title">Chapter ${chapter.number}: ${chapter.title}</div>
-                                    <div class="hook">"${chapter.hook}"</div>
+                                    <!-- Enhanced Chapter Title Container -->
+                                    <div style="
+                                        background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(61, 12, 17, 0.1) 100%);
+                                        border: 3px solid #c9a84c;
+                                        border-radius: 12px;
+                                        padding: 40px 30px;
+                                        margin-bottom: 30px;
+                                        position: relative;
+                                        box-shadow: 0 8px 32px rgba(201, 168, 76, 0.2);
+                                        background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\"><rect fill=\"%23c9a84c\" opacity=\"0.05\" width=\"100\" height=\"100\"/><path fill=\"%23c9a84c\" opacity=\"0.03\" d=\"M0,0 L100,100 M100,0 L0,100\"/></svg>');
+                                    ">
+                                        <!-- Chapter Badge -->
+                                        <div style="
+                                            position: absolute;
+                                            top: 15px;
+                                            right: 15px;
+                                            width: 70px;
+                                            height: 70px;
+                                            background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%);
+                                            border-radius: 50%;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            font-size: 2rem;
+                                            font-weight: 900;
+                                            color: #0a0a0a;
+                                            box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+                                            z-index: 10;
+                                        ">${chapter.number}</div>
+                                        
+                                        <!-- Part Designation -->
+                                        <div style="
+                                            font-size: 0.95rem;
+                                            color: #c9a84c;
+                                            text-transform: uppercase;
+                                            letter-spacing: 2px;
+                                            font-weight: bold;
+                                            text-align: center;
+                                            margin-bottom: 1rem;
+                                        ">${chapter.part}</div>
+                                        
+                                        <!-- Big, Fanciful, Bold Title -->
+                                        <h2 style="
+                                            color: #c9a84c;
+                                            font-size: 3rem;
+                                            font-family: 'Playfair Display', serif;
+                                            font-weight: 900;
+                                            text-align: center;
+                                            margin: 0 0 1.5rem 0;
+                                            line-height: 1.2;
+                                            letter-spacing: 1px;
+                                            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+                                        ">Chapter ${chapter.number}: ${chapter.title}</h2>
+                                        
+                                        <!-- Enhanced Hook -->
+                                        <div style="
+                                            background: linear-gradient(90deg, rgba(201, 168, 76, 0.1) 0%, rgba(201, 168, 76, 0.05) 100%);
+                                            border-left: 4px solid #c9a84c;
+                                            border-right: 4px solid #c9a84c;
+                                            padding: 20px 25px;
+                                            border-radius: 8px;
+                                            text-align: center;
+                                        ">
+                                            <p style="
+                                                color: #3d0c11;
+                                                font-style: italic;
+                                                font-size: 1.3rem;
+                                                font-weight: 600;
+                                                line-height: 1.8;
+                                                letter-spacing: 0.5px;
+                                                margin: 0;
+                                            ">"${chapter.hook}"</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Chapter Content -->
                                     <div class="content"><p>${contentText}</p></div>
                                 </div>
                                 <div class="page-number">Page ${pageNumber++}</div>
