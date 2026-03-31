@@ -1190,7 +1190,7 @@
         </div>
     </footer>
     
-    <script src="book-data.js"></script>
+    <script src="book-data-complete.js"></script>
     <script>
         // PARTICLE CANVAS
         const canvas = document.getElementById('heroCanvas');
@@ -1364,22 +1364,22 @@
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access) {
-                // Create reader modal
+                // Create reader modal with table of contents
                 const readerHTML = `
                     <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
                         <div style="background: rgba(201, 168, 76, 0.1); padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(201, 168, 76, 0.2); flex-wrap: wrap; gap: 1rem;">
-                            <h3 style="color: var(--gold); margin: 0; font-size: 1.2rem;">Why Sit Here and Die?</h3>
+                            <h3 style="color: var(--gold); margin: 0; font-size: 1.2rem;">Why Sit Here and Die? — Online Reader</h3>
                             <button onclick="closeReader()" style="background: var(--gold); color: var(--black); border: none; padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">✕ Close</button>
                         </div>
-                        <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 200px 1fr; gap: 0; width: 100%;">
-                            <div id="chapterNav" style="border-right: 1px solid rgba(201, 168, 76, 0.2); padding: 1rem; max-height: 100%; overflow-y: auto; background: rgba(10, 10, 10, 0.5);">
-                                <h4 style="color: var(--gold); margin: 0 0 1rem 0; font-size: 0.95rem;">Chapters</h4>
-                                <div id="chapterList"></div>
+                        <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 250px 1fr; gap: 0; width: 100%;">
+                            <div id="chapterNav" style="border-right: 1px solid rgba(201, 168, 76, 0.2); padding: 1.5rem; max-height: 100%; overflow-y: auto; background: rgba(10, 10, 10, 0.5);">
+                                <h4 style="color: var(--gold); margin: 0 0 1.5rem 0; font-size: 0.95rem; font-weight: 700;">TABLE OF CONTENTS</h4>
+                                <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
                             </div>
-                            <div id="chapterContent" style="padding: 2rem; color: var(--cream); line-height: 1.8; font-size: 1rem; white-space: pre-wrap; word-wrap: break-word; position: relative; overflow-y: auto;">
-                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.05; font-size: 3rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%;">Licensed Copy — ${access.name}</div>
-                                <div style="position: relative; z-index: 1;">
-                                    <p style="text-align: center; color: rgba(201, 168, 76, 0.8);">Select a chapter to read</p>
+                            <div id="chapterContent" style="padding: 2.5rem; color: var(--cream); line-height: 1.9; font-size: 1.05rem; position: relative; overflow-y: auto;">
+                                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 4rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0;">Licensed Copy — ${access.name}</div>
+                                <div style="position: relative; z-index: 1; text-align: center;">
+                                    <p style="color: rgba(201, 168, 76, 0.8); font-size: 1.1rem;">📖 Select a chapter from the table of contents to begin reading</p>
                                 </div>
                             </div>
                         </div>
@@ -1387,19 +1387,30 @@
                 `;
                 document.body.insertAdjacentHTML('beforeend', readerHTML);
                 
-                // Populate chapter list
+                // Populate chapter list with table of contents
                 const chapterList = document.getElementById('chapterList');
-                bookContent.chapters.forEach(ch => {
+                
+                // Add Front Matter sections
+                const frontMatterSections = [
+                    { id: 'title', label: 'Title Page', type: 'frontmatter' },
+                    { id: 'dedication', label: 'Dedication', type: 'frontmatter' },
+                    { id: 'epigraph', label: 'Epigraph', type: 'frontmatter' },
+                    { id: 'foreword', label: 'Foreword', type: 'frontmatter' },
+                    { id: 'endorsement', label: 'Endorsement', type: 'frontmatter' },
+                    { id: 'preface', label: 'Preface', type: 'frontmatter' }
+                ];
+                
+                frontMatterSections.forEach(section => {
                     const btn = document.createElement('button');
-                    btn.textContent = `Ch ${ch.number}: ${ch.title}`;
+                    btn.textContent = section.label;
                     btn.style.cssText = `
                         display: block;
                         width: 100%;
-                        padding: 0.8rem;
-                        margin-bottom: 0.5rem;
-                        background: rgba(201, 168, 76, 0.1);
-                        border: 1px solid rgba(201, 168, 76, 0.2);
-                        color: var(--cream);
+                        padding: 0.9rem;
+                        margin-bottom: 0.3rem;
+                        background: rgba(201, 168, 76, 0.08);
+                        border: 1px solid rgba(201, 168, 76, 0.15);
+                        color: rgba(245, 240, 232, 0.9);
                         border-radius: 4px;
                         cursor: pointer;
                         text-align: left;
@@ -1408,23 +1419,94 @@
                         font-family: 'Lato', sans-serif;
                     `;
                     btn.onmouseover = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.2)';
+                        btn.style.background = 'rgba(201, 168, 76, 0.15)';
                         btn.style.borderColor = 'var(--gold)';
+                        btn.style.color = 'var(--gold)';
                     };
                     btn.onmouseout = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.1)';
-                        btn.style.borderColor = 'rgba(201, 168, 76, 0.2)';
+                        btn.style.background = 'rgba(201, 168, 76, 0.08)';
+                        btn.style.borderColor = 'rgba(201, 168, 76, 0.15)';
+                        btn.style.color = 'rgba(245, 240, 232, 0.9)';
+                    };
+                    btn.onclick = () => displayFrontMatter(section.id);
+                    chapterList.appendChild(btn);
+                });
+                
+                // Add separator
+                const separator = document.createElement('div');
+                separator.style.cssText = 'height: 1px; background: rgba(201, 168, 76, 0.2); margin: 1rem 0;';
+                chapterList.appendChild(separator);
+                
+                // Add chapters
+                bookContent.chapters.forEach(ch => {
+                    const btn = document.createElement('button');
+                    btn.textContent = `Ch ${ch.number}: ${ch.title}`;
+                    btn.style.cssText = `
+                        display: block;
+                        width: 100%;
+                        padding: 0.9rem;
+                        margin-bottom: 0.3rem;
+                        background: rgba(201, 168, 76, 0.08);
+                        border: 1px solid rgba(201, 168, 76, 0.15);
+                        color: rgba(245, 240, 232, 0.9);
+                        border-radius: 4px;
+                        cursor: pointer;
+                        text-align: left;
+                        font-size: 0.85rem;
+                        transition: all 0.3s;
+                        font-family: 'Lato', sans-serif;
+                    `;
+                    btn.onmouseover = () => {
+                        btn.style.background = 'rgba(201, 168, 76, 0.15)';
+                        btn.style.borderColor = 'var(--gold)';
+                        btn.style.color = 'var(--gold)';
+                    };
+                    btn.onmouseout = () => {
+                        btn.style.background = 'rgba(201, 168, 76, 0.08)';
+                        btn.style.borderColor = 'rgba(201, 168, 76, 0.15)';
+                        btn.style.color = 'rgba(245, 240, 232, 0.9)';
                     };
                     btn.onclick = () => displayChapter(ch.number);
                     chapterList.appendChild(btn);
                 });
+                
+                // Add conclusion
+                const conclusionBtn = document.createElement('button');
+                conclusionBtn.textContent = 'Conclusion';
+                conclusionBtn.style.cssText = `
+                    display: block;
+                    width: 100%;
+                    padding: 0.9rem;
+                    margin-bottom: 0.3rem;
+                    background: rgba(201, 168, 76, 0.08);
+                    border: 1px solid rgba(201, 168, 76, 0.15);
+                    color: rgba(245, 240, 232, 0.9);
+                    border-radius: 4px;
+                    cursor: pointer;
+                    text-align: left;
+                    font-size: 0.85rem;
+                    transition: all 0.3s;
+                    font-family: 'Lato', sans-serif;
+                `;
+                conclusionBtn.onmouseover = () => {
+                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.15)';
+                    conclusionBtn.style.borderColor = 'var(--gold)';
+                    conclusionBtn.style.color = 'var(--gold)';
+                };
+                conclusionBtn.onmouseout = () => {
+                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.08)';
+                    conclusionBtn.style.borderColor = 'rgba(201, 168, 76, 0.15)';
+                    conclusionBtn.style.color = 'rgba(245, 240, 232, 0.9)';
+                };
+                conclusionBtn.onclick = () => displayConclusion();
+                chapterList.appendChild(conclusionBtn);
                 
                 // Add responsive styles
                 const style = document.createElement('style');
                 style.textContent = `
                     @media (max-width: 768px) {
                         #readerModal {
-                            grid-template-columns: 1fr !important;
+                            flex-direction: column;
                         }
                         #readerModal > div:nth-child(2) {
                             grid-template-columns: 1fr !important;
@@ -1432,11 +1514,24 @@
                         #chapterNav {
                             border-right: none !important;
                             border-bottom: 1px solid rgba(201, 168, 76, 0.2) !important;
-                            max-height: 150px !important;
+                            max-height: 120px !important;
+                            padding: 1rem !important;
                         }
                         #chapterContent {
-                            padding: 1rem !important;
+                            padding: 1.5rem !important;
                             font-size: 0.95rem !important;
+                            line-height: 1.7 !important;
+                        }
+                        #chapterList {
+                            display: grid !important;
+                            grid-template-columns: 1fr 1fr !important;
+                            gap: 0.3rem !important;
+                        }
+                    }
+                    @media (max-width: 480px) {
+                        #chapterContent {
+                            padding: 1rem !important;
+                            font-size: 0.9rem !important;
                         }
                     }
                 `;
@@ -1446,18 +1541,65 @@
             }
         }
         
+        function displayFrontMatter(sectionId) {
+            const section = bookContent.frontMatter[sectionId];
+            const content = document.getElementById('chapterContent');
+            
+            if (sectionId === 'title') {
+                content.innerHTML = `
+                    <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
+                        <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem;">${bookContent.metadata.title}</h1>
+                        <p style="color: rgba(201, 168, 76, 0.8); font-size: 1.2rem; margin-bottom: 2rem;">${bookContent.metadata.subtitle}</p>
+                        <p style="color: var(--cream); font-size: 1.1rem; margin-bottom: 3rem;">by ${bookContent.metadata.author}</p>
+                        <p style="color: rgba(201, 168, 76, 0.6); font-size: 0.95rem;">${bookContent.frontMatter.titlePage.copyright}</p>
+                    </div>
+                `;
+            } else if (sectionId === 'dedication') {
+                content.innerHTML = `
+                    <div style="position: relative; z-index: 1;">
+                        <h2 style="color: var(--gold); margin-bottom: 2rem; text-align: center;">Dedication</h2>
+                        <p style="text-align: center; font-style: italic; font-size: 1.1rem; line-height: 2;">${section}</p>
+                    </div>
+                `;
+            } else if (sectionId === 'epigraph') {
+                content.innerHTML = `
+                    <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
+                        <p style="color: var(--gold); font-style: italic; font-size: 1.2rem; line-height: 2;">${section}</p>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div style="position: relative; z-index: 1;">
+                        <h2 style="color: var(--gold); margin-bottom: 1.5rem;">${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}</h2>
+                        <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.9;">${section}</div>
+                    </div>
+                `;
+            }
+        }
+        
         function displayChapter(chapterNum) {
             const chapter = bookContent.chapters.find(c => c.number === chapterNum);
             if (chapter) {
                 const content = document.getElementById('chapterContent');
                 content.innerHTML = `
                     <div style="position: relative; z-index: 1;">
-                        <h2 style="color: var(--gold); margin-bottom: 0.5rem; font-size: 1.5rem;">Chapter ${chapter.number}: ${chapter.title}</h2>
-                        <p style="color: rgba(201, 168, 76, 0.8); font-style: italic; margin-bottom: 2rem; font-size: 0.95rem;">${chapter.hook}</p>
-                        <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.8;">${chapter.content}</div>
+                        <div style="color: rgba(201, 168, 76, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">${chapter.part}</div>
+                        <h2 style="color: var(--gold); margin-bottom: 0.5rem; font-size: 1.8rem;">Chapter ${chapter.number}: ${chapter.title}</h2>
+                        <p style="color: rgba(201, 168, 76, 0.8); font-style: italic; margin-bottom: 2rem; font-size: 1rem; border-left: 3px solid var(--gold); padding-left: 1rem;">${chapter.hook}</p>
+                        <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.9;">${chapter.content}</div>
                     </div>
                 `;
             }
+        }
+        
+        function displayConclusion() {
+            const content = document.getElementById('chapterContent');
+            content.innerHTML = `
+                <div style="position: relative; z-index: 1;">
+                    <h2 style="color: var(--gold); margin-bottom: 2rem; font-size: 1.8rem;">Conclusion</h2>
+                    <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.9;">${bookContent.conclusion}</div>
+                </div>
+            `;
         }
         
         function closeReader() {
