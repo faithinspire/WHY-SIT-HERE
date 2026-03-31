@@ -3,686 +3,1364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why Sit Here and Die? - Breaking the Trap of Stagnation</title>
+    <title>Why Sit Here and Die? - Olushola Odunuga Paul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Lato', sans-serif; color: #f5f0e8; background: #0a0a0a; overflow-x: hidden; }
+        
+        /* COLORS */
+        :root {
+            --black: #0a0a0a;
+            --gold: #c9a84c;
+            --cream: #f5f0e8;
+            --burgundy: #3d0c11;
         }
-
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.8;
-            color: #333;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        }
-
-        /* Navigation */
+        
+        /* TYPOGRAPHY */
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; font-weight: 900; }
+        
+        /* STICKY NAV */
         nav {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 1rem 2rem;
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
             z-index: 1000;
-            border-bottom: 3px solid #d4af37;
-        }
-
-        nav ul {
-            list-style: none;
+            background: transparent;
+            padding: 1.5rem 2rem;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
         }
-
-        nav a {
-            color: #fff;
+        
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(201, 168, 76, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--cream);
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-
-        nav a:hover {
-            color: #d4af37;
+        
+        .nav-links a:hover {
+            color: var(--gold);
         }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23000" width="1200" height="600"/><path fill="%23d4af37" opacity="0.1" d="M0 300 Q300 200 600 300 T1200 300 L1200 600 L0 600 Z"/></svg>');
-            background-size: cover;
-            background-position: center;
-            padding: 6rem 2rem;
-            text-align: center;
-            color: #fff;
-            min-height: 70vh;
-            display: flex;
+        
+        .hamburger {
+            display: none;
             flex-direction: column;
-            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--gold);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        
+        /* HERO */
+        .hero {
+            height: 100vh;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
         }
-
+        
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4.5rem;
+            color: var(--gold);
             margin-bottom: 1rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            line-height: 1.2;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 20px rgba(201, 168, 76, 0.3);
         }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
+        
+        .hero-scripture {
+            font-size: 1.3rem;
+            color: var(--cream);
             margin-bottom: 2rem;
-            color: #d4af37;
             font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
         }
-
-        .hero .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        .hero .scripture {
-            background: rgba(212, 175, 55, 0.1);
-            border-left: 4px solid #d4af37;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 700px;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        /* CTA Buttons */
-        .cta-section {
+        
+        .hero-buttons {
             display: flex;
             gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 1s forwards;
         }
-
+        
         .btn {
             padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 5px;
+            font-size: 1rem;
+            border: 2px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
             cursor: pointer;
             transition: all 0.3s;
+            font-family: 'Lato', sans-serif;
             text-decoration: none;
             display: inline-block;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-
-        .btn-primary {
-            background: #d4af37;
-            color: #000;
-        }
-
-        .btn-primary:hover {
-            background: #e6c547;
+        
+        .btn:hover {
+            background: var(--gold);
+            color: var(--black);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
-
-        .btn-secondary {
+        
+        .btn-solid {
+            background: var(--gold);
+            color: var(--black);
+        }
+        
+        .btn-solid:hover {
             background: transparent;
-            color: #d4af37;
-            border: 2px solid #d4af37;
+            color: var(--gold);
         }
-
-        .btn-secondary:hover {
-            background: #d4af37;
-            color: #000;
+        
+        .scroll-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 2;
         }
-
-        /* Content Sections */
-        .section {
-            padding: 4rem 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .section-light {
-            background: #f5f5f5;
-        }
-
-        .section-dark {
-            background: #1a1a1a;
-            color: #fff;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #d4af37;
-            text-align: center;
-        }
-
-        .section-dark h2 {
-            color: #d4af37;
-        }
-
-        .section p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-
-        /* About Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            margin: 2rem 0;
-        }
-
-        .about-grid img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-        }
-
-        /* Features */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .feature-card {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #d4af37;
-        }
-
-        .section-dark .feature-card {
-            background: #2d2d2d;
-            color: #fff;
-        }
-
-        .feature-card h3 {
-            color: #d4af37;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .feature-card p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Testimonials */
-        .testimonial {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            border-left: 4px solid #d4af37;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-dark .testimonial {
-            background: #2d2d2d;
-            color: #fff;
-        }
-
-        .testimonial p {
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-author {
-            font-weight: bold;
-            color: #d4af37;
-        }
-
-        /* Payment Section */
-        .payment-section {
-            background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%);
-            color: #000;
-            padding: 4rem 2rem;
-            text-align: center;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-
-        .payment-section h3 {
+        
+        .scroll-arrow i {
             font-size: 2rem;
-            margin-bottom: 1.5rem;
+            color: var(--gold);
         }
-
-        .price-display {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1rem 0;
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
         }
-
-        .payment-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .payment-option {
-            background: rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .payment-option:hover {
-            background: rgba(0, 0, 0, 0.2);
-            transform: translateY(-3px);
-        }
-
-        /* Footer */
-        footer {
-            background: #000;
-            color: #fff;
-            text-align: center;
-            padding: 2rem;
-            border-top: 3px solid #d4af37;
-        }
-
-        footer p {
-            margin: 0.5rem 0;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            animation: fadeIn 0.3s;
-        }
-
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 2rem;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
+        
+        /* SECTIONS */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        .close:hover {
-            color: #000;
+        
+        .section-title {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 3rem;
+            text-align: center;
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
+        
+        /* ABOUT SECTION */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group select {
+        
+        .book-cover {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(201, 168, 76, 0.2);
+        }
+        
+        .about-synopsis {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: var(--cream);
+        }
+        
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: rgba(201, 168, 76, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--gold);
+            text-align: center;
+        }
+        
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card h4 {
+            color: var(--gold);
             font-size: 1rem;
         }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        
+        /* ENDORSEMENTS */
+        .endorsements {
+            background: rgba(61, 12, 17, 0.3);
         }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2rem;
+        
+        .endorsement-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .endorsement-card {
+            background: rgba(201, 168, 76, 0.05);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .endorsement-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .endorsement-card p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .endorsement-card h4 {
+            color: var(--gold);
+            font-size: 0.95rem;
+        }
+        
+        /* CHAPTERS GRID */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .chapter-card {
+            background: rgba(201, 168, 76, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            background: rgba(201, 168, 76, 0.1);
+        }
+        
+        .chapter-card.locked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.3);
+            border-radius: 8px;
+        }
+        
+        .chapter-number {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        
+        .chapter-card h4 {
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .chapter-card p {
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .btn-unlock {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 0.7rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn-unlock:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+        
+        /* AUTHOR */
+        .author-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .author-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+        }
+        
+        .author-bio p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .author-quote {
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.1rem;
+            border-left: 3px solid var(--gold);
+            padding-left: 1.5rem;
+        }
+        
+        /* TESTIMONIALS */
+        .testimonials-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background: rgba(201, 168, 76, 0.05);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .testimonial-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-card p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .testimonial-card h4 {
+            color: var(--gold);
+            font-size: 0.95rem;
+        }
+        
+        /* FEATURES */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(201, 168, 76, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .feature h4 {
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* SCRIPTURE BANNER */
+        .scripture-banner {
+            background: linear-gradient(135deg, var(--gold), rgba(201, 168, 76, 0.8));
+            color: var(--black);
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .scripture-banner h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        
+        /* GET THE BOOK */
+        .get-book {
+            background: rgba(61, 12, 17, 0.3);
+        }
+        
+        .book-pricing {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(201, 168, 76, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .book-pricing h3 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-tagline {
+            font-size: 1.1rem;
+            color: rgba(245, 240, 232, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .book-price {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: 900;
+            margin: 1rem 0;
+        }
+        
+        .book-includes {
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* PAYMENT SECTION */
+        .payment-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .payment-section h3 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .payment-step {
+            background: rgba(201, 168, 76, 0.05);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .payment-step h4 {
+            color: var(--cream);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .step-number {
+            background: var(--gold);
+            color: var(--black);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+        
+        .bank-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .bank-card {
+            background: rgba(10, 10, 10, 0.5);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        
+        .bank-card h5 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .bank-card p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .btn-copy {
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3);
+        }
+        
+        #accessForm {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        #accessForm input {
+            padding: 1rem;
+            background: rgba(10, 10, 10, 0.5);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 4px;
+            color: var(--cream);
+            font-family: 'Lato', sans-serif;
+        }
+        
+        #accessForm input::placeholder {
+            color: rgba(245, 240, 232, 0.5);
+        }
+        
+        #accessForm input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(10, 10, 10, 0.7);
+        }
+        
+        /* BOOK ACCESS PANEL */
+        .book-access-panel {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(201, 168, 76, 0.05);
+            border-radius: 8px;
+            border: 2px solid var(--gold);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        
+        .access-content h3 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+        
+        .access-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .access-note {
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+            font-style: italic;
+        }
+        
+        /* WHATSAPP BUTTON */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            z-index: 999;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 70px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .whatsapp-btn:hover .whatsapp-tooltip {
+            opacity: 1;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: rgba(10, 10, 10, 0.8);
+            border-top: 1px solid rgba(201, 168, 76, 0.2);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-legal {
+            font-size: 0.85rem;
+            color: rgba(245, 240, 232, 0.6);
+            margin-top: 1rem;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            
+            .about-content {
+                grid-template-columns: 1fr;
             }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
+            
+            .endorsement-cards {
+                grid-template-columns: 1fr;
             }
-
-            .cta-section {
-                flex-direction: column;
+            
+            .author-content {
+                grid-template-columns: 1fr;
             }
-
-            .btn {
-                width: 100%;
+            
+            .author-photo {
+                width: 200px;
+                height: 200px;
+                margin: 0 auto;
             }
-
-            .section {
-                padding: 2rem 1rem;
+            
+            .bank-options {
+                grid-template-columns: 1fr;
             }
-
-            .section h2 {
-                font-size: 1.8rem;
+            
+            .access-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .whatsapp-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .footer-links {
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
+    <!-- STICKY NAV -->
+    <nav id="navbar">
+        <div class="logo">WHY SIT HERE</div>
+        <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#chapters">Chapters</a></li>
+            <li><a href="#author">Author</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#purchase">Purchase</a></li>
+            <li><a href="#book">Get the Book</a></li>
+            <li><a href="#access">Access Book</a></li>
         </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <h1>Why Sit Here and Die?</h1>
-        <p class="subtitle">Breaking the Trap of Stagnation</p>
-        <p class="tagline">A life-and-leadership wake-up call from 2 Kings 7</p>
-        
-        <div class="scripture">
-            "And there were four leprous men at the entering in of the gate: and they said one to another, Why sit we here until we die? If we say, We will enter into the city, then the famine is in the city, and we shall die there: and if we sit still here, we die also. Now therefore come, and let us fall unto the host of the Syrians: if they save us alive, we shall live; and if they kill us, we shall but die."
-            <br><br>
-            <strong>— 2 Kings 7:3–4 (KJV)</strong>
+    
+    <!-- HERO -->
+    <section class="hero">
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
+        <div class="hero-content">
+            <h1>WHY SIT HERE AND DIE?</h1>
+            <p class="hero-scripture">"Why sit we here until we die?" — 2 Kings 7:3 (KJV)</p>
+            <div class="hero-buttons">
+                <button class="btn" onclick="document.getElementById('chapters').scrollIntoView()">Read a Chapter</button>
+                <button class="btn btn-solid" onclick="document.getElementById('book').scrollIntoView()">Get the Book</button>
+            </div>
         </div>
-
-        <div class="cta-section">
-            <button class="btn btn-primary" onclick="scrollToSection('purchase')">Get the Book Now</button>
-            <button class="btn btn-secondary" onclick="scrollToSection('about')">Learn More</button>
+        <div class="scroll-arrow">
+            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
-
-    <!-- About Section -->
-    <section class="section section-light" id="about">
-        <h2>About This Book</h2>
-        
-        <p>When life is tight—spiritually, financially, emotionally, professionally—passivity becomes a decision. The four lepers teach a repeatable pattern: face reality, move with courage, take wise risks, and steward the "good news" you find.</p>
-
-        <p>This is not a book of theory. This is a book of testimony. Every principle has been tested in the laboratory of real life. Every chapter addresses a struggle you have personally navigated. Every invitation to rise is an invitation the author first had to accept himself.</p>
-
-        <div class="features">
-            <div class="feature-card">
-                <h3>📖 18 Chapters</h3>
-                <p>Comprehensive exploration of spiritual, financial, relational, and professional breakthrough</p>
+    
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about">
+        <h2 class="section-title">About the Book</h2>
+        <div class="about-content">
+            <div class="about-left">
+                <img src="book-cover.jpg" alt="Why Sit Here and Die Book Cover" class="book-cover">
             </div>
-            <div class="feature-card">
-                <h3>🎯 Practical Tools</h3>
-                <p>Actionable frameworks, audits, and assignments designed to turn insight into action</p>
-            </div>
-            <div class="feature-card">
-                <h3>📚 Real Stories</h3>
-                <p>Authentic narratives from people who refused to sit at their gates</p>
-            </div>
-            <div class="feature-card">
-                <h3>✨ Biblical Foundation</h3>
-                <p>Every chapter rooted in Scripture with practical application for modern life</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chapters Preview -->
-    <section class="section section-dark" id="chapters">
-        <h2>What You'll Discover</h2>
-        
-        <div class="features">
-            <div class="feature-card">
-                <h3>Part One: The Trap</h3>
-                <p><strong>Chapters 1-4</strong><br>Recognize the gates where you're sitting. Name the famines. Learn how rejection can train you. Have the conversations that change everything.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Part Two: The Move</h3>
-                <p><strong>Chapters 5-8</strong><br>Develop faith that walks. Manage risk wisely. Build in the hidden hours. Discover how God intervenes where you cannot.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Part Three: Abundance</h3>
-                <p><strong>Chapters 9-12</strong><br>Steward what you've found. Share the good news. Build credibility. Communicate with impact.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Part Four: Legacy</h3>
-                <p><strong>Chapters 13-18</strong><br>Understand sudden turnarounds. Face the consequences of unbelief. Build systems that last. Raise the next generation of movers.</p>
+            <div class="about-right">
+                <p class="about-synopsis">When life is starving you—of joy, money, progress, peace—there is a question that exposes every excuse: Why sit here and die? In 2 Kings 7, four rejected lepers made one decision that saved a city: they moved. Their story is a blueprint for spiritual renewal, career direction, academic excellence, leadership growth, and business breakthrough.</p>
+                <div class="about-features">
+                    <div class="feature-card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Confront Stagnation</h4>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-compass"></i>
+                        <h4>Take Wise Risks</h4>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <h4>Build Discipline</h4>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-crown"></i>
+                        <h4>Create Legacy</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Testimonials -->
-    <section class="section section-light" id="testimonials">
-        <h2>What Readers Are Saying</h2>
-        
-        <div class="testimonial">
-            <p>"This book didn't just inspire me—it confronted me. I realized I've been sitting at gates I could have walked through years ago. The practical assignments forced me to move, not just think about moving."</p>
-            <p class="testimonial-author">— Chioma, Lagos</p>
-        </div>
-
-        <div class="testimonial">
-            <p>"Every chapter felt like it was written for my specific situation. The author's honesty about his own struggles made me feel less alone. This is the book I wish someone had given me five years ago."</p>
-            <p class="testimonial-author">— Tunde, Abuja</p>
-        </div>
-
-        <div class="testimonial">
-            <p>"I've read many Christian books, but this one is different. It's biblical without being preachy, practical without being shallow, and challenging without being condemning. I'm already on my second read-through."</p>
-            <p class="testimonial-author">— Adaeze, Port Harcourt</p>
+    
+    <!-- ENDORSEMENTS -->
+    <section class="endorsements">
+        <h2 class="section-title">What Leaders Are Saying</h2>
+        <div class="endorsement-cards">
+            <div class="endorsement-card">
+                <i class="fas fa-quote-left"></i>
+                <p>"Why sit we here until we die?" — 2 Kings 7:3. These words are a timeless call to action. Though rejected and hopeless, the lepers made a bold decision to move—and that decision changed everything. This book is a call to rise above fear, delay, and limitation.</p>
+                <h4>Pst Tosin Oloyede</h4>
+            </div>
+            <div class="endorsement-card">
+                <i class="fas fa-quote-left"></i>
+                <p>This book is a must read by all sons and daughters of God. Growth, achievement and success in life is hinged on continuous movement. This book challenges us to keep moving forward until we fulfill our destiny. SHALOM.</p>
+                <h4>A/P Mark E. Ikpegbu</h4>
+            </div>
         </div>
     </section>
-
-    <!-- Purchase Section -->
-    <section class="section section-light" id="purchase">
-        <h2>Get Your Copy Today</h2>
+    
+    <!-- CHAPTERS PREVIEW -->
+    <section id="chapters" class="chapters">
+        <h2 class="section-title">18 Chapters of Transformation</h2>
+        <div class="chapters-grid">
+            <div class="chapter-card locked">
+                <div class="chapter-number">01</div>
+                <h4>The Gate Mentality</h4>
+                <p>The most dangerous place is not the battlefield—it's the place you learned to survive without hope.</p>
+                <button class="btn-unlock" onclick="unlockPreview(1)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">02</div>
+                <h4>Name the Famine</h4>
+                <p>You can't break what you refuse to describe.</p>
+                <button class="btn-unlock" onclick="unlockPreview(2)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">03</div>
+                <h4>Rejected Not Finished</h4>
+                <p>Rejection is not your final destination—it's your launching pad.</p>
+                <button class="btn-unlock" onclick="unlockPreview(3)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">04</div>
+                <h4>The Conversation That Changed Everything</h4>
+                <p>Silence is not neutral. It's a choice.</p>
+                <button class="btn-unlock" onclick="unlockPreview(4)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">05</div>
+                <h4>Faith That Walks</h4>
+                <p>Faith without movement is just hope. Faith with movement is destiny.</p>
+                <button class="btn-unlock" onclick="unlockPreview(5)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">06</div>
+                <h4>Risk Management for Believers</h4>
+                <p>Calculated courage beats reckless fear every time.</p>
+                <button class="btn-unlock" onclick="unlockPreview(6)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">07</div>
+                <h4>Night Moves</h4>
+                <p>Champions are made in the dark, not in the spotlight.</p>
+                <button class="btn-unlock" onclick="unlockPreview(7)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">08</div>
+                <h4>God Can Make the Enemy Hear Something</h4>
+                <p>Divine intervention happens when human effort meets divine power.</p>
+                <button class="btn-unlock" onclick="unlockPreview(8)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">09</div>
+                <h4>The First Tent</h4>
+                <p>Breakthrough rarely begins with a stadium; it begins with one tent.</p>
+                <button class="btn-unlock" onclick="unlockPreview(9)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">10</div>
+                <h4>Stewardship: Don't Eat Your Future</h4>
+                <p>What you do with your first abundance determines your second.</p>
+                <button class="btn-unlock" onclick="unlockPreview(10)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">11</div>
+                <h4>Good News Is Not Private Property</h4>
+                <p>Breakthrough multiplies when it's shared.</p>
+                <button class="btn-unlock" onclick="unlockPreview(11)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">12</div>
+                <h4>Credibility and Communication</h4>
+                <p>The message is only as powerful as the messenger.</p>
+                <button class="btn-unlock" onclick="unlockPreview(12)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">13</div>
+                <h4>The Economy Can Turn Overnight</h4>
+                <p>God specializes in suddenly.</p>
+                <button class="btn-unlock" onclick="unlockPreview(13)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">14</div>
+                <h4>Unbelief Has Consequences</h4>
+                <p>What you refuse to believe will refuse to happen for you.</p>
+                <button class="btn-unlock" onclick="unlockPreview(14)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">15</div>
+                <h4>When You See But Cannot Taste</h4>
+                <p>Seeing the promise is not the same as possessing it.</p>
+                <button class="btn-unlock" onclick="unlockPreview(15)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">16</div>
+                <h4>From Miracle to Model</h4>
+                <p>Miracles are meant to become systems.</p>
+                <button class="btn-unlock" onclick="unlockPreview(16)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">17</div>
+                <h4>Legacy Leadership: Raising Movers</h4>
+                <p>Your greatest legacy is not what you build—it's who you raise.</p>
+                <button class="btn-unlock" onclick="unlockPreview(17)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+            <div class="chapter-card locked">
+                <div class="chapter-number">18</div>
+                <h4>The City Must Hear</h4>
+                <p>Good news is not good if it does not travel.</p>
+                <button class="btn-unlock" onclick="unlockPreview(18)"><i class="fas fa-lock"></i> Unlock Preview</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- AUTHOR -->
+    <section id="author" class="author">
+        <h2 class="section-title">About the Author</h2>
+        <div class="author-content">
+            <img src="author.jpg" alt="Olushola Odunuga Paul" class="author-photo">
+            <div class="author-bio">
+                <p>Olushola Odunuga Paul is the Lead Pastor of Ruach Apostolic Center, Lagos, Nigeria. A preacher, teacher, and technology professional, he writes at the intersection of faith, leadership, and practical life.</p>
+                <p class="author-quote">"I wrote this book for the person I used to be—and sometimes still am."</p>
+                <p>This book was forged in a furnace of personal struggle and divine encounter. He writes not as someone who has arrived, but as someone who has learned one thing clearly: sitting is not a strategy. Movement is.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials">
+        <h2 class="section-title">Reader Testimonials</h2>
+        <div class="testimonials-carousel">
+            <div class="testimonial-card">
+                <i class="fas fa-quote-left"></i>
+                <p>"This book changed how I see my situation. I was sitting, waiting for permission. Now I'm moving."</p>
+                <h4>— Chioma, Lagos</h4>
+            </div>
+            <div class="testimonial-card">
+                <i class="fas fa-quote-left"></i>
+                <p>"Every chapter felt like it was written for me. The frameworks are practical, the stories are real, and the message is urgent."</p>
+                <h4>— Tunde, Abuja</h4>
+            </div>
+            <div class="testimonial-card">
+                <i class="fas fa-quote-left"></i>
+                <p>"I've read many books on faith and leadership. This one is different. It's not theoretical—it's transformational."</p>
+                <h4>— Adaeze, Port Harcourt</h4>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FEATURES -->
+    <section class="features">
+        <h2 class="section-title">What's Inside</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <i class="fas fa-book"></i>
+                <h4>18 Chapters</h4>
+                <p>Complete transformation journey</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <h4>40+ Real-Life Stories</h4>
+                <p>Practical examples from real people</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-tasks"></i>
+                <h4>Movement Assignments</h4>
+                <p>Action steps for each chapter</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-praying-hands"></i>
+                <h4>Prayers & Scripture</h4>
+                <p>Spiritual foundation throughout</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-sitemap"></i>
+                <h4>Leadership Frameworks</h4>
+                <p>Systems for sustainable change</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-lightbulb"></i>
+                <h4>Life Application Tools</h4>
+                <p>Practical grids and exercises</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SCRIPTURE BANNER -->
+    <section class="scripture-banner">
+        <h2>"Why sit we here until we die?" — 2 Kings 7:3</h2>
+    </section>
+    
+    <!-- GET THE BOOK -->
+    <section id="book" class="get-book">
+        <h2 class="section-title">Get the Book</h2>
+        <div class="book-pricing">
+            <h3>Why Sit Here and Die?</h3>
+            <p class="book-tagline">Breaking the trap of stagnation — spiritually, financially, and personally</p>
+            <p class="book-price" id="bookPrice">₦5,000</p>
+            <p class="book-includes">Includes: Full 18-Chapter Book | Online Reader | PDF Download | Lifetime Access</p>
+        </div>
         
         <div class="payment-section">
-            <h3>Complete Book Access</h3>
-            <p>All 18 chapters + Movement Assignments + Prayers</p>
-            <div class="price-display">₦5,000</div>
-            <p style="margin-bottom: 2rem;">One-time payment for lifetime access</p>
+            <h3>How to Get Your Copy</h3>
             
-            <div class="payment-options">
-                <div class="payment-option" onclick="openPaymentModal('card')">
-                    <h4>💳 Card Payment</h4>
-                    <p>Visa, Mastercard, Verve</p>
-                </div>
-                <div class="payment-option" onclick="openPaymentModal('transfer')">
-                    <h4>🏦 Bank Transfer</h4>
-                    <p>Direct deposit</p>
-                </div>
-                <div class="payment-option" onclick="openPaymentModal('mobile')">
-                    <h4>📱 Mobile Money</h4>
-                    <p>MTN, Airtel, GLO</p>
+            <div class="payment-step">
+                <h4><span class="step-number">1</span> Make Payment via Bank Transfer</h4>
+                <div class="bank-options">
+                    <div class="bank-card">
+                        <h5>Access Bank</h5>
+                        <p><strong>Account Number:</strong> <span id="accessBankNum">0739166631</span></p>
+                        <p><strong>Account Name:</strong> Shola Odunuga</p>
+                        <button class="btn-copy" onclick="copyToClipboard('0739166631', 'Access Bank')">Copy Account Number</button>
+                    </div>
+                    <div class="bank-card">
+                        <h5>OPay</h5>
+                        <p><strong>Account Number:</strong> <span id="opayNum">8133050594</span></p>
+                        <p><strong>Account Name:</strong> Shola Odunuga</p>
+                        <button class="btn-copy" onclick="copyToClipboard('8133050594', 'OPay')">Copy Account Number</button>
+                    </div>
                 </div>
             </div>
-
-            <button class="btn btn-primary" onclick="openPaymentModal('card')" style="background: #000; color: #d4af37; margin-top: 1rem;">Proceed to Payment</button>
-        </div>
-
-        <div style="margin-top: 3rem; text-align: center;">
-            <h3 style="color: #333; margin-bottom: 1rem;">What's Included</h3>
-            <ul style="list-style: none; text-align: left; max-width: 500px; margin: 0 auto;">
-                <li style="padding: 0.5rem 0;">✓ Full 18-chapter book</li>
-                <li style="padding: 0.5rem 0;">✓ Movement Assignments for each chapter</li>
-                <li style="padding: 0.5rem 0;">✓ Closing prayers and reflections</li>
-                <li style="padding: 0.5rem 0;">✓ Lifetime access to updates</li>
-                <li style="padding: 0.5rem 0;">✓ Digital download (PDF + Web reader)</li>
-                <li style="padding: 0.5rem 0;">✓ Email support</li>
-            </ul>
+            
+            <div class="payment-step">
+                <h4><span class="step-number">2</span> Send Payment Proof on WhatsApp</h4>
+                <button class="btn btn-solid" onclick="sendWhatsAppProof()">
+                    <i class="fab fa-whatsapp"></i> Send Proof on WhatsApp
+                </button>
+            </div>
+            
+            <div class="payment-step">
+                <h4><span class="step-number">3</span> Receive Your Password</h4>
+                <p>You will receive a unique access password via WhatsApp after payment is confirmed.</p>
+            </div>
+            
+            <div class="payment-step">
+                <h4><span class="step-number">4</span> Enter Password Below to Access Book</h4>
+                <form id="accessForm" onsubmit="handleAccessSubmit(event)">
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                    <input type="email" id="email" placeholder="Email Address" required>
+                    <input type="text" id="reference" placeholder="Transaction Reference" required>
+                    <input type="password" id="password" placeholder="Enter password sent to you after payment" required>
+                    <button type="submit" class="btn btn-solid" style="width: 100%;">Access My Book Now</button>
+                </form>
+                <div id="accessMessage" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px;"></div>
+            </div>
         </div>
     </section>
-
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closePaymentModal()">&times;</span>
-            <h2 style="color: #333; margin-bottom: 1.5rem;">Complete Your Purchase</h2>
-            
-            <form id="paymentForm" onsubmit="processPayment(event)">
-                <div class="form-group">
-                    <label for="fullname">Full Name</label>
-                    <input type="text" id="fullname" name="fullname" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="paymentMethod">Payment Method</label>
-                    <select id="paymentMethod" name="paymentMethod" required>
-                        <option value="">Select payment method</option>
-                        <option value="card">Card Payment</option>
-                        <option value="transfer">Bank Transfer</option>
-                        <option value="mobile">Mobile Money</option>
-                    </select>
-                </div>
-
-                <div id="bankDetails" style="display: none; background: #f0f0f0; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
-                    <p><strong>Bank Transfer Details:</strong></p>
-                    <p>Bank: [Bank Name]<br>Account: [Account Number]<br>Name: [Account Name]</p>
-                    <p style="margin-top: 1rem; font-size: 0.9rem;">After transfer, reply with proof of payment to confirm access.</p>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; background: #d4af37; color: #000;">Complete Purchase - ₦5,000</button>
-            </form>
-
-            <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
-                Your information is secure and will only be used to provide book access.
-            </p>
+    
+    <!-- BOOK ACCESS PANEL (Hidden until password correct) -->
+    <section id="bookAccessPanel" class="book-access-panel" style="display: none;">
+        <div class="access-content">
+            <i class="fas fa-unlock" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+            <h3 id="welcomeMessage">Welcome! Your book is ready.</h3>
+            <div class="access-buttons">
+                <button class="btn btn-solid" onclick="openReader()">
+                    <i class="fas fa-book-open"></i> READ ONLINE
+                </button>
+                <button class="btn" onclick="downloadPDF()">
+                    <i class="fas fa-download"></i> DOWNLOAD PDF
+                </button>
+            </div>
+            <p class="access-note">Bookmark this page. Use your password to return anytime.</p>
         </div>
-    </div>
-
-    <!-- Footer -->
+    </section>
+    
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="#" id="whatsappBtn" class="whatsapp-btn" onclick="openWhatsApp(event)">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
+    </a>
+    
+    <!-- FOOTER -->
     <footer>
-        <p><strong>Why Sit Here and Die?</strong></p>
-        <p>Breaking the Trap of Stagnation — Spiritually, Financially, and Personally</p>
-        <p>By Olushola O. Paul</p>
-        <p style="margin-top: 1.5rem; font-size: 0.9rem;">© 2026 Olushola O Paul. All rights reserved.</p>
-        <p style="margin-top: 1rem; font-size: 0.85rem;">
-            <a href="#" style="color: #d4af37; text-decoration: none;">Privacy Policy</a> | 
-            <a href="#" style="color: #d4af37; text-decoration: none;">Terms of Service</a> | 
-            <a href="#" style="color: #d4af37; text-decoration: none;">Contact</a>
-        </p>
+        <div class="footer-content">
+            <p>&copy; 2026 Olushola Odunuga Paul. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#chapters">Chapters</a>
+                <a href="#author">Author</a>
+                <a href="#book">Get the Book</a>
+                <a href="#" onclick="requestClearance()">Request Content Clearance</a>
+            </div>
+            <p class="footer-legal">Scripture quotations from the King James Version (KJV), public domain. Unauthorized copying, reproduction or distribution is prohibited by law.</p>
+        </div>
     </footer>
-
+    
+    <script src="book-data.js"></script>
     <script>
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+        // PARTICLE CANVAS
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let particles = [];
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = `rgba(201, 168, 76, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-
-        function openPaymentModal(method) {
-            const modal = document.getElementById('paymentModal');
-            const bankDetails = document.getElementById('bankDetails');
-            const paymentMethod = document.getElementById('paymentMethod');
-            
-            modal.style.display = 'block';
-            paymentMethod.value = method;
-            
-            if (method === 'transfer') {
-                bankDetails.style.display = 'block';
+        
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        
+        animateParticles();
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // STICKY NAV
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                bankDetails.style.display = 'none';
+                navbar.classList.remove('scrolled');
             }
+        });
+        
+        // COPY TO CLIPBOARD
+        function copyToClipboard(text, bank) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`${bank} account number copied!`);
+            });
         }
-
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
+        
+        // TOAST NOTIFICATION
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--gold);
+                color: var(--black);
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 2000;
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
-
-        function processPayment(event) {
-            event.preventDefault();
+        
+        // WHATSAPP FUNCTIONS
+        function openWhatsApp(e) {
+            e.preventDefault();
+            const message = encodeURIComponent("Hello Pastor Shola, I am interested in WHY SIT HERE AND DIE. Please assist me.");
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+        }
+        
+        function sendWhatsAppProof() {
+            const message = encodeURIComponent("Hello Pastor Shola, I have made payment for WHY SIT HERE AND DIE. My reference is: [ref]. Please send my access password.");
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+        }
+        
+        // PASSWORD ACCESS
+        let failedAttempts = 0;
+        
+        function handleAccessSubmit(e) {
+            e.preventDefault();
             
-            const fullname = document.getElementById('fullname').value;
+            const password = document.getElementById('password').value;
+            const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const paymentMethod = document.getElementById('paymentMethod').value;
+            const reference = document.getElementById('reference').value;
+            const messageDiv = document.getElementById('accessMessage');
             
-            // Store payment info (in production, this would go to a backend)
-            const paymentData = {
-                fullname,
-                email,
-                phone,
-                paymentMethod,
-                amount: 5000,
-                timestamp: new Date().toISOString()
-            };
+            // Check password
+            const encodedInput = btoa(password.trim());
             
-            console.log('Payment Data:', paymentData);
-            
-            // Simulate payment processing
-            alert(`Thank you, ${fullname}!\n\nYour payment of ₦5,000 has been received.\n\nYou will receive an email at ${email} with your book access link shortly.\n\nIf you don't receive it within 5 minutes, please contact support.`);
-            
-            closePaymentModal();
-            document.getElementById('paymentForm').reset();
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('paymentModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+            if (validPasswords.includes(encodedInput)) {
+                // Correct password
+                sessionStorage.setItem('bookAccess', JSON.stringify({
+                    name: fullName,
+                    email: email,
+                    reference: reference,
+                    timestamp: new Date().getTime()
+                }));
+                
+                document.getElementById('accessForm').style.display = 'none';
+                document.getElementById('bookAccessPanel').style.display = 'block';
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${fullName}! Your book is ready.`;
+                messageDiv.style.display = 'none';
+                failedAttempts = 0;
+                
+                showToast('Access granted! Welcome to your book.');
+            } else {
+                failedAttempts++;
+                
+                if (failedAttempts >= 3) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = 'rgba(61, 12, 17, 0.5)';
+                    messageDiv.style.color = '#ff6b6b';
+                    messageDiv.textContent = 'Too many attempts. Please contact us on WhatsApp for assistance.';
+                    document.getElementById('accessForm').style.pointerEvents = 'none';
+                    document.getElementById('accessForm').style.opacity = '0.5';
+                    
+                    setTimeout(() => {
+                        document.getElementById('accessForm').style.pointerEvents = 'auto';
+                        document.getElementById('accessForm').style.opacity = '1';
+                        failedAttempts = 0;
+                    }, 60000);
+                } else {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = 'rgba(61, 12, 17, 0.5)';
+                    messageDiv.style.color = '#ff6b6b';
+                    messageDiv.textContent = `Invalid password. Please check your WhatsApp message or contact us. (Attempt ${failedAttempts}/3)`;
+                }
             }
         }
-
-        // Handle payment method change
-        document.getElementById('paymentMethod').addEventListener('change', function() {
-            const bankDetails = document.getElementById('bankDetails');
-            if (this.value === 'transfer') {
-                bankDetails.style.display = 'block';
-            } else {
-                bankDetails.style.display = 'none';
+        
+        // READER FUNCTIONS
+        function openReader() {
+            const access = JSON.parse(sessionStorage.getItem('bookAccess'));
+            if (access) {
+                // Open reader with book content
+                alert('Opening online reader with your book content...');
+                // In production, this would open a full-screen reader
+            }
+        }
+        
+        function downloadPDF() {
+            const access = JSON.parse(sessionStorage.getItem('bookAccess'));
+            if (access) {
+                window.open(BOOK_PDF_URL, '_blank');
+                showToast('PDF download started!');
+            }
+        }
+        
+        // REQUEST CLEARANCE
+        function requestClearance() {
+            const form = prompt('Request Content Clearance\n\nName:');
+            if (form) {
+                showToast('Request received. We respond within 48 hours.');
+            }
+        }
+        
+        // UNLOCK PREVIEW
+        function unlockPreview(chapterNum) {
+            const name = prompt('Enter your name to unlock chapter preview:');
+            if (name) {
+                showToast(`Chapter ${chapterNum} preview unlocked for ${name}!`);
+                // In production, this would show the chapter preview
+            }
+        }
+        
+        // COPY PROTECTION
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showToast('Content protected. Contact us for licensing.');
+        });
+        
+        document.addEventListener('selectstart', (e) => {
+            if (e.target.closest('.book-reader')) {
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                showToast('Copying disabled. Purchase book for personal use rights.');
+            }
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                showToast('Printing requires written permission from publisher.');
+            }
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                showToast('Developer tools are disabled for this content.');
             }
         });
     </script>
