@@ -616,6 +616,9 @@
             border-radius: 8px;
             border: 2px solid var(--gold);
             animation: fadeInUp 0.8s ease-out;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         #accessSuccess i {
@@ -636,15 +639,17 @@
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 2rem;
+            max-width: 100%;
         }
         
         .access-buttons .btn {
-            padding: 1.2rem 1rem;
-            font-size: 0.95rem;
+            padding: 1rem 0.8rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            min-height: 50px;
         }
         
         .access-note {
@@ -1313,6 +1318,8 @@
         }
         
         // READER FUNCTIONS
+        let sidebarWidth = 280;
+        
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access && bookContent) {
@@ -1325,12 +1332,13 @@
                             </div>
                             <button onclick="closeReader()" style="background: #0a0a0a; color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;">✕ Close</button>
                         </div>
-                        <div style="flex: 1; overflow: hidden; display: grid; grid-template-columns: 280px 1fr; gap: 0; width: 100%;">
-                            <div id="chapterNav" style="border-right: 3px solid #c9a84c; padding: 1.5rem; overflow-y: auto; overflow-x: hidden; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.1);">
+                        <div style="flex: 1; overflow: hidden; display: flex; width: 100%; position: relative;">
+                            <div id="chapterNav" style="width: ${sidebarWidth}px; border-right: 3px solid #c9a84c; padding: 1.5rem; overflow-y: auto; overflow-x: hidden; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.1); flex-shrink: 0;">
                                 <h4 style="color: #c9a84c; margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); position: sticky; top: 0; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); padding-bottom: 1rem; z-index: 10;">📑 CONTENTS</h4>
                                 <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
                             </div>
-                            <div id="chapterContent" style="padding: 2rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; overflow-x: hidden; background: #0f0f0f; font-family: 'Georgia', serif;">
+                            <div id="resizeDivider" style="width: 6px; background: linear-gradient(90deg, #c9a84c, #a68a3a); cursor: col-resize; flex-shrink: 0; hover: background #c9a84c;"></div>
+                            <div id="chapterContent" style="flex: 1; padding: 2rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; overflow-x: hidden; background: #0f0f0f; font-family: 'Georgia', serif;">
                                 <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
                                 <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
                                     <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Why Sit Here and Die?</h1>
@@ -1342,6 +1350,31 @@
                     </div>
                 `;
                 document.body.insertAdjacentHTML('beforeend', readerHTML);
+                
+                // Add resizable divider functionality
+                const divider = document.getElementById('resizeDivider');
+                const nav = document.getElementById('chapterNav');
+                let isResizing = false;
+                
+                divider.addEventListener('mousedown', () => {
+                    isResizing = true;
+                });
+                
+                document.addEventListener('mousemove', (e) => {
+                    if (!isResizing) return;
+                    const modal = document.getElementById('readerModal');
+                    if (!modal) return;
+                    
+                    const newWidth = e.clientX - modal.getBoundingClientRect().left;
+                    if (newWidth > 150 && newWidth < 500) {
+                        sidebarWidth = newWidth;
+                        nav.style.width = newWidth + 'px';
+                    }
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    isResizing = false;
+                });
                 
                 // Populate chapter list
                 const chapterList = document.getElementById('chapterList');
@@ -1415,15 +1448,38 @@
         // DOWNLOAD PDF
         function downloadPDF() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
-            if (access) {
-                // Create a simple PDF download link
-                const link = document.createElement('a');
-                link.href = 'book-complete.pdf';
-                link.download = 'Why_Sit_Here_and_Die.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                showToast('📥 PDF download started!');
+            if (access && bookContent) {
+                // Create a simple text-based PDF using a library or generate download
+                try {
+                    // Create a blob with book content
+                    let pdfContent = 'Why Sit Here and Die?\n\n';
+                    pdfContent += 'By Olushola Odunuga Paul\n\n';
+                    pdfContent += '='.repeat(50) + '\n\n';
+                    
+                    // Add all chapters
+                    bookContent.chapters.forEach(ch => {
+                        pdfContent += `CHAPTER ${ch.number}: ${ch.title}\n`;
+                        pdfContent += `"${ch.hook}"\n\n`;
+                        pdfContent += ch.content + '\n\n';
+                        pdfContent += '-'.repeat(50) + '\n\n';
+                    });
+                    
+                    // Create blob and download
+                    const blob = new Blob([pdfContent], { type: 'text/plain' });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'Why_Sit_Here_and_Die.txt';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    
+                    showToast('📥 Book downloaded successfully!');
+                } catch (error) {
+                    console.error('Download error:', error);
+                    showToast('❌ Download failed. Please try again.');
+                }
             } else {
                 showToast('❌ Please enter your password first.');
             }
