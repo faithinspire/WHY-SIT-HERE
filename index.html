@@ -1379,8 +1379,8 @@
                                 <h4 style="color: var(--gold); margin: 0 0 1.5rem 0; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">📑 Contents</h4>
                                 <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
                             </div>
-                            <div id="chapterContent" style="padding: 3rem; color: #2a2a2a; line-height: 2; font-size: 1.1rem; position: relative; overflow-y: auto; background: linear-gradient(to bottom, #f5f0e8, #faf7f0); font-family: 'Georgia', serif;">
-                                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.05; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
+                            <div id="chapterContent" style="padding: 3rem; color: #2a2a2a; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; background: linear-gradient(to bottom, #faf8f3, #f5f0e8); font-family: 'Georgia', serif;">
+                                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
                                 <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
                                     <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Why Sit Here and Die?</h1>
                                     <p style="color: rgba(42,42,42,0.7); font-size: 1.1rem; margin-bottom: 2rem;">A life-and-leadership wake-up call from 2 Kings 7</p>
@@ -1562,33 +1562,73 @@
                 return;
             }
             
+            // Professional book styling
+            const bookStyle = `
+                position: relative;
+                z-index: 1;
+                font-family: 'Georgia', serif;
+                line-height: 1.8;
+                color: #2a2a2a;
+            `;
+            
             if (sectionId === 'title') {
                 content.innerHTML = `
-                    <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
-                        <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem;">${bookContent.metadata.title}</h1>
-                        <p style="color: rgba(201, 168, 76, 0.8); font-size: 1.2rem; margin-bottom: 2rem;">${bookContent.metadata.subtitle}</p>
-                        <p style="color: var(--cream); font-size: 1.1rem; margin-bottom: 3rem;">by ${bookContent.metadata.author}</p>
-                        <p style="color: rgba(201, 168, 76, 0.6); font-size: 0.95rem;">${bookContent.frontMatter.titlePage.copyright}</p>
+                    <div style="${bookStyle} text-align: center; padding: 4rem 0;">
+                        <h1 style="color: var(--gold); font-size: 2.8rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: 2px;">WHY SIT HERE AND DIE?</h1>
+                        <p style="color: #3d0c11; font-size: 1.3rem; margin-bottom: 2rem; font-style: italic;">${bookContent.metadata.subtitle}</p>
+                        <p style="color: #2a2a2a; font-size: 1.1rem; margin-bottom: 1rem;">by ${bookContent.metadata.author}</p>
+                        <p style="color: #666; font-size: 1rem; margin-bottom: 2rem;">${bookContent.metadata.church}</p>
+                        <p style="color: #999; font-size: 0.95rem;">${bookContent.metadata.year}</p>
+                        <hr style="margin: 2rem 0; border: none; border-top: 2px solid var(--gold);">
+                        <p style="color: #666; font-size: 0.9rem; margin-top: 2rem;">${bookContent.frontMatter.titlePage.copyright}</p>
                     </div>
                 `;
             } else if (sectionId === 'dedication') {
                 content.innerHTML = `
-                    <div style="position: relative; z-index: 1;">
-                        <h2 style="color: var(--gold); margin-bottom: 2rem; text-align: center;">Dedication</h2>
-                        <p style="text-align: center; font-style: italic; font-size: 1.1rem; line-height: 2;">${section}</p>
+                    <div style="${bookStyle}">
+                        <h2 style="color: var(--gold); margin-bottom: 2rem; text-align: center; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Dedication</h2>
+                        <p style="text-align: center; font-style: italic; font-size: 1.1rem; line-height: 2; color: #3d0c11;">${section}</p>
                     </div>
                 `;
             } else if (sectionId === 'epigraph') {
                 content.innerHTML = `
-                    <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
-                        <p style="color: var(--gold); font-style: italic; font-size: 1.2rem; line-height: 2;">${section}</p>
+                    <div style="${bookStyle} text-align: center; padding: 3rem 0;">
+                        <p style="color: var(--gold); font-style: italic; font-size: 1.2rem; line-height: 2; border-left: 3px solid var(--gold); border-right: 3px solid var(--gold); padding: 2rem; margin: 0 auto; max-width: 80%;">${section}</p>
+                    </div>
+                `;
+            } else if (sectionId === 'acknowledgments') {
+                content.innerHTML = `
+                    <div style="${bookStyle}">
+                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Acknowledgments</h2>
+                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word;">${section}</div>
+                    </div>
+                `;
+            } else if (sectionId === 'foreword') {
+                content.innerHTML = `
+                    <div style="${bookStyle}">
+                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Foreword</h2>
+                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word;">${section}</div>
+                    </div>
+                `;
+            } else if (sectionId === 'preface') {
+                content.innerHTML = `
+                    <div style="${bookStyle}">
+                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Preface</h2>
+                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word;">${section}</div>
+                    </div>
+                `;
+            } else if (sectionId === 'endorsement') {
+                content.innerHTML = `
+                    <div style="${bookStyle}">
+                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Endorsement</h2>
+                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word;">${section}</div>
                     </div>
                 `;
             } else {
                 content.innerHTML = `
-                    <div style="position: relative; z-index: 1;">
-                        <h2 style="color: var(--gold); margin-bottom: 1.5rem;">${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}</h2>
-                        <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.9;">${section}</div>
+                    <div style="${bookStyle}">
+                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif;">${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}</h2>
+                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word;">${section}</div>
                     </div>
                 `;
             }
@@ -1609,12 +1649,14 @@
                     console.error('Chapter content element not found');
                     return;
                 }
+                
+                // Professional book styling with international standards
                 content.innerHTML = `
-                    <div style="position: relative; z-index: 1;">
-                        <div style="color: rgba(201, 168, 76, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">${chapter.part}</div>
-                        <h2 style="color: var(--gold); margin-bottom: 0.5rem; font-size: 1.8rem;">Chapter ${chapter.number}: ${chapter.title}</h2>
-                        <p style="color: rgba(201, 168, 76, 0.8); font-style: italic; margin-bottom: 2rem; font-size: 1rem; border-left: 3px solid var(--gold); padding-left: 1rem;">${chapter.hook}</p>
-                        <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.9;">${chapter.content}</div>
+                    <div style="position: relative; z-index: 1; font-family: 'Georgia', serif; color: #2a2a2a;">
+                        <div style="color: var(--gold); font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">${chapter.part}</div>
+                        <h2 style="color: var(--gold); margin-bottom: 0.8rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900; line-height: 1.3;">Chapter ${chapter.number}: ${chapter.title}</h2>
+                        <p style="color: #3d0c11; font-style: italic; margin-bottom: 1.5rem; font-size: 1rem; border-left: 4px solid var(--gold); padding-left: 1.2rem; line-height: 1.8;">"${chapter.hook}"</p>
+                        <div style="font-size: 1rem; line-height: 1.9; text-align: justify; white-space: pre-wrap; word-wrap: break-word; color: #2a2a2a;">${chapter.content}</div>
                     </div>
                 `;
             }
@@ -1695,50 +1737,228 @@
                     return;
                 }
                 
-                // Generate PDF from book data using browser print
-                const printWindow = window.open('', '', 'width=800,height=600');
+                // Generate professional PDF from book data
+                const printWindow = window.open('', '', 'width=900,height=700');
                 
                 let htmlContent = `
                     <!DOCTYPE html>
                     <html>
                     <head>
+                        <meta charset="UTF-8">
                         <title>Why Sit Here and Die - Complete Book</title>
                         <style>
-                            body { font-family: Georgia, serif; line-height: 1.8; color: #333; margin: 40px; }
-                            h1 { color: #c9a84c; text-align: center; font-size: 28px; margin-bottom: 10px; }
-                            h2 { color: #3d0c11; margin-top: 40px; margin-bottom: 15px; page-break-before: always; }
-                            .subtitle { text-align: center; color: #666; margin-bottom: 20px; font-size: 14px; }
-                            .author { text-align: center; color: #666; margin-bottom: 30px; }
-                            .chapter { page-break-inside: avoid; margin-bottom: 40px; }
-                            .hook { font-style: italic; color: #3d0c11; border-left: 3px solid #c9a84c; padding-left: 15px; margin: 15px 0; }
-                            .content { text-align: justify; }
-                            .part { color: #c9a84c; font-size: 12px; margin-bottom: 10px; }
-                            @media print { body { margin: 20px; } h2 { page-break-before: always; } }
+                            * { margin: 0; padding: 0; box-sizing: border-box; }
+                            body { 
+                                font-family: 'Georgia', serif; 
+                                line-height: 1.8; 
+                                color: #2a2a2a; 
+                                background: #f5f0e8;
+                                padding: 40px;
+                            }
+                            .page { 
+                                background: white; 
+                                padding: 60px 50px;
+                                margin-bottom: 40px;
+                                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                                page-break-after: always;
+                                min-height: 800px;
+                            }
+                            h1 { 
+                                color: #c9a84c; 
+                                font-size: 36px; 
+                                text-align: center; 
+                                margin-bottom: 20px;
+                                font-weight: bold;
+                                letter-spacing: 2px;
+                            }
+                            h2 { 
+                                color: #3d0c11; 
+                                font-size: 18px; 
+                                margin-top: 30px; 
+                                margin-bottom: 15px;
+                                font-weight: bold;
+                            }
+                            .subtitle { 
+                                text-align: center; 
+                                color: #3d0c11; 
+                                font-size: 16px; 
+                                margin-bottom: 20px;
+                                font-style: italic;
+                            }
+                            .author { 
+                                text-align: center; 
+                                color: #666; 
+                                font-size: 14px; 
+                                margin-bottom: 10px;
+                            }
+                            .chapter { 
+                                page-break-inside: avoid; 
+                                margin-bottom: 30px;
+                            }
+                            .chapter-number {
+                                color: #c9a84c;
+                                font-size: 12px;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                letter-spacing: 1px;
+                                margin-bottom: 5px;
+                            }
+                            .chapter-title {
+                                color: #c9a84c;
+                                font-size: 18px;
+                                font-weight: bold;
+                                margin-bottom: 10px;
+                            }
+                            .hook { 
+                                font-style: italic; 
+                                color: #3d0c11; 
+                                border-left: 4px solid #c9a84c; 
+                                padding-left: 15px; 
+                                margin: 15px 0; 
+                                font-size: 14px;
+                                line-height: 1.8;
+                            }
+                            .content { 
+                                text-align: justify; 
+                                font-size: 14px;
+                                line-height: 1.8;
+                                color: #2a2a2a;
+                            }
+                            .part { 
+                                color: #c9a84c; 
+                                font-size: 12px; 
+                                margin-bottom: 10px;
+                                font-weight: bold;
+                            }
+                            .title-page {
+                                text-align: center;
+                                padding: 100px 50px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                                min-height: 800px;
+                            }
+                            .dedication {
+                                text-align: center;
+                                font-style: italic;
+                                font-size: 14px;
+                                line-height: 1.8;
+                                color: #3d0c11;
+                            }
+                            .epigraph {
+                                text-align: center;
+                                font-style: italic;
+                                font-size: 14px;
+                                line-height: 1.8;
+                                color: #c9a84c;
+                                border-left: 3px solid #c9a84c;
+                                border-right: 3px solid #c9a84c;
+                                padding: 30px;
+                                margin: 30px 0;
+                            }
+                            .section-title {
+                                text-align: center;
+                                color: #3d0c11;
+                                font-size: 18px;
+                                font-weight: bold;
+                                margin-bottom: 20px;
+                            }
+                            hr { 
+                                border: none; 
+                                border-top: 2px solid #c9a84c; 
+                                margin: 30px 0;
+                            }
+                            .copyright {
+                                text-align: center;
+                                font-size: 10px;
+                                color: #999;
+                                margin-top: 30px;
+                            }
+                            @media print { 
+                                body { padding: 0; background: white; }
+                                .page { margin-bottom: 0; box-shadow: none; page-break-after: always; }
+                            }
                         </style>
                     </head>
                     <body>
+                `;
+                
+                // Title Page
+                htmlContent += `
+                    <div class="page title-page">
                         <h1>WHY SIT HERE AND DIE?</h1>
                         <p class="subtitle">${bookContent.metadata.subtitle}</p>
                         <p class="author">by ${bookContent.metadata.author}</p>
                         <p class="author">${bookContent.metadata.church}</p>
-                        <hr style="margin: 40px 0;">
+                        <p class="author">${bookContent.metadata.year}</p>
+                        <hr>
+                        <p class="copyright">${bookContent.frontMatter.titlePage.copyright}</p>
+                    </div>
                 `;
                 
-                // Add all chapters
+                // Dedication
+                htmlContent += `
+                    <div class="page">
+                        <h2 class="section-title">Dedication</h2>
+                        <p class="dedication">${bookContent.frontMatter.dedication}</p>
+                    </div>
+                `;
+                
+                // Epigraph
+                htmlContent += `
+                    <div class="page">
+                        <div class="epigraph">${bookContent.frontMatter.epigraph}</div>
+                    </div>
+                `;
+                
+                // Acknowledgments
+                htmlContent += `
+                    <div class="page">
+                        <h2 class="section-title">Acknowledgments</h2>
+                        <div class="content">${bookContent.frontMatter.acknowledgments.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+                
+                // Foreword
+                htmlContent += `
+                    <div class="page">
+                        <h2 class="section-title">Foreword</h2>
+                        <div class="content">${bookContent.frontMatter.foreword.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+                
+                // Preface
+                htmlContent += `
+                    <div class="page">
+                        <h2 class="section-title">Preface</h2>
+                        <div class="content">${bookContent.frontMatter.preface.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+                
+                // Endorsement
+                htmlContent += `
+                    <div class="page">
+                        <h2 class="section-title">Endorsement</h2>
+                        <div class="content">${bookContent.frontMatter.endorsement.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+                
+                // Chapters
                 if (bookContent.chapters && bookContent.chapters.length > 0) {
                     bookContent.chapters.forEach(chapter => {
                         const contentText = chapter.content ? chapter.content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>') : '';
                         htmlContent += `
-                            <div class="chapter">
-                                <div class="part">${chapter.part}</div>
-                                <h2>Chapter ${chapter.number}: ${chapter.title}</h2>
-                                <div class="hook">${chapter.hook}</div>
-                                <div class="content">${contentText}</div>
+                            <div class="page">
+                                <div class="chapter">
+                                    <div class="part">${chapter.part}</div>
+                                    <div class="chapter-title">Chapter ${chapter.number}: ${chapter.title}</div>
+                                    <div class="hook">"${chapter.hook}"</div>
+                                    <div class="content">${contentText}</div>
+                                </div>
                             </div>
                         `;
                     });
-                } else {
-                    htmlContent += '<p>No chapters found in book content.</p>';
                 }
                 
                 htmlContent += `
@@ -1752,7 +1972,7 @@
                 // Trigger print dialog
                 setTimeout(() => {
                     printWindow.print();
-                    showToast('📥 PDF dialog opened. Select "Save as PDF" to download the complete book.');
+                    showToast('📥 PDF dialog opened. Select "Save as PDF" to download the complete book with professional formatting.');
                 }, 500);
             } else {
                 showToast('❌ Please enter your password first.');
