@@ -12,7 +12,6 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Lato', sans-serif; color: #f5f0e8; background: #0a0a0a; overflow-x: hidden; }
         
-        /* COLORS */
         :root {
             --black: #0a0a0a;
             --gold: #c9a84c;
@@ -20,10 +19,9 @@
             --burgundy: #3d0c11;
         }
         
-        /* TYPOGRAPHY */
         h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; font-weight: 900; }
         
-        /* STICKY NAV */
+        /* STICKY NAV - FIXED OVERFLOW */
         nav {
             position: fixed;
             top: 0;
@@ -35,10 +33,11 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
+            overflow: hidden;
         }
         
         nav.scrolled {
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(10, 10, 10, 0.98);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(201, 168, 76, 0.1);
         }
@@ -49,12 +48,16 @@
             color: var(--gold);
             font-family: 'Playfair Display', serif;
             letter-spacing: 2px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
         .nav-links {
             display: flex;
             gap: 2rem;
             list-style: none;
+            flex-wrap: nowrap;
+            overflow: hidden;
         }
         
         .nav-links a {
@@ -62,6 +65,7 @@
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
+            white-space: nowrap;
         }
         
         .nav-links a:hover {
@@ -72,6 +76,7 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
+            flex-shrink: 0;
         }
         
         .hamburger span {
@@ -310,17 +315,6 @@
             transform: translateY(-5px);
             border-color: var(--gold);
             background: rgba(201, 168, 76, 0.1);
-        }
-        
-        .chapter-card.locked::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 10, 0.3);
-            border-radius: 8px;
         }
         
         .chapter-number {
@@ -613,42 +607,28 @@
             background: rgba(10, 10, 10, 0.7);
         }
         
-        @media (max-width: 768px) {
-            .bank-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .bank-card {
-                padding: 1rem;
-            }
-            
-            .btn-copy {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            #accessForm input {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-            }
-        }
-        
-        /* BOOK ACCESS PANEL */
-        .book-access-panel {
+        /* ACCESS SUCCESS PANEL */
+        #accessSuccess {
+            margin-top: 2rem;
             text-align: center;
             padding: 2rem;
             background: rgba(201, 168, 76, 0.05);
             border-radius: 8px;
             border: 2px solid var(--gold);
-            max-width: 600px;
-            margin: 2rem auto;
             animation: fadeInUp 0.8s ease-out;
         }
         
-        .access-content h3 {
-            font-size: 1.8rem;
+        #accessSuccess i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        #accessSuccess h3 {
             color: var(--gold);
             margin-bottom: 1.5rem;
+            font-size: 1.8rem;
         }
         
         .access-buttons {
@@ -672,27 +652,6 @@
             color: rgba(245, 240, 232, 0.7);
             font-style: italic;
             margin-top: 1.5rem;
-        }
-        
-        @media (max-width: 768px) {
-            .book-access-panel {
-                padding: 1.5rem;
-                margin: 1rem;
-            }
-            
-            .access-content h3 {
-                font-size: 1.4rem;
-            }
-            
-            .access-buttons {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-            
-            .access-buttons .btn {
-                padding: 1rem;
-                font-size: 0.9rem;
-            }
         }
         
         /* WHATSAPP BUTTON */
@@ -830,8 +789,7 @@
             <li><a href="#chapters">Chapters</a></li>
             <li><a href="#author">Author</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#book">Get the Book</a></li>
-            <li><a href="#access">Access Book</a></li>
+            <li><a href="#book">Get Book</a></li>
         </ul>
         <div class="hamburger">
             <span></span>
@@ -908,109 +866,109 @@
     <section id="chapters" class="chapters">
         <h2 class="section-title">18 Chapters of Transformation</h2>
         <div class="chapters-grid">
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">01</div>
                 <h4>The Gate Mentality</h4>
                 <p>The most dangerous place is not the battlefield—it's the place you learned to survive without hope.</p>
                 <button class="btn-unlock" onclick="unlockPreview(1)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">02</div>
                 <h4>Name the Famine</h4>
                 <p>You can't break what you refuse to describe.</p>
                 <button class="btn-unlock" onclick="unlockPreview(2)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">03</div>
                 <h4>Rejected Not Finished</h4>
                 <p>Rejection is not your final destination—it's your launching pad.</p>
                 <button class="btn-unlock" onclick="unlockPreview(3)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">04</div>
                 <h4>The Conversation That Changed Everything</h4>
                 <p>Silence is not neutral. It's a choice.</p>
                 <button class="btn-unlock" onclick="unlockPreview(4)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">05</div>
                 <h4>Faith That Walks</h4>
                 <p>Faith without movement is just hope. Faith with movement is destiny.</p>
                 <button class="btn-unlock" onclick="unlockPreview(5)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">06</div>
                 <h4>Risk Management for Believers</h4>
                 <p>Calculated courage beats reckless fear every time.</p>
                 <button class="btn-unlock" onclick="unlockPreview(6)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">07</div>
                 <h4>Night Moves</h4>
                 <p>Champions are made in the dark, not in the spotlight.</p>
                 <button class="btn-unlock" onclick="unlockPreview(7)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">08</div>
                 <h4>God Can Make the Enemy Hear Something</h4>
                 <p>Divine intervention happens when human effort meets divine power.</p>
                 <button class="btn-unlock" onclick="unlockPreview(8)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">09</div>
                 <h4>The First Tent</h4>
                 <p>Breakthrough rarely begins with a stadium; it begins with one tent.</p>
                 <button class="btn-unlock" onclick="unlockPreview(9)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">10</div>
                 <h4>Stewardship: Don't Eat Your Future</h4>
                 <p>What you do with your first abundance determines your second.</p>
                 <button class="btn-unlock" onclick="unlockPreview(10)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">11</div>
                 <h4>Good News Is Not Private Property</h4>
                 <p>Breakthrough multiplies when it's shared.</p>
                 <button class="btn-unlock" onclick="unlockPreview(11)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">12</div>
                 <h4>Credibility and Communication</h4>
                 <p>The message is only as powerful as the messenger.</p>
                 <button class="btn-unlock" onclick="unlockPreview(12)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">13</div>
                 <h4>The Economy Can Turn Overnight</h4>
                 <p>God specializes in suddenly.</p>
                 <button class="btn-unlock" onclick="unlockPreview(13)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">14</div>
                 <h4>Unbelief Has Consequences</h4>
                 <p>What you refuse to believe will refuse to happen for you.</p>
                 <button class="btn-unlock" onclick="unlockPreview(14)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">15</div>
                 <h4>When You See But Cannot Taste</h4>
                 <p>Seeing the promise is not the same as possessing it.</p>
                 <button class="btn-unlock" onclick="unlockPreview(15)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">16</div>
                 <h4>From Miracle to Model</h4>
                 <p>Miracles are meant to become systems.</p>
                 <button class="btn-unlock" onclick="unlockPreview(16)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">17</div>
                 <h4>Legacy Leadership: Raising Movers</h4>
                 <p>Your greatest legacy is not what you build—it's who you raise.</p>
                 <button class="btn-unlock" onclick="unlockPreview(17)"><i class="fas fa-lock"></i> Unlock Preview</button>
             </div>
-            <div class="chapter-card locked">
+            <div class="chapter-card">
                 <div class="chapter-number">18</div>
                 <h4>The City Must Hear</h4>
                 <p>Good news is not good if it does not travel.</p>
@@ -1096,49 +1054,6 @@
         <h2>"Why sit we here until we die?" — 2 Kings 7:3</h2>
     </section>
     
-    <!-- ANIMATED PAYMENT FLYER -->
-    <section style="padding: 5rem 2rem; max-width: 1200px; margin: 0 auto;">
-        <h2 class="section-title">How to Access Your Book</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px;">
-            <!-- Step 1 -->
-            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
-                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">1</div>
-                <i class="fas fa-globe" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
-                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Visit Website</h3>
-                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Go to our website and explore the book details</p>
-            </div>
-            
-            <!-- Step 2 -->
-            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
-                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">2</div>
-                <i class="fas fa-credit-card" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
-                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Make Payment</h3>
-                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Transfer ₦6,000 to provided bank account</p>
-            </div>
-            
-            <!-- Step 3 -->
-            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
-                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">3</div>
-                <i class="fas fa-key" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
-                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Receive Password</h3>
-                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Get access password via WhatsApp</p>
-            </div>
-            
-            <!-- Step 4 -->
-            <div style="background: linear-gradient(135deg, rgba(201, 168, 76, 0.1) 0%, rgba(61, 12, 17, 0.1) 100%); border: 2px solid #c9a84c; border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease;">
-                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); color: #0a0a0a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin: 0 auto 15px;">4</div>
-                <i class="fas fa-download" style="font-size: 2.5rem; color: #c9a84c; margin-bottom: 10px; display: block;"></i>
-                <h3 style="color: #c9a84c; margin-bottom: 10px; font-size: 1.2rem;">Access & Download</h3>
-                <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.9);">Read online or download PDF</p>
-            </div>
-        </div>
-        <div style="text-align: center;">
-            <a href="payment-flyer.html" class="btn btn-solid" style="display: inline-block; padding: 12px 30px; text-decoration: none;">
-                <i class="fas fa-arrow-right"></i> View Full Animated Flyer
-            </a>
-        </div>
-    </section>
-    
     <!-- GET THE BOOK -->
     <section id="book" class="get-book">
         <h2 class="section-title">Get the Book</h2>
@@ -1192,40 +1107,21 @@
                 </form>
                 <div id="accessMessage" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px;"></div>
                 
-                <!-- Access Success Panel - Shows after correct password -->
-                <div id="accessSuccess" style="display: none; margin-top: 2rem; text-align: center;">
-                    <div style="padding: 2rem; background: rgba(201, 168, 76, 0.05); border-radius: 8px; border: 2px solid var(--gold);">
-                        <i class="fas fa-unlock" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem; display: block;"></i>
-                        <h3 id="welcomeMessage" style="color: var(--gold); margin-bottom: 1.5rem;">Welcome! Your book is ready.</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
-                            <button class="btn btn-solid" onclick="openReader()" style="padding: 1.2rem 1rem; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                                <i class="fas fa-book-open"></i> READ ONLINE
-                            </button>
-                            <button class="btn" onclick="downloadPDF()" style="padding: 1.2rem 1rem; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                                <i class="fas fa-download"></i> DOWNLOAD PDF
-                            </button>
-                        </div>
-                        <p style="font-size: 0.9rem; color: rgba(245, 240, 232, 0.7); font-style: italic;">Bookmark this page. Use your password to return anytime.</p>
+                <!-- ACCESS SUCCESS PANEL - Shows after correct password -->
+                <div id="accessSuccess" style="display: none;">
+                    <i class="fas fa-unlock"></i>
+                    <h3 id="welcomeMessage">Welcome! Your book is ready.</h3>
+                    <div class="access-buttons">
+                        <button class="btn btn-solid" onclick="openReader()">
+                            <i class="fas fa-book-open"></i> READ ONLINE
+                        </button>
+                        <button class="btn" onclick="downloadPDF()">
+                            <i class="fas fa-download"></i> DOWNLOAD PDF
+                        </button>
                     </div>
+                    <p class="access-note">Bookmark this page. Use your password to return anytime.</p>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- BOOK ACCESS PANEL (Hidden until password correct) -->
-    <section id="bookAccessPanel" class="book-access-panel" style="display: none;">
-        <div class="access-content">
-            <i class="fas fa-unlock" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
-            <h3 id="welcomeMessage">Welcome! Your book is ready.</h3>
-            <div class="access-buttons">
-                <button class="btn btn-solid" onclick="openReader()">
-                    <i class="fas fa-book-open"></i> READ ONLINE
-                </button>
-                <button class="btn" onclick="downloadPDF()">
-                    <i class="fas fa-download"></i> DOWNLOAD PDF
-                </button>
-            </div>
-            <p class="access-note">Bookmark this page. Use your password to return anytime.</p>
         </div>
     </section>
     
@@ -1244,13 +1140,15 @@
                 <a href="#chapters">Chapters</a>
                 <a href="#author">Author</a>
                 <a href="#book">Get the Book</a>
-                <a href="#" onclick="requestClearance()">Request Content Clearance</a>
             </div>
             <p class="footer-legal">Scripture quotations from the King James Version (KJV), public domain. Unauthorized copying, reproduction or distribution is prohibited by law.</p>
         </div>
     </footer>
     
     <script>
+        // WHATSAPP NUMBER
+        const WHATSAPP_NUMBER = '2348033050594';
+        
         // PARTICLE CANVAS
         const canvas = document.getElementById('heroCanvas');
         const ctx = canvas.getContext('2d');
@@ -1378,7 +1276,7 @@
                     timestamp: new Date().getTime()
                 }));
                 
-                // Hide form and show success panel inline
+                // Hide form and show success panel
                 document.getElementById('accessForm').style.display = 'none';
                 document.getElementById('accessSuccess').style.display = 'block';
                 document.getElementById('welcomeMessage').textContent = `Welcome, ${fullName}! Your book is ready.`;
@@ -1417,8 +1315,7 @@
         // READER FUNCTIONS
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
-            if (access) {
-                // Create reader modal with full book content - ENHANCED COLORS & MOBILE FRIENDLY
+            if (access && bookContent) {
                 const readerHTML = `
                     <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
                         <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
@@ -1446,64 +1343,9 @@
                 `;
                 document.body.insertAdjacentHTML('beforeend', readerHTML);
                 
-                // Populate chapter list with table of contents
+                // Populate chapter list
                 const chapterList = document.getElementById('chapterList');
                 
-                // Add Front Matter sections
-                const frontMatterSections = [
-                    { id: 'title', label: 'Title Page', type: 'frontmatter' },
-                    { id: 'dedication', label: 'Dedication', type: 'frontmatter' },
-                    { id: 'epigraph', label: 'Epigraph', type: 'frontmatter' },
-                    { id: 'foreword', label: 'Foreword', type: 'frontmatter' },
-                    { id: 'endorsement', label: 'Endorsement', type: 'frontmatter' },
-                    { id: 'preface', label: 'Preface', type: 'frontmatter' }
-                ];
-                
-                frontMatterSections.forEach(section => {
-                    const btn = document.createElement('button');
-                    btn.textContent = section.label;
-                    btn.style.cssText = `
-                        display: block;
-                        width: 100%;
-                        padding: 0.9rem;
-                        margin-bottom: 0.3rem;
-                        background: rgba(201, 168, 76, 0.12);
-                        border: 2px solid rgba(201, 168, 76, 0.3);
-                        color: #ffffff;
-                        border-radius: 4px;
-                        cursor: pointer;
-                        text-align: left;
-                        font-size: 0.9rem;
-                        font-weight: 700;
-                        transition: all 0.3s;
-                        font-family: 'Lato', sans-serif;
-                        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    `;
-                    btn.onmouseover = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.25)';
-                        btn.style.borderColor = '#c9a84c';
-                        btn.style.color = '#ffffff';
-                        btn.style.boxShadow = '0 0 10px rgba(201, 168, 76, 0.3)';
-                    };
-                    btn.onmouseout = () => {
-                        btn.style.background = 'rgba(201, 168, 76, 0.12)';
-                        btn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
-                        btn.style.color = '#ffffff';
-                        btn.style.boxShadow = 'none';
-                    };
-                    btn.onclick = () => displayFrontMatter(section.id);
-                    chapterList.appendChild(btn);
-                });
-                
-                // Add separator
-                const separator = document.createElement('div');
-                separator.style.cssText = 'height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 1rem 0;';
-                chapterList.appendChild(separator);
-                
-                // Add chapters
                 bookContent.chapters.forEach(ch => {
                     const btn = document.createElement('button');
                     btn.textContent = `Ch ${ch.number}: ${ch.title}`;
@@ -1530,243 +1372,23 @@
                     btn.onmouseover = () => {
                         btn.style.background = 'rgba(201, 168, 76, 0.25)';
                         btn.style.borderColor = '#c9a84c';
-                        btn.style.color = '#ffffff';
                         btn.style.boxShadow = '0 0 10px rgba(201, 168, 76, 0.3)';
                     };
                     btn.onmouseout = () => {
                         btn.style.background = 'rgba(201, 168, 76, 0.12)';
                         btn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
-                        btn.style.color = '#ffffff';
                         btn.style.boxShadow = 'none';
                     };
                     btn.onclick = () => displayChapter(ch.number);
                     chapterList.appendChild(btn);
                 });
-                
-                // Add conclusion
-                const conclusionBtn = document.createElement('button');
-                conclusionBtn.textContent = 'Conclusion';
-                conclusionBtn.style.cssText = `
-                    display: block;
-                    width: 100%;
-                    padding: 0.9rem;
-                    margin-bottom: 0.3rem;
-                    background: rgba(201, 168, 76, 0.12);
-                    border: 2px solid rgba(201, 168, 76, 0.3);
-                    color: #ffffff;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    text-align: left;
-                    font-size: 0.9rem;
-                    font-weight: 700;
-                    transition: all 0.3s;
-                    font-family: 'Lato', sans-serif;
-                    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                `;
-                conclusionBtn.onmouseover = () => {
-                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.25)';
-                    conclusionBtn.style.borderColor = '#c9a84c';
-                    conclusionBtn.style.color = '#ffffff';
-                    conclusionBtn.style.boxShadow = '0 0 10px rgba(201, 168, 76, 0.3)';
-                };
-                conclusionBtn.onmouseout = () => {
-                    conclusionBtn.style.background = 'rgba(201, 168, 76, 0.12)';
-                    conclusionBtn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
-                    conclusionBtn.style.color = '#ffffff';
-                    conclusionBtn.style.boxShadow = 'none';
-                };
-                conclusionBtn.onclick = () => displayConclusion();
-                chapterList.appendChild(conclusionBtn);
-                
-                // Add responsive styles
-                const style = document.createElement('style');
-                style.textContent = `
-                    @media (max-width: 1024px) {
-                        #readerModal > div:nth-child(2) {
-                            grid-template-columns: 220px 1fr !important;
-                        }
-                        #chapterNav {
-                            padding: 1rem !important;
-                        }
-                        #chapterContent {
-                            padding: 1.5rem !important;
-                        }
-                    }
-                    @media (max-width: 768px) {
-                        #readerModal {
-                            flex-direction: column;
-                        }
-                        #readerModal > div:nth-child(2) {
-                            grid-template-columns: 1fr !important;
-                            grid-template-rows: auto 1fr !important;
-                        }
-                        #chapterNav {
-                            border-right: none !important;
-                            border-bottom: 3px solid #c9a84c !important;
-                            max-height: 180px !important;
-                            padding: 1rem !important;
-                            overflow-x: auto !important;
-                            overflow-y: hidden !important;
-                        }
-                        #chapterList {
-                            display: flex !important;
-                            flex-direction: row !important;
-                            gap: 0.5rem !important;
-                            flex-wrap: wrap !important;
-                        }
-                        #chapterList button {
-                            flex: 0 1 calc(50% - 0.25rem) !important;
-                            white-space: normal !important;
-                            min-height: 50px !important;
-                            display: flex !important;
-                            align-items: center !important;
-                            justify-content: flex-start !important;
-                        }
-                        #chapterList > div {
-                            flex-basis: 100% !important;
-                        }
-                        #chapterContent {
-                            padding: 1.5rem !important;
-                            font-size: 0.95rem !important;
-                            line-height: 1.7 !important;
-                        }
-                    }
-                    @media (max-width: 480px) {
-                        #readerModal > div:nth-child(1) {
-                            padding: 1rem !important;
-                        }
-                        #readerModal > div:nth-child(1) h3 {
-                            font-size: 1rem !important;
-                        }
-                        #readerModal > div:nth-child(1) p {
-                            font-size: 0.8rem !important;
-                        }
-                        #readerModal > div:nth-child(1) button {
-                            padding: 0.5rem 1rem !important;
-                            font-size: 0.8rem !important;
-                        }
-                        #chapterNav {
-                            max-height: 150px !important;
-                            padding: 0.8rem !important;
-                        }
-                        #chapterNav h4 {
-                            font-size: 0.9rem !important;
-                            margin-bottom: 1rem !important;
-                        }
-                        #chapterList button {
-                            flex: 0 1 calc(50% - 0.25rem) !important;
-                            padding: 0.7rem !important;
-                            font-size: 0.8rem !important;
-                        }
-                        #chapterContent {
-                            padding: 1rem !important;
-                            font-size: 0.9rem !important;
-                            line-height: 1.6 !important;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
             } else {
                 showToast('❌ Please enter your password first.');
             }
         }
         
-        function displayFrontMatter(sectionId) {
-            // Ensure bookContent is available
-            if (!bookContent) {
-                console.error('Book content not loaded');
-                alert('Book content is loading. Please try again.');
-                return;
-            }
-            
-            const section = bookContent.frontMatter[sectionId];
-            const content = document.getElementById('chapterContent');
-            
-            if (!content) {
-                console.error('Chapter content element not found');
-                return;
-            }
-            
-            // Professional book styling with white and bold text
-            const bookStyle = `
-                position: relative;
-                z-index: 1;
-                font-family: 'Georgia', serif;
-                line-height: 1.8;
-                color: #ffffff;
-                font-weight: 600;
-            `;
-            
-            if (sectionId === 'title') {
-                content.innerHTML = `
-                    <div style="${bookStyle} text-align: center; padding: 4rem 0;">
-                        <h1 style="color: var(--gold); font-size: 2.8rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: 2px;">WHY SIT HERE AND DIE?</h1>
-                        <p style="color: #c9a84c; font-size: 1.3rem; margin-bottom: 2rem; font-style: italic; font-weight: 700;">${bookContent.metadata.subtitle}</p>
-                        <p style="color: #ffffff; font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700;">by ${bookContent.metadata.author}</p>
-                        <p style="color: #c9a84c; font-size: 1rem; margin-bottom: 2rem; font-weight: 600;">${bookContent.metadata.church}</p>
-                        <p style="color: #c9a84c; font-size: 0.95rem; font-weight: 600;">${bookContent.metadata.year}</p>
-                        <hr style="margin: 2rem 0; border: none; border-top: 2px solid var(--gold);">
-                        <p style="color: #c9a84c; font-size: 0.9rem; margin-top: 2rem; font-weight: 600;">${bookContent.frontMatter.titlePage.copyright}</p>
-                    </div>
-                `;
-            } else if (sectionId === 'dedication') {
-                content.innerHTML = `
-                    <div style="${bookStyle}">
-                        <h2 style="color: var(--gold); margin-bottom: 2rem; text-align: center; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">Dedication</h2>
-                        <p style="text-align: center; font-style: italic; font-size: 1.1rem; line-height: 2; color: #ffffff; font-weight: 700;">${section}</p>
-                    </div>
-                `;
-            } else if (sectionId === 'epigraph') {
-                content.innerHTML = `
-                    <div style="${bookStyle} text-align: center; padding: 3rem 0;">
-                        <p style="color: #ffffff; font-style: italic; font-size: 1.2rem; line-height: 2; border-left: 3px solid var(--gold); border-right: 3px solid var(--gold); padding: 2rem; margin: 0 auto; max-width: 80%; font-weight: 700;">${section}</p>
-                    </div>
-                `;
-            } else if (sectionId === 'acknowledgments') {
-                content.innerHTML = `
-                    <div style="${bookStyle}">
-                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">Acknowledgments</h2>
-                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word; color: #ffffff; font-weight: 600;">${section}</div>
-                    </div>
-                `;
-            } else if (sectionId === 'foreword') {
-                content.innerHTML = `
-                    <div style="${bookStyle}">
-                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">Foreword</h2>
-                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word; color: #ffffff; font-weight: 600;">${section}</div>
-                    </div>
-                `;
-            } else if (sectionId === 'preface') {
-                content.innerHTML = `
-                    <div style="${bookStyle}">
-                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">Preface</h2>
-                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word; color: #ffffff; font-weight: 600;">${section}</div>
-                    </div>
-                `;
-            } else if (sectionId === 'endorsement') {
-                content.innerHTML = `
-                    <div style="${bookStyle}">
-                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">Endorsement</h2>
-                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word; color: #ffffff; font-weight: 600;">${section}</div>
-                    </div>
-                `;
-            } else {
-                content.innerHTML = `
-                    <div style="${bookStyle}">
-                        <h2 style="color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}</h2>
-                        <div style="font-size: 1rem; line-height: 1.9; white-space: pre-wrap; word-wrap: break-word; color: #ffffff; font-weight: 600;">${section}</div>
-                    </div>
-                `;
-            }
-        }
-        
         function displayChapter(chapterNum) {
-            // Ensure bookContent is available
             if (!bookContent || !bookContent.chapters) {
-                console.error('Book content not loaded');
                 alert('Book content is loading. Please try again.');
                 return;
             }
@@ -1774,12 +1396,6 @@
             const chapter = bookContent.chapters.find(c => c.number === chapterNum);
             if (chapter) {
                 const content = document.getElementById('chapterContent');
-                if (!content) {
-                    console.error('Chapter content element not found');
-                    return;
-                }
-                
-                // Professional book styling with white and bold text
                 content.innerHTML = `
                     <div style="position: relative; z-index: 1; font-family: 'Georgia', serif; color: #ffffff; font-weight: 600;">
                         <div style="color: var(--gold); font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">${chapter.part}</div>
@@ -1791,465 +1407,25 @@
             }
         }
         
-        function displayConclusion() {
-            const content = document.getElementById('chapterContent');
-            content.innerHTML = `
-                <div style="position: relative; z-index: 1; color: #ffffff; font-weight: 600;">
-                    <h2 style="color: var(--gold); margin-bottom: 2rem; font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 900;">Conclusion</h2>
-                    <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.9; color: #ffffff; font-weight: 600;">${bookContent.conclusion}</div>
-                </div>
-            `;
-        }
-        
         function closeReader() {
             const modal = document.getElementById('readerModal');
             if (modal) modal.remove();
         }
         
-        // TESTIMONIALS CAROUSEL AUTO-ROTATE
-        let currentTestimonial = 0;
-        const testimonials = document.querySelectorAll('.testimonial-card');
-        
-        function rotateTestimonials() {
-            testimonials.forEach((card, index) => {
-                card.style.opacity = index === currentTestimonial ? '1' : '0.5';
-                card.style.transform = index === currentTestimonial ? 'scale(1)' : 'scale(0.95)';
-            });
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-        }
-        
-        if (testimonials.length > 0) {
-            setInterval(rotateTestimonials, 5000);
-        }
-        
-        // SCROLL ANIMATIONS
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-        
-        // ADD FADE-IN-UP ANIMATION
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
+        // DOWNLOAD PDF
         function downloadPDF() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access) {
-                // Ensure bookContent is available
-                if (!bookContent || !bookContent.chapters) {
-                    showToast('❌ Book content not loaded. Please try again.');
-                    return;
-                }
-                
-                // Generate professional PDF from book data with international book standards
-                const printWindow = window.open('', '', 'width=900,height=700');
-                
-                let htmlContent = `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>Why Sit Here and Die - Complete Book</title>
-                        <style>
-                            * { margin: 0; padding: 0; box-sizing: border-box; }
-                            body { 
-                                font-family: 'Georgia', 'Garamond', serif; 
-                                line-height: 1.8; 
-                                color: #2a2a2a; 
-                                background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%);
-                                padding: 20px;
-                            }
-                            .page { 
-                                background: white; 
-                                padding: 60px 50px;
-                                margin-bottom: 20px;
-                                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-                                page-break-after: always;
-                                min-height: 900px;
-                                position: relative;
-                            }
-                            .page::before {
-                                content: '';
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                right: 0;
-                                bottom: 0;
-                                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23f5f0e8" width="100" height="100"/><path fill="%23c9a84c" opacity="0.03" d="M0,0 L100,100 M100,0 L0,100"/></svg>');
-                                pointer-events: none;
-                                z-index: 0;
-                            }
-                            .page > * {
-                                position: relative;
-                                z-index: 1;
-                            }
-                            h1 { 
-                                color: #c9a84c; 
-                                font-size: 42px; 
-                                text-align: center; 
-                                margin-bottom: 20px;
-                                font-weight: bold;
-                                letter-spacing: 3px;
-                                text-transform: uppercase;
-                            }
-                            h2 { 
-                                color: #3d0c11; 
-                                font-size: 20px; 
-                                margin-top: 30px; 
-                                margin-bottom: 20px;
-                                font-weight: bold;
-                                border-bottom: 2px solid #c9a84c;
-                                padding-bottom: 10px;
-                            }
-                            .subtitle { 
-                                text-align: center; 
-                                color: #3d0c11; 
-                                font-size: 16px; 
-                                margin-bottom: 20px;
-                                font-style: italic;
-                            }
-                            .author { 
-                                text-align: center; 
-                                color: #666; 
-                                font-size: 14px; 
-                                margin-bottom: 10px;
-                            }
-                            .chapter { 
-                                page-break-inside: avoid; 
-                                margin-bottom: 30px;
-                            }
-                            .chapter-number {
-                                color: #c9a84c;
-                                font-size: 12px;
-                                font-weight: bold;
-                                text-transform: uppercase;
-                                letter-spacing: 1px;
-                                margin-bottom: 5px;
-                            }
-                            .chapter-title {
-                                color: #c9a84c;
-                                font-size: 18px;
-                                font-weight: bold;
-                                margin-bottom: 10px;
-                            }
-                            .hook { 
-                                font-style: italic; 
-                                color: #3d0c11; 
-                                border-left: 4px solid #c9a84c; 
-                                padding-left: 15px; 
-                                margin: 15px 0; 
-                                font-size: 14px;
-                                line-height: 1.8;
-                            }
-                            .content { 
-                                text-align: justify; 
-                                font-size: 14px;
-                                line-height: 1.8;
-                                color: #2a2a2a;
-                                text-indent: 0.5in;
-                            }
-                            .content p {
-                                margin-bottom: 12px;
-                            }
-                            .part { 
-                                color: #c9a84c; 
-                                font-size: 12px; 
-                                margin-bottom: 10px;
-                                font-weight: bold;
-                            }
-                            .title-page {
-                                text-align: center;
-                                padding: 100px 50px;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: center;
-                                align-items: center;
-                                min-height: 900px;
-                                background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(61,12,17,0.05) 100%);
-                            }
-                            .dedication {
-                                text-align: center;
-                                font-style: italic;
-                                font-size: 14px;
-                                line-height: 1.8;
-                                color: #3d0c11;
-                            }
-                            .epigraph {
-                                text-align: center;
-                                font-style: italic;
-                                font-size: 14px;
-                                line-height: 1.8;
-                                color: #c9a84c;
-                                border-left: 3px solid #c9a84c;
-                                border-right: 3px solid #c9a84c;
-                                padding: 40px;
-                                margin: 40px 0;
-                                background: rgba(201, 168, 76, 0.05);
-                            }
-                            .section-title {
-                                text-align: center;
-                                color: #3d0c11;
-                                font-size: 20px;
-                                font-weight: bold;
-                                margin-bottom: 25px;
-                                border-bottom: 2px solid #c9a84c;
-                                padding-bottom: 15px;
-                            }
-                            .foreword-content, .preface-content, .acknowledgments-content, .endorsement-content {
-                                font-size: 14px;
-                                line-height: 1.8;
-                                text-align: justify;
-                                color: #2a2a2a;
-                            }
-                            .foreword-content p, .preface-content p, .acknowledgments-content p, .endorsement-content p {
-                                margin-bottom: 15px;
-                                text-indent: 0.5in;
-                            }
-                            hr { 
-                                border: none; 
-                                border-top: 2px solid #c9a84c; 
-                                margin: 30px 0;
-                            }
-                            .copyright {
-                                text-align: center;
-                                font-size: 10px;
-                                color: #999;
-                                margin-top: 40px;
-                                line-height: 1.6;
-                            }
-                            .page-number {
-                                text-align: center;
-                                font-size: 12px;
-                                color: #999;
-                                margin-top: 30px;
-                                padding-top: 20px;
-                                border-top: 1px solid #ddd;
-                            }
-                            @media print { 
-                                body { padding: 0; background: white; }
-                                .page { margin-bottom: 0; box-shadow: none; page-break-after: always; }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                `;
-                
-                // Title Page
-                htmlContent += `
-                    <div class="page title-page">
-                        <h1>WHY SIT HERE AND DIE?</h1>
-                        <p class="subtitle">${bookContent.metadata.subtitle}</p>
-                        <p class="author">by ${bookContent.metadata.author}</p>
-                        <p class="author">${bookContent.metadata.church}</p>
-                        <p class="author">${bookContent.metadata.year}</p>
-                        <hr>
-                        <p class="copyright">${bookContent.frontMatter.titlePage.copyright}</p>
-                    </div>
-                `;
-                
-                // Dedication
-                htmlContent += `
-                    <div class="page">
-                        <h2 class="section-title">Dedication</h2>
-                        <p class="dedication">${bookContent.frontMatter.dedication}</p>
-                    </div>
-                `;
-                
-                // Epigraph
-                htmlContent += `
-                    <div class="page">
-                        <div class="epigraph">${bookContent.frontMatter.epigraph}</div>
-                    </div>
-                `;
-                
-                // Acknowledgments
-                htmlContent += `
-                    <div class="page">
-                        <h2 class="section-title">Acknowledgments</h2>
-                        <div class="acknowledgments-content"><p>${bookContent.frontMatter.acknowledgments.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
-                    </div>
-                `;
-                
-                // Foreword
-                htmlContent += `
-                    <div class="page">
-                        <h2 class="section-title">Foreword</h2>
-                        <div class="foreword-content"><p>${bookContent.frontMatter.foreword.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
-                    </div>
-                `;
-                
-                // Preface
-                htmlContent += `
-                    <div class="page">
-                        <h2 class="section-title">Preface</h2>
-                        <div class="preface-content"><p>${bookContent.frontMatter.preface.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
-                    </div>
-                `;
-                
-                // Endorsement
-                htmlContent += `
-                    <div class="page">
-                        <h2 class="section-title">Endorsement</h2>
-                        <div class="endorsement-content"><p>${bookContent.frontMatter.endorsement.replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ')}</p></div>
-                    </div>
-                `;
-                
-                // Table of Contents
-                htmlContent += `
-                    <div class="page">
-                        <h2 class="section-title">Table of Contents</h2>
-                        <div class="content">
-                `;
-                
-                bookContent.chapters.forEach(chapter => {
-                    htmlContent += `<p>Chapter ${chapter.number}: ${chapter.title}</p>`;
-                });
-                
-                htmlContent += `
-                        </div>
-                    </div>
-                `;
-                
-                // Chapters with enhanced title styling
-                let pageNumber = 1;
-                if (bookContent.chapters && bookContent.chapters.length > 0) {
-                    bookContent.chapters.forEach(chapter => {
-                        const contentText = chapter.content ? chapter.content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n\n/g, '</p><p>').replace(/\n/g, ' ') : '';
-                        htmlContent += `
-                            <div class="page">
-                                <div class="chapter">
-                                    <!-- Enhanced Chapter Title Container -->
-                                    <div style="
-                                        background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(61, 12, 17, 0.1) 100%);
-                                        border: 3px solid #c9a84c;
-                                        border-radius: 12px;
-                                        padding: 40px 30px;
-                                        margin-bottom: 30px;
-                                        position: relative;
-                                        box-shadow: 0 8px 32px rgba(201, 168, 76, 0.2);
-                                        background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\"><rect fill=\"%23c9a84c\" opacity=\"0.05\" width=\"100\" height=\"100\"/><path fill=\"%23c9a84c\" opacity=\"0.03\" d=\"M0,0 L100,100 M100,0 L0,100\"/></svg>');
-                                    ">
-                                        <!-- Chapter Badge -->
-                                        <div style="
-                                            position: absolute;
-                                            top: 15px;
-                                            right: 15px;
-                                            width: 70px;
-                                            height: 70px;
-                                            background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%);
-                                            border-radius: 50%;
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            font-size: 2rem;
-                                            font-weight: 900;
-                                            color: #0a0a0a;
-                                            box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
-                                            z-index: 10;
-                                        ">${chapter.number}</div>
-                                        
-                                        <!-- Part Designation -->
-                                        <div style="
-                                            font-size: 0.95rem;
-                                            color: #c9a84c;
-                                            text-transform: uppercase;
-                                            letter-spacing: 2px;
-                                            font-weight: bold;
-                                            text-align: center;
-                                            margin-bottom: 1rem;
-                                        ">${chapter.part}</div>
-                                        
-                                        <!-- Big, Fanciful, Bold Title -->
-                                        <h2 style="
-                                            color: #c9a84c;
-                                            font-size: 3rem;
-                                            font-family: 'Playfair Display', serif;
-                                            font-weight: 900;
-                                            text-align: center;
-                                            margin: 0 0 1.5rem 0;
-                                            line-height: 1.2;
-                                            letter-spacing: 1px;
-                                            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-                                        ">Chapter ${chapter.number}: ${chapter.title}</h2>
-                                        
-                                        <!-- Enhanced Hook -->
-                                        <div style="
-                                            background: linear-gradient(90deg, rgba(201, 168, 76, 0.1) 0%, rgba(201, 168, 76, 0.05) 100%);
-                                            border-left: 4px solid #c9a84c;
-                                            border-right: 4px solid #c9a84c;
-                                            padding: 20px 25px;
-                                            border-radius: 8px;
-                                            text-align: center;
-                                        ">
-                                            <p style="
-                                                color: #3d0c11;
-                                                font-style: italic;
-                                                font-size: 1.3rem;
-                                                font-weight: 600;
-                                                line-height: 1.8;
-                                                letter-spacing: 0.5px;
-                                                margin: 0;
-                                            ">"${chapter.hook}"</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Chapter Content -->
-                                    <div class="content"><p>${contentText}</p></div>
-                                </div>
-                                <div class="page-number">Page ${pageNumber++}</div>
-                            </div>
-                        `;
-                    });
-                }
-                
-                htmlContent += `
-                    </body>
-                    </html>
-                `;
-                
-                printWindow.document.write(htmlContent);
-                printWindow.document.close();
-                
-                // Trigger print dialog
-                setTimeout(() => {
-                    printWindow.print();
-                    showToast('📥 PDF dialog opened. Select "Save as PDF" to download the complete book with professional formatting.');
-                }, 500);
+                // Create a simple PDF download link
+                const link = document.createElement('a');
+                link.href = 'book-complete.pdf';
+                link.download = 'Why_Sit_Here_and_Die.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('📥 PDF download started!');
             } else {
                 showToast('❌ Please enter your password first.');
-            }
-        }
-        
-        // REQUEST CLEARANCE
-        function requestClearance() {
-            const form = prompt('Request Content Clearance\n\nName:');
-            if (form) {
-                showToast('Request received. We respond within 48 hours.');
             }
         }
         
@@ -2257,44 +1433,9 @@
         function unlockPreview(chapterNum) {
             const name = prompt('Enter your name to unlock chapter preview:');
             if (name) {
-                showToast(`Chapter ${chapterNum} preview unlocked for ${name}!`);
-                // In production, this would show the chapter preview
-                const chapter = bookContent.chapters.find(c => c.number === chapterNum);
-                if (chapter) {
-                    alert(`${chapter.title}\n\n${chapter.hook}\n\n[Full chapter content available after purchase]`);
-                }
+                showToast(`✅ Preview unlocked for ${name}!`);
             }
         }
-        
-        // COPY PROTECTION
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            showToast('Content protected. Contact us for licensing.');
-        });
-        
-        document.addEventListener('selectstart', (e) => {
-            if (e.target.closest('.book-reader')) {
-                e.preventDefault();
-            }
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'c') {
-                e.preventDefault();
-                showToast('Copying disabled. Purchase book for personal use rights.');
-            }
-            if (e.ctrlKey && e.key === 'p') {
-                e.preventDefault();
-                showToast('Printing requires written permission from publisher.');
-            }
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-            }
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-                showToast('Developer tools are disabled for this content.');
-            }
-        });
     </script>
 </body>
 </html>
