@@ -1337,10 +1337,10 @@
                                 <h4 style="color: #c9a84c; margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); position: sticky; top: 0; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); padding-bottom: 1rem; z-index: 10;">📑 CONTENTS</h4>
                                 <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
                             </div>
-                            <div style="display: flex; align-items: center; background: linear-gradient(90deg, #c9a84c, #a68a3a); width: 30px; flex-shrink: 0; position: relative; group: hover;">
-                                <button id="resizeLeft" style="position: absolute; left: 2px; background: #0a0a0a; color: #c9a84c; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 14px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center;">◀</button>
-                                <div id="resizeDivider" style="width: 6px; height: 100%; background: linear-gradient(90deg, #c9a84c, #a68a3a); cursor: col-resize; flex-shrink: 0; position: absolute; left: 12px;"></div>
-                                <button id="resizeRight" style="position: absolute; right: 2px; background: #0a0a0a; color: #c9a84c; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 14px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center;">▶</button>
+                            <div style="display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #c9a84c, #a68a3a); width: 50px; flex-shrink: 0; position: relative; gap: 4px; padding: 0 4px;">
+                                <button id="resizeLeft" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">◀</button>
+                                <div id="resizeDivider" style="width: 4px; height: 100%; background: linear-gradient(90deg, #c9a84c, #a68a3a); cursor: col-resize; flex-shrink: 0;"></div>
+                                <button id="resizeRight" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">▶</button>
                             </div>
                             <div id="chapterContent" style="flex: 1; padding: 2rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; overflow-x: hidden; background: #0f0f0f; font-family: 'Georgia', serif;">
                                 <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
@@ -1482,53 +1482,18 @@
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
             if (access && bookContent) {
                 try {
-                    // Try to download the professional PDF first
+                    // Try to download the complete professional PDF
                     const link = document.createElement('a');
-                    link.href = 'Why_Sit_Here_and_Die_Professional.pdf';
-                    link.download = 'Why_Sit_Here_and_Die_Professional.pdf';
+                    link.href = 'Why_Sit_Here_and_Die_Complete.pdf';
+                    link.download = 'Why_Sit_Here_and_Die_Complete.pdf';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
                     
-                    showToast('📥 Professional PDF downloading...');
+                    showToast('📥 Complete PDF downloading...');
                 } catch (error) {
                     console.error('PDF download error:', error);
-                    // Fallback: Generate text file
-                    let textContent = 'WHY SIT HERE AND DIE?\n';
-                    textContent += 'By Olushola Odunuga Paul\n\n';
-                    textContent += '='.repeat(70) + '\n\n';
-                    
-                    // Add front matter
-                    if (bookContent.frontMatter) {
-                        textContent += 'DEDICATION\n' + bookContent.frontMatter.dedication + '\n\n';
-                        textContent += '-'.repeat(70) + '\n\n';
-                        textContent += 'FOREWORD\n' + bookContent.frontMatter.foreword + '\n\n';
-                        textContent += '-'.repeat(70) + '\n\n';
-                        textContent += 'PREFACE\n' + bookContent.frontMatter.preface + '\n\n';
-                        textContent += '-'.repeat(70) + '\n\n';
-                    }
-                    
-                    // Add all chapters
-                    bookContent.chapters.forEach(ch => {
-                        textContent += `CHAPTER ${ch.number}: ${ch.title}\n`;
-                        textContent += `"${ch.hook}"\n\n`;
-                        textContent += ch.content + '\n\n';
-                        textContent += '-'.repeat(70) + '\n\n';
-                    });
-                    
-                    textContent += 'CONCLUSION\n' + bookContent.conclusion + '\n\n';
-                    
-                    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-                    const url = window.URL.createObjectURL(blob);
-                    const fallbackLink = document.createElement('a');
-                    fallbackLink.href = url;
-                    fallbackLink.download = 'Why_Sit_Here_and_Die_Book.txt';
-                    document.body.appendChild(fallbackLink);
-                    fallbackLink.click();
-                    document.body.removeChild(fallbackLink);
-                    window.URL.revokeObjectURL(url);
-                    
-                    showToast('📥 Book content downloaded as text file');
+                    showToast('❌ PDF download failed. Please try again.');
                 }
             } else {
                 showToast('❌ Please enter your password first.');
