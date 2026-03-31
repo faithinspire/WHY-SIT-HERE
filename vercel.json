@@ -33,7 +33,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/book-professional.html"
+      "destination": "/index.html"
     }
   ]
 }
