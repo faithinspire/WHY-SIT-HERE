@@ -323,6 +323,85 @@
             background: #764ba2;
         }
 
+        .search-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: #f0f0f0;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .notes-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .notes-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .notes-section button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .notes-section button:hover {
+            background: #764ba2;
+        }
+
         @media (max-width: 768px) {
             .reader-container {
                 height: 100vh;
@@ -378,14 +457,25 @@
         </div>
 
         <div class="reader-content">
+            <div class="search-container" id="searchContainer" style="display: none;">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search in book..." onkeyup="searchBook()">
+                <div class="search-results" id="searchResults"></div>
+            </div>
             <div class="chapter-view" id="chapterView">
                 <!-- Content loads here -->
+            </div>
+            <div class="notes-section" id="notesSection" style="display: none;">
+                <h4>📝 Chapter Notes</h4>
+                <textarea id="chapterNotes" placeholder="Add your notes for this chapter..."></textarea>
+                <button onclick="saveNotes()">Save Notes</button>
             </div>
         </div>
 
         <div class="reader-footer">
             <button class="nav-button" id="prevBtn" onclick="previousChapter()">← Previous</button>
-            <button class="toc-button" onclick="toggleTOC()">📑 Table of Contents</button>
+            <button class="toc-button" onclick="toggleTOC()">📑 TOC</button>
+            <button class="toc-button" onclick="toggleSearch()">🔍 Search</button>
+            <button class="toc-button" onclick="toggleNotes()">📝 Notes</button>
             <div class="reading-progress">
                 <div class="reading-progress-bar" id="progressBar"></div>
             </div>
@@ -396,7 +486,7 @@
                 <button onclick="decreaseFontSize()">A−</button>
                 <button onclick="increaseFontSize()">A+</button>
             </div>
-            <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">🔖 Bookmark</button>
+            <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">🔖</button>
             <button class="nav-button" id="nextBtn" onclick="nextChapter()">Next →</button>
         </div>
     </div>
@@ -548,6 +638,70 @@
             // Update progress bar and bookmark
             updateProgressBar();
             updateBookmarkButton();
+            loadNotes();
+        }
+
+        // Search functionality
+        function toggleSearch() {
+            const searchContainer = document.getElementById('searchContainer');
+            searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+            if (searchContainer.style.display === 'block') {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function searchBook() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const searchResults = document.getElementById('searchResults');
+            
+            if (query.length < 2) {
+                searchResults.innerHTML = '';
+                return;
+            }
+            
+            let results = [];
+            bookData.forEach((chapter, index) => {
+                if (chapter.content && chapter.content.toLowerCase().includes(query)) {
+                    results.push({
+                        index: index,
+                        title: chapter.title,
+                        preview: chapter.content.substring(0, 100) + '...'
+                    });
+                }
+            });
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+                return;
+            }
+            
+            searchResults.innerHTML = results.map((result, i) => `
+                <div class="search-result-item" onclick="loadChapter(${result.index}); toggleSearch();">
+                    <strong>${result.title}</strong><br/>
+                    <small>${result.preview}</small>
+                </div>
+            `).join('');
+        }
+
+        // Notes functionality
+        function toggleNotes() {
+            const notesSection = document.getElementById('notesSection');
+            notesSection.style.display = notesSection.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('chapterNotes').value;
+            const currentChapter = bookData[currentChapterIndex];
+            let allNotes = JSON.parse(localStorage.getItem('chapterNotes')) || {};
+            allNotes[currentChapter.id] = notes;
+            localStorage.setItem('chapterNotes', JSON.stringify(allNotes));
+            alert('Notes saved!');
+        }
+
+        function loadNotes() {
+            const currentChapter = bookData[currentChapterIndex];
+            let allNotes = JSON.parse(localStorage.getItem('chapterNotes')) || {};
+            document.getElementById('chapterNotes').value = allNotes[currentChapter.id] || '';
         }
 
         function formatContent(content) {
