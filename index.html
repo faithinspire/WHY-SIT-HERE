@@ -1323,7 +1323,7 @@
         
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
-            if (access && bookContent) {
+            if (access && bookDataReader) {
                 const readerHTML = `
                     <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
                         <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
@@ -1425,7 +1425,8 @@
                 // Populate chapter list
                 const chapterList = document.getElementById('chapterList');
                 
-                bookDataReader.chapters.forEach(ch => {
+                if (bookDataReader.chapters) {
+                    bookDataReader.chapters.forEach(ch => {
                     const btn = document.createElement('button');
                     btn.textContent = `Ch ${ch.number}: ${ch.title}`;
                     btn.style.cssText = `
@@ -1460,19 +1461,20 @@
                     };
                     btn.onclick = () => displayChapter(ch.number);
                     chapterList.appendChild(btn);
-                });
+                    });
+                }
             } else {
                 showToast('❌ Please enter your password first.');
             }
         }
         
         function displayChapter(chapterNum) {
-            if (!bookContent || !bookContent.chapters) {
+            if (!bookDataReader || !bookDataReader.chapters) {
                 alert('Book content is loading. Please try again.');
                 return;
             }
             
-            const chapter = bookContent.chapters.find(c => c.number === chapterNum);
+            const chapter = bookDataReader.chapters.find(c => c.number === chapterNum);
             if (chapter) {
                 const content = document.getElementById('chapterContent');
                 
@@ -1509,12 +1511,40 @@
         // DOWNLOAD PDF
         function downloadPDF() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
-            if (access && bookContent) {
+            if (access && bookDataPDF) {
                 try {
-                    // Download the complete PDF with all content
+                    // Generate PDF content from bookDataPDF
+                    let pdfContent = `WHY SIT HERE AND DIE?\n`;
+                    pdfContent += `By ${bookDataPDF.metadata.author}\n\n`;
+                    pdfContent += `${bookDataPDF.metadata.subtitle}\n\n`;
+                    pdfContent += `=====================================\n\n`;
+                    
+                    // Add front matter
+                    if (bookDataPDF.frontMatter) {
+                        pdfContent += `DEDICATION\n${bookDataPDF.frontMatter.dedication}\n\n`;
+                        pdfContent += `EPIGRAPH\n${bookDataPDF.frontMatter.epigraph}\n\n`;
+                        pdfContent += `FOREWORD\n${bookDataPDF.frontMatter.foreword}\n\n`;
+                        pdfContent += `PREFACE\n${bookDataPDF.frontMatter.preface}\n\n`;
+                        pdfContent += `ACKNOWLEDGMENTS\n${bookDataPDF.frontMatter.acknowledgments}\n\n`;
+                    }
+                    
+                    // Add all chapters
+                    if (bookDataPDF.chapters) {
+                        bookDataPDF.chapters.forEach(ch => {
+                            pdfContent += `\n=====================================\n`;
+                            pdfContent += `CHAPTER ${ch.number}: ${ch.title}\n`;
+                            pdfContent += `=====================================\n\n`;
+                            pdfContent += `${ch.hook}\n\n`;
+                            pdfContent += `${ch.content}\n\n`;
+                        });
+                    }
+                    
+                    // Create blob and download
+                    const blob = new Blob([pdfContent], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
-                    link.href = 'Why_Sit_Here_and_Die_Complete.pdf';
-                    link.download = 'Why_Sit_Here_and_Die_Complete.pdf';
+                    link.href = url;
+                    link.download = 'Why_Sit_Here_and_Die_Complete.txt';
                     link.style.display = 'none';
                     document.body.appendChild(link);
                     
@@ -1524,12 +1554,13 @@
                     // Cleanup
                     setTimeout(() => {
                         document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
                     }, 100);
                     
-                    showToast('📥 Complete book PDF downloading...');
+                    showToast('📥 Complete book downloaded successfully!');
                 } catch (error) {
-                    console.error('PDF download error:', error);
-                    showToast('❌ PDF download failed. Please try again.');
+                    console.error('Download error:', error);
+                    showToast('❌ Download failed. Please try again.');
                 }
             } else {
                 showToast('❌ Please enter your password first.');
