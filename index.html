@@ -6,7 +6,8 @@
     <title>Why Sit Here and Die? - Olushola Odunuga Paul</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="book-data-complete.js"></script>
+    <script src="book-data-reader.js"></script>
+    <script src="book-data-pdf.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -1424,7 +1425,7 @@
                 // Populate chapter list
                 const chapterList = document.getElementById('chapterList');
                 
-                bookContent.chapters.forEach(ch => {
+                bookDataReader.chapters.forEach(ch => {
                     const btn = document.createElement('button');
                     btn.textContent = `Ch ${ch.number}: ${ch.title}`;
                     btn.style.cssText = `
