@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Sit Here and Die? - Book Reader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .reader-container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+
+        .reader-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 3px solid #764ba2;
+        }
+
+        .reader-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .reader-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .reader-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            background: #fafafa;
+        }
+
+        .chapter-view {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .chapter-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .chapter-meta {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .chapter-content {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #444;
+        }
+
+        .chapter-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .chapter-content h3 {
+            font-size: 20px;
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .chapter-content ul, .chapter-content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .chapter-content li {
+            margin-bottom: 10px;
+        }
+
+        .reader-footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .nav-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-indicator {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .chapter-selector {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .chapter-selector:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .toc-button {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .toc-button:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .toc-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .toc-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .toc-content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .toc-content h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .toc-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover {
+            background: #e8e8ff;
+            transform: translateX(5px);
+        }
+
+        .close-toc {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .reader-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .reader-content {
+                padding: 20px;
+            }
+
+            .chapter-view {
+                padding: 20px;
+            }
+
+            .chapter-title {
+                font-size: 24px;
+            }
+
+            .reader-footer {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav-button {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="reader-container">
+        <div class="reader-header">
+            <h1>📖 Why Sit Here and Die?</h1>
+            <p>Breaking the trap of stagnation — spiritually, financially, and personally — from 2 Kings 7</p>
+        </div>
+
+        <div class="reader-content">
+            <div class="chapter-view" id="chapterView">
+                <!-- Content loads here -->
+            </div>
+        </div>
+
+        <div class="reader-footer">
+            <button class="nav-button" id="prevBtn" onclick="previousChapter()">← Previous</button>
+            <button class="toc-button" onclick="toggleTOC()">📑 Table of Contents</button>
+            <div class="page-indicator">
+                <span id="pageIndicator">Loading...</span>
+            </div>
+            <button class="nav-button" id="nextBtn" onclick="nextChapter()">Next →</button>
+        </div>
+    </div>
+
+    <!-- Table of Contents Modal -->
+    <div class="toc-modal" id="tocModal">
+        <div class="toc-content">
+            <span class="close-toc" onclick="toggleTOC()">&times;</span>
+            <h2>Table of Contents</h2>
+            <div id="tocList"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentChapterIndex = 0;
+        let bookData = [];
+
+        // Initialize book data
+        async function initializeBook() {
+            try {
+                const response = await fetch('book-data-complete.js');
+                const text = await response.text();
+                // Extract the bookContent object
+                eval(text);
+                
+                // Build chapters array with front matter
+                bookData = [
+                    {
+                        id: 'intro',
+                        title: 'Introduction',
+                        subtitle: 'The Gate Is Not Your Home',
+                        content: getIntroductionContent(),
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'foreword',
+                        title: 'Foreword',
+                        subtitle: 'By Pst Tosin Oloyede',
+                        content: bookContent.frontMatter.foreword,
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'endorsement',
+                        title: 'Endorsement',
+                        subtitle: 'By A/P Mark E. Ikpegbu',
+                        content: bookContent.frontMatter.endorsement,
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'acknowledgments',
+                        title: 'Acknowledgments',
+                        content: bookContent.frontMatter.acknowledgments,
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'preface',
+                        title: 'Preface',
+                        subtitle: 'Before You Read This Book',
+                        content: bookContent.frontMatter.preface,
+                        type: 'frontmatter'
+                    }
+                ];
+
+                // Add all chapters
+                bookContent.chapters.forEach((chapter, index) => {
+                    bookData.push({
+                        id: `chapter-${chapter.number}`,
+                        number: chapter.number,
+                        part: chapter.part,
+                        title: chapter.title,
+                        hook: chapter.hook,
+                        content: chapter.content,
+                        type: 'chapter'
+                    });
+                });
+
+                // Build TOC
+                buildTableOfContents();
+                
+                // Load first chapter
+                loadChapter(0);
+            } catch (error) {
+                console.error('Error loading book:', error);
+                document.getElementById('chapterView').innerHTML = '<p>Error loading book. Please refresh the page.</p>';
+            }
+        }
+
+        function getIntroductionContent() {
+            return `<p>Introduce the scene (2 Kings 6–7): famine, fear, siege, and a city stuck. Then introduce the four lepers: rejected men who still refused to surrender to stillness. Close with a promise: This book will help the reader move in spiritual life, business, career, academics, relationships, leadership, and personal development—without fake hype, and without ignoring reality.</p>
+            
+            <p>This is your invitation to rise from the gate where you have been sitting. Not tomorrow. Not when conditions are perfect. Not when you feel ready. Today.</p>
+            
+            <p>The question that changed a city awaits your answer: Why sit here until you die?</p>`;
+        }
+
+        function buildTableOfContents() {
+            const tocList = document.getElementById('tocList');
+            tocList.innerHTML = '';
+
+            bookData.forEach((item, index) => {
+                const tocItem = document.createElement('div');
+                tocItem.className = 'toc-item';
+                
+                if (item.type === 'frontmatter') {
+                    tocItem.textContent = item.title;
+                } else {
+                    tocItem.textContent = `Chapter ${item.number}: ${item.title}`;
+                }
+                
+                tocItem.onclick = () => {
+                    loadChapter(index);
+                    toggleTOC();
+                };
+                
+                tocList.appendChild(tocItem);
+            });
+        }
+
+        function loadChapter(index) {
+            if (index < 0 || index >= bookData.length) return;
+
+            currentChapterIndex = index;
+            const chapter = bookData[index];
+            const chapterView = document.getElementById('chapterView');
+
+            let html = `<div class="chapter-title">${chapter.title}</div>`;
+            
+            if (chapter.subtitle) {
+                html += `<div class="chapter-meta">${chapter.subtitle}</div>`;
+            }
+            
+            if (chapter.hook) {
+                html += `<div class="chapter-meta" style="color: #667eea; font-style: italic; margin-bottom: 20px;">"${chapter.hook}"</div>`;
+            }
+
+            html += `<div class="chapter-content">${formatContent(chapter.content)}</div>`;
+
+            chapterView.innerHTML = html;
+            chapterView.scrollTop = 0;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === bookData.length - 1;
+
+            // Update page indicator
+            document.getElementById('pageIndicator').textContent = 
+                `${index + 1} of ${bookData.length}`;
+        }
+
+        function formatContent(content) {
+            if (!content) return '';
+            
+            // Convert line breaks to paragraphs
+            let formatted = content
+                .split('\n\n')
+                .map(para => {
+                    para = para.trim();
+                    if (!para) return '';
+                    
+                    // Check if it's a heading
+                    if (para.match(/^[A-Z][A-Z\s]+$/)) {
+                        return `<h3>${para}</h3>`;
+                    }
+                    
+                    return `<p>${para}</p>`;
+                })
+                .join('');
+
+            return formatted;
+        }
+
+        function previousChapter() {
+            if (currentChapterIndex > 0) {
+                loadChapter(currentChapterIndex - 1);
+            }
+        }
+
+        function nextChapter() {
+            if (currentChapterIndex < bookData.length - 1) {
+                loadChapter(currentChapterIndex + 1);
+            }
+        }
+
+        function toggleTOC() {
+            const modal = document.getElementById('tocModal');
+            modal.classList.toggle('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('tocModal');
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousChapter();
+            if (e.key === 'ArrowRight') nextChapter();
+        });
+
+        // Initialize on load
+        window.addEventListener('load', initializeBook);
+    </script>
+</body>
+</html>

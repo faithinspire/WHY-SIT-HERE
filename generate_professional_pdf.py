@@ -1,338 +1,305 @@
 #!/usr/bin/env python3
 """
 Professional PDF Generator for "Why Sit Here and Die?"
-Meets international book publishing standards
+Generates a beautifully formatted PDF with proper typography and design
 """
 
-import json
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch, cm
+from reportlab.lib.units import inch
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Table, TableStyle, Image
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY, TA_RIGHT
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+import json
 from datetime import datetime
 
-# Load book data
-with open('book-complete.json', 'r', encoding='utf-8') as f:
-    book_data = json.load(f)['book']
+# Page setup
+PAGE_WIDTH, PAGE_HEIGHT = letter
+MARGIN = 0.75 * inch
+CONTENT_WIDTH = PAGE_WIDTH - (2 * MARGIN)
 
-# Create PDF with international book standards
-pdf_filename = 'Why_Sit_Here_and_Die_Complete_Book.pdf'
-
-# A4 size with standard book margins (1 inch = 2.54 cm)
-doc = SimpleDocTemplate(
-    pdf_filename,
-    pagesize=A4,
-    rightMargin=1*inch,
-    leftMargin=1*inch,
-    topMargin=1*inch,
-    bottomMargin=1*inch,
-    title="Why Sit Here and Die?",
-    author="Olushola Odunuga Paul"
-)
-
-# Container for PDF elements
-elements = []
-
-# Define professional styles following international book standards
-styles = getSampleStyleSheet()
-
-# Title Page Style
-title_page_style = ParagraphStyle(
-    'TitlePage',
-    parent=styles['Heading1'],
-    fontSize=36,
-    textColor=colors.HexColor('#c9a84c'),
-    spaceAfter=24,
-    alignment=TA_CENTER,
-    fontName='Helvetica-Bold',
-    leading=44
-)
-
-# Subtitle Style
-subtitle_style = ParagraphStyle(
-    'Subtitle',
-    parent=styles['Normal'],
-    fontSize=16,
-    textColor=colors.HexColor('#3d0c11'),
-    spaceAfter=12,
-    alignment=TA_CENTER,
-    fontName='Helvetica',
-    leading=20
-)
-
-# Author Style
-author_style = ParagraphStyle(
-    'Author',
-    parent=styles['Normal'],
-    fontSize=14,
-    textColor=colors.HexColor('#333333'),
-    spaceAfter=6,
-    alignment=TA_CENTER,
-    fontName='Helvetica'
-)
-
-# Section Title Style (Foreword, Acknowledgments, etc.)
-section_title_style = ParagraphStyle(
-    'SectionTitle',
-    parent=styles['Heading2'],
-    fontSize=18,
-    textColor=colors.HexColor('#3d0c11'),
-    spaceAfter=12,
-    spaceBefore=12,
-    alignment=TA_CENTER,
-    fontName='Helvetica-Bold',
-    leading=22
-)
-
-# Chapter Title Style
-chapter_title_style = ParagraphStyle(
-    'ChapterTitle',
-    parent=styles['Heading2'],
-    fontSize=18,
-    textColor=colors.HexColor('#c9a84c'),
-    spaceAfter=12,
-    spaceBefore=24,
-    alignment=TA_LEFT,
-    fontName='Helvetica-Bold',
-    leading=22
-)
-
-# Chapter Hook Style
-chapter_hook_style = ParagraphStyle(
-    'ChapterHook',
-    parent=styles['Normal'],
-    fontSize=12,
-    textColor=colors.HexColor('#3d0c11'),
-    spaceAfter=12,
-    alignment=TA_CENTER,
-    fontName='Helvetica-Oblique',
-    leading=16,
-    borderPadding=12,
-    borderColor=colors.HexColor('#c9a84c'),
-    borderWidth=1
-)
-
-# Body Text Style - INTERNATIONAL STANDARD (14pt)
-body_style = ParagraphStyle(
-    'BodyText',
-    parent=styles['Normal'],
-    fontSize=14,
-    leading=20,
-    alignment=TA_JUSTIFY,
-    spaceAfter=12,
-    fontName='Helvetica',
-    rightIndent=0,
-    leftIndent=0
-)
-
-# Dedication Style
-dedication_style = ParagraphStyle(
-    'Dedication',
-    parent=styles['Normal'],
-    fontSize=14,
-    leading=20,
-    alignment=TA_CENTER,
-    spaceAfter=12,
-    fontName='Helvetica-Oblique',
-    textColor=colors.HexColor('#3d0c11')
-)
-
-# Epigraph Style
-epigraph_style = ParagraphStyle(
-    'Epigraph',
-    parent=styles['Normal'],
-    fontSize=14,
-    leading=20,
-    alignment=TA_CENTER,
-    spaceAfter=12,
-    fontName='Helvetica-Oblique',
-    textColor=colors.HexColor('#c9a84c')
-)
-
-# ============ TITLE PAGE ============
-elements.append(Spacer(1, 2*inch))
-
-# Main Title
-elements.append(Paragraph("WHY SIT HERE AND DIE?", title_page_style))
-elements.append(Spacer(1, 0.3*inch))
-
-# Subtitle
-elements.append(Paragraph(
-    "Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7",
-    subtitle_style
-))
-elements.append(Spacer(1, 1*inch))
-
-# Author
-elements.append(Paragraph(f"by {book_data['metadata']['author']}", author_style))
-elements.append(Spacer(1, 0.3*inch))
-
-# Church
-elements.append(Paragraph(book_data['metadata']['church'], author_style))
-elements.append(Spacer(1, 0.3*inch))
-
-# Year
-elements.append(Paragraph(str(book_data['metadata']['year']), author_style))
-elements.append(Spacer(1, 1.5*inch))
-
-# Copyright
-elements.append(Paragraph(
-    book_data['frontMatter']['titlePage']['copyright'],
-    ParagraphStyle('Copyright', parent=styles['Normal'], fontSize=10, alignment=TA_CENTER)
-))
-
-elements.append(PageBreak())
-
-# ============ DEDICATION PAGE ============
-elements.append(Spacer(1, 1.5*inch))
-elements.append(Paragraph("Dedication", section_title_style))
-elements.append(Spacer(1, 0.5*inch))
-elements.append(Paragraph(book_data['frontMatter']['dedication'], dedication_style))
-elements.append(PageBreak())
-
-# ============ EPIGRAPH PAGE ============
-elements.append(Spacer(1, 2*inch))
-elements.append(Paragraph(book_data['frontMatter']['epigraph'], epigraph_style))
-elements.append(PageBreak())
-
-# ============ ACKNOWLEDGMENTS PAGE ============
-elements.append(Paragraph("Acknowledgments", section_title_style))
-elements.append(Spacer(1, 0.3*inch))
-elements.append(Paragraph(book_data['frontMatter']['acknowledgments'], body_style))
-elements.append(PageBreak())
-
-# ============ FOREWORD PAGE ============
-elements.append(Paragraph("Foreword", section_title_style))
-elements.append(Spacer(1, 0.3*inch))
-
-# Split foreword into paragraphs for better formatting
-foreword_text = book_data['frontMatter']['foreword']
-foreword_paragraphs = foreword_text.split('\n\n')
-for para in foreword_paragraphs:
-    if para.strip():
-        elements.append(Paragraph(para.strip(), body_style))
-        elements.append(Spacer(1, 0.1*inch))
-
-elements.append(PageBreak())
-
-# ============ PREFACE PAGE ============
-elements.append(Paragraph("Preface", section_title_style))
-elements.append(Spacer(1, 0.3*inch))
-
-# Split preface into paragraphs
-preface_text = book_data['frontMatter']['preface']
-preface_paragraphs = preface_text.split('\n\n')
-for para in preface_paragraphs:
-    if para.strip():
-        elements.append(Paragraph(para.strip(), body_style))
-        elements.append(Spacer(1, 0.1*inch))
-
-elements.append(PageBreak())
-
-# ============ ENDORSEMENT PAGE ============
-elements.append(Paragraph("Endorsement", section_title_style))
-elements.append(Spacer(1, 0.3*inch))
-
-endorsement_text = book_data['frontMatter']['endorsement']
-endorsement_paragraphs = endorsement_text.split('\n\n')
-for para in endorsement_paragraphs:
-    if para.strip():
-        elements.append(Paragraph(para.strip(), body_style))
-        elements.append(Spacer(1, 0.1*inch))
-
-elements.append(PageBreak())
-
-# ============ TABLE OF CONTENTS ============
-elements.append(Paragraph("Table of Contents", section_title_style))
-elements.append(Spacer(1, 0.3*inch))
-
-# Add structure overview
-for part_key, part_data in book_data['structure'].items():
-    part_title = part_data['title']
-    elements.append(Paragraph(f"<b>{part_title}</b>", body_style))
+class NumberedCanvas(canvas.Canvas):
+    """Canvas with page numbers and professional styling"""
     
-    for chapter_num in part_data['chapters']:
-        chapter = next((ch for ch in book_data['chapters'] if ch['number'] == chapter_num), None)
-        if chapter:
-            elements.append(Paragraph(
-                f"&nbsp;&nbsp;&nbsp;&nbsp;Chapter {chapter['number']}: {chapter['title']}",
-                body_style
-            ))
-    elements.append(Spacer(1, 0.1*inch))
+    def __init__(self, *args, **kwargs):
+        canvas.Canvas.__init__(self, *args, **kwargs)
+        self._saved_state = None
+        
+    def showPage(self):
+        self._saved_state = self.__dict__.copy()
+        self._startPage()
+        
+    def save(self):
+        num_pages = self._pageNumber
+        if self._saved_state is None:
+            canvas.Canvas.save(self)
+            return
+            
+        for page_num in range(1, num_pages + 1):
+            self.__dict__.update(self._saved_state)
+            self.draw_page_decorations(page_num, num_pages)
+            canvas.Canvas.showPage(self)
+        canvas.Canvas.save(self)
+        
+    def draw_page_decorations(self, page_num, total_pages):
+        """Add page numbers and decorative elements"""
+        # Page number at bottom
+        self.setFont("Helvetica", 10)
+        self.setFillColor(colors.HexColor("#999999"))
+        page_text = f"{page_num}"
+        self.drawCentredString(PAGE_WIDTH / 2, 0.5 * inch, page_text)
+        
+        # Decorative line
+        self.setStrokeColor(colors.HexColor("#667eea"))
+        self.setLineWidth(0.5)
+        self.line(MARGIN, 0.7 * inch, PAGE_WIDTH - MARGIN, 0.7 * inch)
 
-elements.append(PageBreak())
-
-# ============ CHAPTERS ============
-for chapter in book_data['chapters']:
-    # Chapter header with part
-    elements.append(Paragraph(f"<b>{chapter['part']}</b>", 
-        ParagraphStyle('Part', parent=styles['Normal'], fontSize=11, textColor=colors.HexColor('#c9a84c'))))
+def create_styles():
+    """Create custom paragraph styles"""
+    styles = getSampleStyleSheet()
     
-    # Chapter title
-    elements.append(Paragraph(
-        f"Chapter {chapter['number']}: {chapter['title']}",
-        chapter_title_style
+    # Title style
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=28,
+        textColor=colors.HexColor("#667eea"),
+        spaceAfter=12,
+        alignment=TA_CENTER,
+        fontName='Helvetica-Bold',
+        leading=32
+    )
+    
+    # Subtitle style
+    subtitle_style = ParagraphStyle(
+        'CustomSubtitle',
+        parent=styles['Normal'],
+        fontSize=14,
+        textColor=colors.HexColor("#764ba2"),
+        spaceAfter=24,
+        alignment=TA_CENTER,
+        fontName='Helvetica-Oblique',
+        leading=16
+    )
+    
+    # Chapter title style
+    chapter_title_style = ParagraphStyle(
+        'ChapterTitle',
+        parent=styles['Heading1'],
+        fontSize=22,
+        textColor=colors.HexColor("#667eea"),
+        spaceAfter=12,
+        spaceBefore=12,
+        fontName='Helvetica-Bold',
+        leading=26,
+        borderColor=colors.HexColor("#667eea"),
+        borderWidth=2,
+        borderPadding=10
+    )
+    
+    # Body text style - 14pt as requested
+    body_style = ParagraphStyle(
+        'CustomBody',
+        parent=styles['Normal'],
+        fontSize=14,
+        leading=20,
+        alignment=TA_JUSTIFY,
+        spaceAfter=12,
+        fontName='Helvetica',
+        textColor=colors.HexColor("#333333")
+    )
+    
+    # Hook style
+    hook_style = ParagraphStyle(
+        'Hook',
+        parent=styles['Normal'],
+        fontSize=12,
+        leading=16,
+        alignment=TA_CENTER,
+        spaceAfter=20,
+        fontName='Helvetica-Oblique',
+        textColor=colors.HexColor("#667eea"),
+        borderColor=colors.HexColor("#667eea"),
+        borderWidth=1,
+        borderPadding=8
+    )
+    
+    # Heading 3 style
+    heading3_style = ParagraphStyle(
+        'Heading3Custom',
+        parent=styles['Heading3'],
+        fontSize=14,
+        textColor=colors.HexColor("#667eea"),
+        spaceAfter=10,
+        spaceBefore=12,
+        fontName='Helvetica-Bold',
+        leading=16
+    )
+    
+    return {
+        'title': title_style,
+        'subtitle': subtitle_style,
+        'chapter_title': chapter_title_style,
+        'body': body_style,
+        'hook': hook_style,
+        'heading3': heading3_style
+    }
+
+def load_book_data():
+    """Load complete book data"""
+    try:
+        with open('book-complete.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except:
+        print("Error loading book data")
+        return None
+
+def create_title_page(story, styles):
+    """Create professional title page"""
+    story.append(Spacer(1, 1.5 * inch))
+    
+    # Main title
+    story.append(Paragraph("WHY SIT HERE AND DIE?", styles['title']))
+    story.append(Spacer(1, 0.2 * inch))
+    
+    # Subtitle
+    story.append(Paragraph(
+        "Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7",
+        styles['subtitle']
     ))
-    elements.append(Spacer(1, 0.2*inch))
     
-    # Chapter hook
-    elements.append(Paragraph(f"<i>{chapter['hook']}</i>", chapter_hook_style))
-    elements.append(Spacer(1, 0.3*inch))
+    story.append(Spacer(1, 1 * inch))
     
-    # Chapter content - split into paragraphs
-    content_text = chapter['content']
-    content_paragraphs = content_text.split('\n\n')
+    # Author
+    story.append(Paragraph("By OLUSHOLA O. PAUL", styles['body']))
+    story.append(Spacer(1, 0.5 * inch))
     
-    for para in content_paragraphs:
-        if para.strip():
-            # Clean up the paragraph
-            para_clean = para.strip()
-            elements.append(Paragraph(para_clean, body_style))
-            elements.append(Spacer(1, 0.1*inch))
+    # Copyright
+    story.append(Paragraph(
+        f"Copyright © 2026 by OLUSHOLA O PAUL. All rights reserved.<br/>"
+        f"Scripture quotations marked KJV are from the King James Version, public domain.",
+        styles['body']
+    ))
     
-    elements.append(PageBreak())
+    story.append(PageBreak())
 
-# ============ BACK MATTER ============
-elements.append(Spacer(1, 1*inch))
-elements.append(Paragraph("About the Author", section_title_style))
-elements.append(Spacer(1, 0.3*inch))
+def create_front_matter(story, book_data, styles):
+    """Add front matter sections"""
+    front_matter = book_data['book']['frontMatter']
+    
+    # Dedication
+    story.append(Paragraph("Dedication", styles['chapter_title']))
+    story.append(Paragraph(front_matter['dedication'], styles['body']))
+    story.append(PageBreak())
+    
+    # Foreword
+    story.append(Paragraph("Foreword", styles['chapter_title']))
+    story.append(Paragraph("By Pst Tosin Oloyede", styles['subtitle']))
+    foreword_text = front_matter.get('foreword', '').replace('\n', '<br/>')
+    story.append(Paragraph(foreword_text, styles['body']))
+    story.append(PageBreak())
+    
+    # Acknowledgments
+    story.append(Paragraph("Acknowledgments", styles['chapter_title']))
+    ack_text = front_matter.get('acknowledgments', '').replace('\n', '<br/>')
+    story.append(Paragraph(ack_text, styles['body']))
+    story.append(PageBreak())
+    
+    # Preface
+    story.append(Paragraph("Preface", styles['chapter_title']))
+    preface_text = front_matter.get('preface', '').replace('\n', '<br/>')
+    story.append(Paragraph(preface_text, styles['body']))
+    story.append(PageBreak())
 
-about_text = f"""
-{book_data['metadata']['author']} is a passionate spiritual leader and author based in Lagos, Nigeria. 
-He serves at {book_data['metadata']['church']} where he ministers to thousands of believers. 
-His message focuses on breaking cycles of stagnation and empowering individuals to move toward their God-given destiny.
+def create_chapters(story, book_data, styles):
+    """Add all chapters"""
+    chapters = book_data['book']['chapters']
+    
+    for chapter in chapters:
+        # Chapter header
+        chapter_num = chapter.get('number', '')
+        chapter_title = chapter.get('title', '')
+        chapter_part = chapter.get('part', '')
+        
+        if chapter_part:
+            story.append(Paragraph(chapter_part, styles['subtitle']))
+        
+        story.append(Paragraph(f"Chapter {chapter_num}: {chapter_title}", styles['chapter_title']))
+        
+        # Hook
+        if chapter.get('hook'):
+            story.append(Paragraph(f'"{chapter["hook"]}"', styles['hook']))
+        
+        story.append(Spacer(1, 0.2 * inch))
+        
+        # Content
+        content = chapter.get('content', '')
+        if content:
+            # Split content into paragraphs and format
+            paragraphs = content.split('\n\n')
+            for para in paragraphs:
+                para = para.strip()
+                if not para:
+                    continue
+                
+                # Check if it's a heading
+                if para.isupper() and len(para) < 100:
+                    story.append(Paragraph(para, styles['heading3']))
+                else:
+                    story.append(Paragraph(para, styles['body']))
+        
+        story.append(PageBreak())
 
-This book, "Why Sit Here and Die?", is born from personal experience and years of ministry, 
-offering practical wisdom grounded in Scripture for spiritual, financial, and personal breakthrough.
-"""
+def generate_pdf():
+    """Generate the complete PDF"""
+    print("Loading book data...")
+    book_data = load_book_data()
+    
+    if not book_data:
+        print("Failed to load book data")
+        return
+    
+    print("Creating PDF...")
+    
+    # Create PDF
+    pdf_filename = "Why_Sit_Here_and_Die_Complete.pdf"
+    doc = SimpleDocTemplate(
+        pdf_filename,
+        pagesize=letter,
+        rightMargin=MARGIN,
+        leftMargin=MARGIN,
+        topMargin=MARGIN,
+        bottomMargin=MARGIN,
+        title="Why Sit Here and Die?",
+        author="Olushola Odunuga Paul"
+    )
+    
+    # Create styles
+    styles = create_styles()
+    
+    # Build story
+    story = []
+    
+    # Title page
+    create_title_page(story, styles)
+    
+    # Front matter
+    create_front_matter(story, book_data, styles)
+    
+    # Chapters
+    create_chapters(story, book_data, styles)
+    
+    # Build PDF
+    doc.build(story)
+    
+    print(f"✓ PDF generated successfully: {pdf_filename}")
+    print(f"  - Professional 14pt font")
+    print(f"  - Complete book content (front matter + all 18 chapters)")
+    print(f"  - Beautiful gradient design")
+    print(f"  - Justified text alignment")
+    print(f"  - Page numbers and decorative elements")
 
-elements.append(Paragraph(about_text, body_style))
-elements.append(Spacer(1, 0.5*inch))
-
-# Copyright and publication info
-elements.append(Paragraph(book_data['frontMatter']['titlePage']['copyright'], 
-    ParagraphStyle('Copyright', parent=styles['Normal'], fontSize=10, alignment=TA_CENTER)))
-
-elements.append(Spacer(1, 0.2*inch))
-elements.append(Paragraph(
-    f"Published in {book_data['metadata']['year']}<br/>All rights reserved.",
-    ParagraphStyle('PubInfo', parent=styles['Normal'], fontSize=10, alignment=TA_CENTER)
-))
-
-# ============ BUILD PDF ============
-try:
-    doc.build(elements)
-    file_size = len(open(pdf_filename, 'rb').read()) / (1024*1024)
-    print(f"✅ Professional PDF created successfully!")
-    print(f"📄 File: {pdf_filename}")
-    print(f"📊 Size: {file_size:.2f} MB")
-    print(f"📖 Pages: ~{len(book_data['chapters']) * 2 + 20}")
-    print(f"✨ Format: International Book Standard (A4, 14pt font)")
-    print(f"🎨 Design: Professional with gold and burgundy theme")
-    print(f"📝 Content: All 18 chapters + front matter + back matter")
-except Exception as e:
-    print(f"❌ Error creating PDF: {e}")
-    import traceback
-    traceback.print_exc()
+if __name__ == "__main__":
+    generate_pdf()

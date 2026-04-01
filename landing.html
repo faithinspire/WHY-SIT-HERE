@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Sit Here and Die? - Complete Book</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            padding: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #764ba2;
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .author {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .description {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+
+        .features {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .features h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            padding: 8px 0;
+            color: #666;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+            transform: translateY(-3px);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #eee;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 Why Sit Here and Die?</h1>
+        <p class="subtitle">Breaking the trap of stagnation — spiritually, financially, and personally — from 2 Kings 7</p>
+        <p class="author">By Olushola Odunuga Paul</p>
+
+        <p class="description">
+            When life is starving you—of joy, money, progress, peace—there is a question that exposes every excuse: Why sit here and die? In 2 Kings 7, four rejected lepers made one decision that saved a city: they moved. Their story is not just ancient history; it is a blueprint for spiritual renewal, career direction, academic excellence, leadership growth, and business breakthrough.
+        </p>
+
+        <div class="features">
+            <h3>What You'll Get:</h3>
+            <ul>
+                <li>Complete book with all 18 chapters</li>
+                <li>Front matter: Introduction, Acknowledgment, Preface, Foreword</li>
+                <li>Interactive click-to-read interface</li>
+                <li>Professional PDF with 14pt international standard font</li>
+                <li>Beautiful design with navigation arrows</li>
+                <li>Table of contents for easy navigation</li>
+            </ul>
+        </div>
+
+        <div class="buttons">
+            <a href="book-reader.html" class="btn btn-primary">📖 Read Online</a>
+            <a href="Why_Sit_Here_and_Die_Complete.pdf" class="btn btn-secondary" download>📥 Download PDF</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Chapters</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">400+</div>
+                <div class="stat-label">Pages</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">2026</div>
+                <div class="stat-label">Published</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
