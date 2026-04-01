@@ -6,8 +6,7 @@
     <title>Why Sit Here and Die? - Olushola Odunuga Paul</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="book-data-reader.js"></script>
-    <script src="book-data-pdf.js"></script>
+    <script src="book-chapters.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -1318,37 +1317,26 @@
             }
         }
         
-        // READER FUNCTIONS
-        let sidebarWidth = 280;
-        
+        // SIMPLIFIED ONLINE READER - NEW FORM
         function openReader() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
-            if (access && bookDataReader) {
+            if (access) {
                 const readerHTML = `
-                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 3000; display: flex; flex-direction: column; overflow: hidden;">
-                        <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-                            <div>
-                                <h3 style="color: #0a0a0a; margin: 0; font-size: 1.3rem; font-weight: 900;">📖 Why Sit Here and Die?</h3>
-                                <p style="color: rgba(10,10,10,0.7); margin: 0.3rem 0 0 0; font-size: 0.9rem;">By Olushola Odunuga Paul</p>
-                            </div>
-                            <button onclick="closeReader()" style="background: #0a0a0a; color: var(--gold); border: 2px solid var(--gold); padding: 0.7rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;">✕ Close</button>
+                    <div id="readerModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 3000; display: flex; flex-direction: column;">
+                        <div style="background: linear-gradient(135deg, #c9a84c 0%, #a68a3a 100%); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                            <h3 style="color: #0a0a0a; margin: 0; font-size: 1.3rem; font-weight: 900;">📖 Why Sit Here and Die? - Online Reader</h3>
+                            <button onclick="closeReader()" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s;">✕ Close</button>
                         </div>
-                        <div style="flex: 1; overflow: hidden; display: flex; width: 100%; position: relative;" id="readerContainer">
-                            <div id="chapterNav" style="width: ${sidebarWidth}px; border-right: 3px solid #c9a84c; padding: 1.5rem; overflow-y: auto; overflow-x: hidden; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); box-shadow: inset 0 0 20px rgba(201, 168, 76, 0.1); flex-shrink: 0; position: relative; z-index: 5;">
-                                <h4 style="color: #c9a84c; margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); position: sticky; top: 0; background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%); padding-bottom: 1rem; z-index: 10;">📑 CONTENTS</h4>
-                                <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.8rem;"></div>
+                        <div style="flex: 1; display: flex; overflow: hidden;">
+                            <div id="chapterNav" style="width: 300px; border-right: 3px solid #c9a84c; padding: 1.5rem; overflow-y: auto; background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%); flex-shrink: 0;">
+                                <h4 style="color: #c9a84c; margin: 0 0 1.5rem 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">📑 All Chapters</h4>
+                                <div id="chapterList" style="display: flex; flex-direction: column; gap: 0.6rem;"></div>
                             </div>
-                            <div id="resizeControl" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #c9a84c, #a68a3a); width: 50px; flex-shrink: 0; position: relative; gap: 4px; padding: 0 4px; z-index: 100; cursor: col-resize;">
-                                <button id="resizeLeft" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 101;">◀</button>
-                                <div id="resizeDivider" style="width: 4px; height: 100%; background: linear-gradient(90deg, #c9a84c, #a68a3a); cursor: col-resize; flex-shrink: 0; z-index: 101;"></div>
-                                <button id="resizeRight" style="background: #0a0a0a; color: #c9a84c; border: 2px solid #c9a84c; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 101;">▶</button>
-                            </div>
-                            <div id="chapterContent" style="flex: 1; padding: 2rem; color: #e8e8e8; line-height: 1.9; font-size: 1rem; position: relative; overflow-y: auto; overflow-x: hidden; background: #0f0f0f; font-family: 'Georgia', serif; z-index: 1;">
-                                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.03; font-size: 5rem; font-weight: 900; color: var(--gold); pointer-events: none; text-align: center; width: 90%; z-index: 0; font-family: 'Playfair Display', serif;">Licensed Copy</div>
-                                <div style="position: relative; z-index: 1; text-align: center; padding: 3rem 0;">
-                                    <h1 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Why Sit Here and Die?</h1>
-                                    <p style="color: rgba(232, 232, 232, 0.7); font-size: 1.1rem; margin-bottom: 2rem;">A life-and-leadership wake-up call from 2 Kings 7</p>
-                                    <p style="color: var(--gold); font-style: italic; font-size: 1rem;">Select a section from the table of contents to begin reading</p>
+                            <div id="chapterContent" style="flex: 1; padding: 2.5rem; color: #f5f0e8; line-height: 1.9; font-size: 1.05rem; overflow-y: auto; background: #0f0f0f;">
+                                <div style="text-align: center; padding: 4rem 2rem;">
+                                    <h1 style="color: #c9a84c; font-size: 2.5rem; margin-bottom: 1rem; font-family: 'Playfair Display', serif; font-weight: 900;">Why Sit Here and Die?</h1>
+                                    <p style="color: rgba(245, 240, 232, 0.8); font-size: 1.1rem;">Breaking the trap of stagnation</p>
+                                    <p style="color: rgba(245, 240, 232, 0.6); margin-top: 2rem; font-style: italic;">Select a chapter from the list to begin reading</p>
                                 </div>
                             </div>
                         </div>
@@ -1356,84 +1344,15 @@
                 `;
                 document.body.insertAdjacentHTML('beforeend', readerHTML);
                 
-                // Add resizable divider functionality
-                const divider = document.getElementById('resizeDivider');
-                const resizeControl = document.getElementById('resizeControl');
-                const nav = document.getElementById('chapterNav');
-                const leftBtn = document.getElementById('resizeLeft');
-                const rightBtn = document.getElementById('resizeRight');
-                const container = document.getElementById('readerContainer');
-                let isResizing = false;
-                
-                // Mouse drag functionality - works over entire content
-                divider.addEventListener('mousedown', () => {
-                    isResizing = true;
-                    document.body.style.userSelect = 'none';
-                    document.body.style.cursor = 'col-resize';
-                });
-                
-                resizeControl.addEventListener('mousedown', () => {
-                    isResizing = true;
-                    document.body.style.userSelect = 'none';
-                    document.body.style.cursor = 'col-resize';
-                });
-                
-                document.addEventListener('mousemove', (e) => {
-                    if (!isResizing) return;
-                    const modal = document.getElementById('readerModal');
-                    if (!modal) return;
-                    
-                    const containerRect = container.getBoundingClientRect();
-                    const newWidth = e.clientX - containerRect.left - 25; // 25 is half of control width
-                    if (newWidth > 150 && newWidth < 500) {
-                        sidebarWidth = newWidth;
-                        nav.style.width = newWidth + 'px';
-                    }
-                });
-                
-                document.addEventListener('mouseup', () => {
-                    isResizing = false;
-                    document.body.style.userSelect = 'auto';
-                    document.body.style.cursor = 'auto';
-                });
-                
-                // Arrow button functionality
-                leftBtn.addEventListener('click', () => {
-                    sidebarWidth = Math.max(150, sidebarWidth - 50);
-                    nav.style.width = sidebarWidth + 'px';
-                });
-                
-                rightBtn.addEventListener('click', () => {
-                    sidebarWidth = Math.min(500, sidebarWidth + 50);
-                    nav.style.width = sidebarWidth + 'px';
-                });
-                
-                // Hover effects for buttons
-                [leftBtn, rightBtn].forEach(btn => {
-                    btn.addEventListener('mouseover', () => {
-                        btn.style.background = '#c9a84c';
-                        btn.style.color = '#0a0a0a';
-                        btn.style.transform = 'scale(1.1)';
-                    });
-                    btn.addEventListener('mouseout', () => {
-                        btn.style.background = '#0a0a0a';
-                        btn.style.color = '#c9a84c';
-                        btn.style.transform = 'scale(1)';
-                    });
-                });
-                
                 // Populate chapter list
                 const chapterList = document.getElementById('chapterList');
-                
-                if (bookDataReader.chapters) {
-                    bookDataReader.chapters.forEach(ch => {
+                bookChapters.forEach(ch => {
                     const btn = document.createElement('button');
-                    btn.textContent = `Ch ${ch.number}: ${ch.title}`;
+                    btn.textContent = `Ch ${ch.id}: ${ch.title}`;
                     btn.style.cssText = `
                         display: block;
                         width: 100%;
                         padding: 0.9rem;
-                        margin-bottom: 0.3rem;
                         background: rgba(201, 168, 76, 0.12);
                         border: 2px solid rgba(201, 168, 76, 0.3);
                         color: #ffffff;
@@ -1441,13 +1360,9 @@
                         cursor: pointer;
                         text-align: left;
                         font-size: 0.9rem;
-                        font-weight: 700;
+                        font-weight: 600;
                         transition: all 0.3s;
                         font-family: 'Lato', sans-serif;
-                        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
                     `;
                     btn.onmouseover = () => {
                         btn.style.background = 'rgba(201, 168, 76, 0.25)';
@@ -1459,44 +1374,24 @@
                         btn.style.borderColor = 'rgba(201, 168, 76, 0.3)';
                         btn.style.boxShadow = 'none';
                     };
-                    btn.onclick = () => displayChapter(ch.number);
+                    btn.onclick = () => displayChapter(ch.id);
                     chapterList.appendChild(btn);
-                    });
-                }
+                });
             } else {
                 showToast('❌ Please enter your password first.');
             }
         }
         
-        function displayChapter(chapterNum) {
-            if (!bookDataReader || !bookDataReader.chapters) {
-                alert('Book content is loading. Please try again.');
-                return;
-            }
-            
-            const chapter = bookDataReader.chapters.find(c => c.number === chapterNum);
+        function displayChapter(chapterId) {
+            const chapter = bookChapters.find(c => c.id === chapterId);
             if (chapter) {
                 const content = document.getElementById('chapterContent');
-                
-                // Format chapter content with proper paragraphs
-                let formattedContent = chapter.content;
-                const paragraphs = formattedContent.split('\n\n').filter(p => p.trim());
-                let contentHTML = '';
-                
-                paragraphs.forEach(para => {
-                    contentHTML += `<p style="margin-bottom: 1rem; text-align: justify; line-height: 1.8;">${para.trim()}</p>`;
-                });
-                
                 content.innerHTML = `
-                    <div style="position: relative; z-index: 1; font-family: 'Georgia', serif; color: #ffffff;">
-                        <div style="color: var(--gold); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--gold); padding-bottom: 0.5rem;">${chapter.part || 'PART'}</div>
-                        <h2 style="color: var(--gold); margin: 1.5rem 0 0.5rem 0; font-size: 2rem; font-family: 'Playfair Display', serif; font-weight: 900; line-height: 1.2;">Chapter ${chapter.number}</h2>
-                        <h3 style="color: #c9a84c; margin-bottom: 1.5rem; font-size: 1.4rem; font-family: 'Playfair Display', serif; font-weight: 700;">${chapter.title}</h3>
-                        <div style="background: rgba(201, 168, 76, 0.1); border-left: 4px solid var(--gold); padding: 1rem; margin-bottom: 2rem; border-radius: 4px;">
-                            <p style="color: #c9a84c; font-style: italic; font-size: 1.05rem; line-height: 1.8; margin: 0;">"${chapter.hook}"</p>
-                        </div>
-                        <div style="font-size: 1rem; line-height: 1.9; color: #e8e8e8; font-weight: 500;">
-                            ${contentHTML}
+                    <div>
+                        <h2 style="color: #c9a84c; font-size: 2rem; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; font-weight: 900;">Chapter ${chapter.id}</h2>
+                        <h3 style="color: #c9a84c; font-size: 1.5rem; margin-bottom: 2rem; font-family: 'Playfair Display', serif; font-weight: 700;">${chapter.title}</h3>
+                        <div style="color: #f5f0e8; line-height: 1.9; font-size: 1.05rem; text-align: justify;">
+                            <p style="margin-bottom: 1.5rem;">${chapter.content}</p>
                         </div>
                     </div>
                 `;
@@ -1508,56 +1403,32 @@
             if (modal) modal.remove();
         }
         
-        // DOWNLOAD PDF
+        // DOWNLOAD PDF - WORKING VERSION
         function downloadPDF() {
             const access = JSON.parse(sessionStorage.getItem('bookAccess'));
-            if (access && bookDataPDF) {
+            if (access) {
                 try {
-                    // Generate PDF content from bookDataPDF
-                    let pdfContent = `WHY SIT HERE AND DIE?\n`;
-                    pdfContent += `By ${bookDataPDF.metadata.author}\n\n`;
-                    pdfContent += `${bookDataPDF.metadata.subtitle}\n\n`;
-                    pdfContent += `=====================================\n\n`;
+                    let content = `WHY SIT HERE AND DIE?\nBreaking the trap of stagnation — spiritually, financially, and personally — from 2 Kings 7\n\nBy Olushola Odunuga Paul\n\n`;
+                    content += `${'='.repeat(70)}\n\n`;
                     
-                    // Add front matter
-                    if (bookDataPDF.frontMatter) {
-                        pdfContent += `DEDICATION\n${bookDataPDF.frontMatter.dedication}\n\n`;
-                        pdfContent += `EPIGRAPH\n${bookDataPDF.frontMatter.epigraph}\n\n`;
-                        pdfContent += `FOREWORD\n${bookDataPDF.frontMatter.foreword}\n\n`;
-                        pdfContent += `PREFACE\n${bookDataPDF.frontMatter.preface}\n\n`;
-                        pdfContent += `ACKNOWLEDGMENTS\n${bookDataPDF.frontMatter.acknowledgments}\n\n`;
-                    }
+                    bookChapters.forEach(ch => {
+                        content += `CHAPTER ${ch.id}: ${ch.title}\n`;
+                        content += `${'='.repeat(70)}\n\n`;
+                        content += `${ch.content}\n\n`;
+                        content += `${'='.repeat(70)}\n\n`;
+                    });
                     
-                    // Add all chapters
-                    if (bookDataPDF.chapters) {
-                        bookDataPDF.chapters.forEach(ch => {
-                            pdfContent += `\n=====================================\n`;
-                            pdfContent += `CHAPTER ${ch.number}: ${ch.title}\n`;
-                            pdfContent += `=====================================\n\n`;
-                            pdfContent += `${ch.hook}\n\n`;
-                            pdfContent += `${ch.content}\n\n`;
-                        });
-                    }
-                    
-                    // Create blob and download
-                    const blob = new Blob([pdfContent], { type: 'text/plain' });
+                    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = url;
                     link.download = 'Why_Sit_Here_and_Die_Complete.txt';
-                    link.style.display = 'none';
                     document.body.appendChild(link);
-                    
-                    // Trigger download
                     link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
                     
-                    // Cleanup
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
-                    }, 100);
-                    
-                    showToast('📥 Complete book downloaded successfully!');
+                    showToast('✅ Book downloaded successfully!');
                 } catch (error) {
                     console.error('Download error:', error);
                     showToast('❌ Download failed. Please try again.');
