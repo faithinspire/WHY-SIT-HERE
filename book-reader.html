@@ -241,6 +241,88 @@
             cursor: pointer;
         }
 
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .search-box button:hover {
+            background: #764ba2;
+        }
+
+        .reading-progress {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .bookmark-btn {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .bookmark-btn:hover {
+            background: #667eea;
+        }
+
+        .bookmark-btn.bookmarked {
+            background: #ff6b6b;
+        }
+
+        .font-size-control {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .font-size-control button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .font-size-control button:hover {
+            background: #764ba2;
+        }
+
         @media (max-width: 768px) {
             .reader-container {
                 height: 100vh;
@@ -304,9 +386,17 @@
         <div class="reader-footer">
             <button class="nav-button" id="prevBtn" onclick="previousChapter()">← Previous</button>
             <button class="toc-button" onclick="toggleTOC()">📑 Table of Contents</button>
+            <div class="reading-progress">
+                <div class="reading-progress-bar" id="progressBar"></div>
+            </div>
             <div class="page-indicator">
                 <span id="pageIndicator">Loading...</span>
             </div>
+            <div class="font-size-control">
+                <button onclick="decreaseFontSize()">A−</button>
+                <button onclick="increaseFontSize()">A+</button>
+            </div>
+            <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">🔖 Bookmark</button>
             <button class="nav-button" id="nextBtn" onclick="nextChapter()">Next →</button>
         </div>
     </div>
@@ -454,6 +544,10 @@
             // Update page indicator
             document.getElementById('pageIndicator').textContent = 
                 `${index + 1} of ${bookData.length}`;
+            
+            // Update progress bar and bookmark
+            updateProgressBar();
+            updateBookmarkButton();
         }
 
         function formatContent(content) {
@@ -508,6 +602,57 @@
             if (e.key === 'ArrowLeft') previousChapter();
             if (e.key === 'ArrowRight') nextChapter();
         });
+
+        // Font size control
+        let currentFontSize = 16;
+        function increaseFontSize() {
+            if (currentFontSize < 24) {
+                currentFontSize += 2;
+                document.querySelector('.chapter-content').style.fontSize = currentFontSize + 'px';
+            }
+        }
+
+        function decreaseFontSize() {
+            if (currentFontSize > 12) {
+                currentFontSize -= 2;
+                document.querySelector('.chapter-content').style.fontSize = currentFontSize + 'px';
+            }
+        }
+
+        // Bookmarking
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        function toggleBookmark() {
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            const currentChapter = bookData[currentChapterIndex];
+            const bookmarkId = currentChapter.id;
+            
+            if (bookmarks.includes(bookmarkId)) {
+                bookmarks = bookmarks.filter(b => b !== bookmarkId);
+                bookmarkBtn.classList.remove('bookmarked');
+            } else {
+                bookmarks.push(bookmarkId);
+                bookmarkBtn.classList.add('bookmarked');
+            }
+            
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+        }
+
+        // Update bookmark button state
+        function updateBookmarkButton() {
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            const currentChapter = bookData[currentChapterIndex];
+            if (bookmarks.includes(currentChapter.id)) {
+                bookmarkBtn.classList.add('bookmarked');
+            } else {
+                bookmarkBtn.classList.remove('bookmarked');
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentChapterIndex + 1) / bookData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
 
         // Initialize on load
         window.addEventListener('load', initializeBook);
