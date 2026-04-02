@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Sit Here and Die? - Book App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-bg: #1a1a1a;
+            --darker-bg: #0f0f0f;
+            --gold: #d4af37;
+            --gold-light: #e8c547;
+            --text-light: #f5f5f5;
+            --text-muted: #b0b0b0;
+            --border-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: var(--dark-bg);
+        }
+
+        .screen {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HOME SCREEN */
+        .home-screen {
+            background: linear-gradient(135deg, var(--darker-bg) 0%, #1a1a2e 100%);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .book-preview {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .book-cover {
+            width: 150px;
+            height: 220px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--darker-bg);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .book-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .book-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .book-author {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .get-book-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--darker-bg);
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .get-book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* CHAPTERS SCREEN */
+        .chapters-screen {
+            padding: 20px;
+        }
+
+        .screen-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+
+        .screen-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .chapters-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .chapter-item {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border-left: 4px solid var(--gold);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .chapter-item:hover {
+            background: linear-gradient(135deg, #333 0%, #282828 100%);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .chapter-number {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .chapter-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .chapter-hook {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* READER SCREEN */
+        .reader-screen {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .reader-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .reader-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .reader-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .reader-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .reader-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .reader-content h3 {
+            font-size: 18px;
+            color: var(--gold);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .reader-nav {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--darker-bg);
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-indicator {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 10px;
+        }
+
+        /* PAYMENT SCREEN */
+        .payment-screen {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .payment-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .payment-description {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .payment-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--darker-bg);
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ACCESS SCREEN */
+        .access-screen {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .access-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .access-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .access-info {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .access-status {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, var(--darker-bg) 50%);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .nav-item.active {
+            color: var(--gold);
+        }
+
+        .nav-item:hover {
+            color: var(--gold-light);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-light);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .book-title {
+                font-size: 24px;
+            }
+
+            .screen-title {
+                font-size: 20px;
+            }
+
+            .reader-title {
+                font-size: 20px;
+            }
+
+            .reader-content {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HOME SCREEN -->
+        <div class="screen home-screen active">
+            <div class="book-preview">
+                <div class="book-cover">Why Sit Here and Die?</div>
+                <div class="book-title">Why Sit Here and Die?</div>
+                <div class="book-subtitle">Breaking the trap of stagnation — spiritually, financially, and personally — from 2 Kings 7</div>
+                <div class="book-author">By Olushola Odunuga Paul</div>
+                <button class="get-book-btn" onclick="goToChapters()">GET BOOK</button>
+            </div>
+        </div>
+
+        <!-- CHAPTERS SCREEN -->
+        <div class="screen chapters-screen">
+            <div class="screen-header">
+                <div class="screen-title">📚 Chapters</div>
+            </div>
+            <div class="chapters-list" id="chaptersList"></div>
+        </div>
+
+        <!-- READER SCREEN -->
+        <div class="screen reader-screen">
+            <div class="reader-header">
+                <div class="reader-title" id="readerTitle">Chapter Title</div>
+                <div class="reader-meta" id="readerMeta"></div>
+            </div>
+            <div class="reader-content" id="readerContent"></div>
+            <div class="reader-nav">
+                <button class="nav-btn" id="prevBtn" onclick="previousChapter()">← Previous</button>
+                <button class="nav-btn" id="nextBtn" onclick="nextChapter()">Next →</button>
+            </div>
+            <div class="page-indicator" id="pageIndicator"></div>
+        </div>
+
+        <!-- PAYMENT SCREEN -->
+        <div class="screen payment-screen">
+            <div class="payment-card">
+                <div class="payment-title">Get Full Access</div>
+                <div class="payment-description">Unlock all 18 chapters and exclusive content</div>
+                <div class="price">$9.99</div>
+                <button class="payment-btn" onclick="processPayment()">Purchase Now</button>
+            </div>
+        </div>
+
+        <!-- ACCESS SCREEN -->
+        <div class="screen access-screen">
+            <div class="access-card">
+                <div class="access-title">Your Account</div>
+                <div class="access-status">✓ Full Access Granted</div>
+                <div class="access-info">You have unlimited access to all chapters and content.</div>
+                <div class="access-info" id="accessEmail"></div>
+            </div>
+        </div>
+
+        <!-- BOTTOM NAVIGATION -->
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="showScreen(0)">
+                <div class="nav-icon">🏠</div>
+                <div>HOME</div>
+            </button>
+            <button class="nav-item" onclick="showScreen(1)">
+                <div class="nav-icon">📚</div>
+                <div>CHAPTERS</div>
+            </button>
+            <button class="nav-item" onclick="showScreen(3)">
+                <div class="nav-icon">💳</div>
+                <div>PAYMENT</div>
+            </button>
+            <button class="nav-item" onclick="showScreen(4)">
+                <div class="nav-icon">👤</div>
+                <div>ACCESS</div>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let bookData = [];
+        let currentChapterIndex = 0;
+        let hasAccess = localStorage.getItem('bookAccess') === 'true';
+
+        // Initialize
+        async function init() {
+            try {
+                const response = await fetch('book-data-complete.js');
+                const text = await response.text();
+                eval(text);
+                
+                // Build chapters array
+                bookData = [
+                    {
+                        id: 'intro',
+                        title: 'Introduction',
+                        subtitle: 'The Gate Is Not Your Home',
+                        content: 'Introduce the scene (2 Kings 6–7): famine, fear, siege, and a city stuck. Then introduce the four lepers: rejected men who still refused to surrender to stillness. Close with a promise: This book will help the reader move in spiritual life, business, career, academics, relationships, leadership, and personal development—without fake hype, and without ignoring reality.\n\nThis is your invitation to rise from the gate where you have been sitting. Not tomorrow. Not when conditions are perfect. Not when you feel ready. Today.\n\nThe question that changed a city awaits your answer: Why sit here until you die?',
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'foreword',
+                        title: 'Foreword',
+                        subtitle: 'By Pst Tosin Oloyede',
+                        content: bookContent.frontMatter.foreword,
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'endorsement',
+                        title: 'Endorsement',
+                        subtitle: 'By A/P Mark E. Ikpegbu',
+                        content: bookContent.frontMatter.endorsement,
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'acknowledgments',
+                        title: 'Acknowledgments',
+                        content: bookContent.frontMatter.acknowledgments,
+                        type: 'frontmatter'
+                    },
+                    {
+                        id: 'preface',
+                        title: 'Preface',
+                        subtitle: 'Before You Read This Book',
+                        content: bookContent.frontMatter.preface,
+                        type: 'frontmatter'
+                    }
+                ];
+
+                // Add all chapters
+                bookContent.chapters.forEach((chapter) => {
+                    bookData.push({
+                        id: `chapter-${chapter.number}`,
+                        number: chapter.number,
+                        part: chapter.part,
+                        title: chapter.title,
+                        hook: chapter.hook,
+                        content: chapter.content,
+                        type: 'chapter'
+                    });
+                });
+
+                buildChaptersList();
+            } catch (error) {
+                console.error('Error loading book:', error);
+            }
+        }
+
+        function buildChaptersList() {
+            const list = document.getElementById('chaptersList');
+            list.innerHTML = '';
+
+            bookData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'chapter-item';
+                
+                if (item.type === 'frontmatter') {
+                    div.innerHTML = `
+                        <div class="chapter-title">${item.title}</div>
+                        ${item.subtitle ? `<div class="chapter-hook">${item.subtitle}</div>` : ''}
+                    `;
+                } else {
+                    div.innerHTML = `
+                        <div class="chapter-number">CHAPTER ${item.number} • PART ${item.part}</div>
+                        <div class="chapter-title">${item.title}</div>
+                        <div class="chapter-hook">"${item.hook}"</div>
+                    `;
+                }
+                
+                div.onclick = () => {
+                    currentChapterIndex = index;
+                    showChapter();
+                    showScreen(2);
+                };
+                
+                list.appendChild(div);
+            });
+        }
+
+        function showScreen(screenIndex) {
+            const screens = document.querySelectorAll('.screen');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            screens.forEach((screen, i) => {
+                screen.classList.toggle('active', i === screenIndex);
+            });
+            
+            navItems.forEach((item, i) => {
+                item.classList.toggle('active', i === screenIndex);
+            });
+        }
+
+        function goToChapters() {
+            showScreen(1);
+        }
+
+        function showChapter() {
+            const chapter = bookData[currentChapterIndex];
+            document.getElementById('readerTitle').textContent = chapter.title;
+            
+            let meta = '';
+            if (chapter.subtitle) {
+                meta += chapter.subtitle;
+            }
+            if (chapter.number) {
+                meta += (meta ? ' • ' : '') + `Chapter ${chapter.number}`;
+            }
+            if (chapter.hook) {
+                meta += (meta ? ' • ' : '') + `"${chapter.hook}"`;
+            }
+            document.getElementById('readerMeta').textContent = meta;
+            
+            document.getElementById('readerContent').innerHTML = formatContent(chapter.content);
+            document.getElementById('pageIndicator').textContent = `${currentChapterIndex + 1} of ${bookData.length}`;
+            
+            document.getElementById('prevBtn').disabled = currentChapterIndex === 0;
+            document.getElementById('nextBtn').disabled = currentChapterIndex === bookData.length - 1;
+            
+            document.querySelector('.reader-screen').scrollTop = 0;
+        }
+
+        function formatContent(content) {
+            if (!content) return '';
+            
+            return content
+                .split('\n\n')
+                .map(para => {
+                    para = para.trim();
+                    if (!para) return '';
+                    
+                    if (para.match(/^[A-Z][A-Z\s]+$/)) {
+                        return `<h3>${para}</h3>`;
+                    }
+                    
+                    return `<p>${para}</p>`;
+                })
+                .join('');
+        }
+
+        function previousChapter() {
+            if (currentChapterIndex > 0) {
+                currentChapterIndex--;
+                showChapter();
+            }
+        }
+
+        function nextChapter() {
+            if (currentChapterIndex < bookData.length - 1) {
+                currentChapterIndex++;
+                showChapter();
+            }
+        }
+
+        function processPayment() {
+            hasAccess = true;
+            localStorage.setItem('bookAccess', 'true');
+            alert('Payment successful! You now have full access.');
+            showScreen(4);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousChapter();
+            if (e.key === 'ArrowRight') nextChapter();
+        });
+
+        // Initialize on load
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

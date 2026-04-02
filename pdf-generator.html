@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Generator - Why Sit Here and Die?</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #d4af37 0%, #e8c547 100%);
+            color: #1a1a1a;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        #pdfContent {
+            display: none;
+        }
+
+        .pdf-page {
+            page-break-after: always;
+            padding: 40px;
+            background: white;
+            font-family: 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .pdf-title {
+            text-align: center;
+            font-size: 28pt;
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }
+
+        .pdf-subtitle {
+            text-align: center;
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .pdf-author {
+            text-align: center;
+            font-size: 14pt;
+            margin-bottom: 20px;
+        }
+
+        .pdf-chapter-title {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #d4af37;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .pdf-chapter-hook {
+            font-size: 12pt;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .pdf-content {
+            font-size: 14pt;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .pdf-content p {
+            margin-bottom: 15px;
+        }
+
+        .pdf-content h3 {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #d4af37;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 PDF Generator</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Generate a professional PDF of "Why Sit Here and Die?" with all 18 chapters
+        </p>
+        
+        <div class="button-group">
+            <button onclick="generatePDF()">📥 Generate PDF</button>
+            <button onclick="location.reload()">🔄 Refresh</button>
+        </div>
+
+        <div class="status" id="status"></div>
+    </div>
+
+    <!-- Hidden PDF content -->
+    <div id="pdfContent">
+        <div class="pdf-page">
+            <div style="margin-top: 80px;"></div>
+            <div class="pdf-title">WHY SIT HERE AND DIE?</div>
+            <div class="pdf-subtitle">Breaking the trap of stagnation—spiritually, financially, and personally—from 2 Kings 7</div>
+            <div style="margin-top: 60px;"></div>
+            <div class="pdf-author">By OLUSHOLA O. PAUL</div>
+            <div class="pdf-author">Ruach Apostolic Center, Lagos, Nigeria</div>
+            <div style="margin-top: 60px;"></div>
+            <div class="pdf-chapter-hook">2 Kings 7:3 (KJV)</div>
+            <div class="pdf-chapter-hook">"Why sit we here until we die?"</div>
+        </div>
+
+        <div id="chaptersContainer"></div>
+    </div>
+
+    <script>
+        let bookContent = null;
+
+        // Load book data
+        async function loadBookData() {
+            try {
+                const response = await fetch('book-data-complete.js');
+                const text = await response.text();
+                eval(text);
+                return bookContent;
+            } catch (error) {
+                console.error('Error loading book data:', error);
+                return null;
+            }
+        }
+
+        async function generatePDF() {
+            const status = document.getElementById('status');
+            status.textContent = 'Loading book data...';
+            status.className = '';
+
+            try {
+                bookContent = await loadBookData();
+                
+                if (!bookContent) {
+                    throw new Error('Failed to load book data');
+                }
+
+                status.textContent = 'Building PDF content...';
+
+                // Build chapters HTML
+                const container = document.getElementById('chaptersContainer');
+                container.innerHTML = '';
+
+                // Front Matter
+                const frontMatterSections = [
+                    { title: 'DEDICATION', content: bookContent.frontMatter.dedication },
+                    { title: 'FOREWORD', subtitle: 'By Pst Tosin Oloyede', content: bookContent.frontMatter.foreword },
+                    { title: 'ENDORSEMENT', subtitle: 'By A/P Mark E. Ikpegbu', content: bookContent.frontMatter.endorsement },
+                    { title: 'ACKNOWLEDGMENTS', content: bookContent.frontMatter.acknowledgments },
+                    { title: 'PREFACE', content: bookContent.frontMatter.preface }
+                ];
+
+                frontMatterSections.forEach(section => {
+                    const page = document.createElement('div');
+                    page.className = 'pdf-page';
+                    page.innerHTML = `
+                        <div class="pdf-chapter-title">${section.title}</div>
+                        ${section.subtitle ? `<div class="pdf-chapter-hook">${section.subtitle}</div>` : ''}
+                        <div class="pdf-content">${formatContentForPDF(section.content)}</div>
+                    `;
+                    container.appendChild(page);
+                });
+
+                // Chapters
+                bookContent.chapters.forEach(chapter => {
+                    const page = document.createElement('div');
+                    page.className = 'pdf-page';
+                    page.innerHTML = `
+                        <div class="pdf-chapter-title">CHAPTER ${chapter.number}: ${chapter.title.toUpperCase()}</div>
+                        <div class="pdf-chapter-hook">"${chapter.hook}"</div>
+                        <div class="pdf-content">${formatContentForPDF(chapter.content)}</div>
+                    `;
+                    container.appendChild(page);
+                });
+
+                status.textContent = 'Generating PDF file...';
+
+                // Generate PDF
+                const element = document.getElementById('pdfContent');
+                const opt = {
+                    margin: 0.5,
+                    filename: 'Why_Sit_Here_and_Die.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+
+                html2pdf().set(opt).from(element).save();
+
+                status.textContent = '✓ PDF generated successfully!';
+                status.className = 'success';
+            } catch (error) {
+                console.error('Error:', error);
+                status.textContent = `✗ Error: ${error.message}`;
+                status.className = 'error';
+            }
+        }
+
+        function formatContentForPDF(content) {
+            if (!content) return '';
+            
+            return content
+                .split('\n\n')
+                .map(para => {
+                    para = para.trim();
+                    if (!para) return '';
+                    
+                    if (para.match(/^[A-Z][A-Z\s]+$/)) {
+                        return `<h3>${para}</h3>`;
+                    }
+                    
+                    return `<p>${para}</p>`;
+                })
+                .join('');
+        }
+    </script>
+</body>
+</html>
